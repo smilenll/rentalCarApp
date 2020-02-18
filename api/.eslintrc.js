@@ -6,9 +6,11 @@ module.exports = {
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
+    "tslint-config-airbnb",
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    "tslint-config-airbnb"
+    'prettier',
+    'prettier/@typescript-eslint',
   ],
   root: true,
   env: {

@@ -1,0 +1,18 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "yourUsername",
+  "password": "yourPassword",
+  "database": "yourDatabase",
+  "entities": [
+    "src/database/entities/**/*.ts"
+  ],
+  "migrations": [
+    "src/database/migration/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/database/entities",
+    "migrationsDir": "src/database/migration"
+  }
+}

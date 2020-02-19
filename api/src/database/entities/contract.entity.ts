@@ -22,9 +22,6 @@ export class Contract {
     @Length(3, 20)
     public lastName: string;
 
-    @Column({ type: 'varchar' })
-    public img: string;
-
     @Column({ type: 'int' })
     @Min(3)
     @Max(80)
@@ -38,10 +35,10 @@ export class Contract {
     public isDeleted: boolean;
 
     @Column({type: 'timestamp'})
-    pickUpDateTime: number;
+    pickUpDateTime: string;
 
-    @Column({type: 'timestamp'})
-    returnDateTime: number;
+    @Column({type: 'timestamp', default: null})
+    returnDateTime: string;
 
     @CreateDateColumn({type: 'timestamp'})
     createdAt: number;

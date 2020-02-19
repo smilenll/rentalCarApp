@@ -6,7 +6,7 @@ import {
     UpdateDateColumn, ManyToOne, OneToMany,
 } from 'typeorm';
 import {CarClass} from "./car-class.entity";
-import {Contract} from "./contracts.entity";
+import {Contract} from "./contract.entity";
 
 @Entity('cars')
 export class Car {
@@ -19,9 +19,6 @@ export class Car {
 
     @Column({ type: 'varchar', nullable: true })
     public img: string;
-
-    @Column({ type: 'int', default: 0 })
-    public allLikes: number;
 
     @Column({type: 'boolean', default: true})
     public isFree: boolean;

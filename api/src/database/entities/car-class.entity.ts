@@ -8,7 +8,7 @@ import {
 import {Car} from "./car.entity";
 import {Max} from "class-validator";
 
-@Entity('classes')
+@Entity('carclasses')
 export class CarClass {
 
     @PrimaryGeneratedColumn('increment')

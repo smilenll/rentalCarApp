@@ -9,7 +9,6 @@ import {CoreModule} from "./common/core.module";
 @Module({
   imports: [
     DatabaseModule,
-    CoreModule,
   ],
   controllers: [AppController],
   providers: [AppService],

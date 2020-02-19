@@ -3,20 +3,19 @@ import {
     PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    UpdateDateColumn,
+    UpdateDateColumn, ManyToOne, OneToMany,
 } from 'typeorm';
+import {CarClass} from "./car-class.entity";
+import {Contract} from "./contracts.entity";
 
-@Entity('posts')
+@Entity('cars')
 export class Car {
 
     @PrimaryGeneratedColumn('increment')
     public id: number;
 
     @Column('varchar', {length: 200})
-    public title: string;
-
-    @Column('varchar', {length: 2000})
-    public description: string;
+    public model: string;
 
     @Column({ type: 'varchar', nullable: true })
     public img: string;
@@ -25,7 +24,7 @@ export class Car {
     public allLikes: number;
 
     @Column({type: 'boolean', default: true})
-    public isPublic: boolean;
+    public isFree: boolean;
 
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
@@ -35,4 +34,10 @@ export class Car {
 
     @UpdateDateColumn({type: 'timestamp'})
     updatedAt: number;
+
+    @ManyToOne(type => CarClass, carClass => carClass.cars, { eager: true })
+    public carClass: CarClass;
+
+    @OneToMany( type => Contract, contracts => contracts.car)
+    public contracts: Contract[];
 }

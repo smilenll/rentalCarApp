@@ -2,7 +2,7 @@ import {Controller, Get} from "@nestjs/common";
 import {ContractsService} from "./contracts.service";
 import {Contract} from "../database/entities/contract.entity";
 
-@Controller('posts')
+@Controller('contracts')
 export class ContractsController {
 
     constructor(

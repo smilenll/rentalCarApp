@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => (
   <nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -17,18 +18,11 @@ const Navbar = () => (
       </button>
       <div className="collapse navbar-collapse" id="navbarCollapse">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <a className="nav-link" href="/">
-              Dashboard
-              <span
-                className="sr-only"
-              >
-                (current)
-              </span>
-            </a>
+          <li className="nav-item ">
+            <NavLink activeClassName="active" className="nav-link" to="/">Dashboard</NavLink>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/cars">Cars</a>
+          <li className="nav-item ">
+            <NavLink activeClassName="active" className="nav-link" to="/cars">Cars</NavLink>
           </li>
         </ul>
         <form className="form-inline mt-2 mt-md-0">

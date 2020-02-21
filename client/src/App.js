@@ -1,20 +1,24 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
 import Dashboard from './components/dashboard/dashboard';
 import Cars from './components/cars/cars';
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar />
       <Switch>
-        <Route path="/" component={Dashboard} />
+        <Route path="/" component={Dashboard} exact />
         <Route path="/cars" component={Cars} />
+        <Route render={() => (
+          <h1> 404</h1>
+        )}
+        />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
 

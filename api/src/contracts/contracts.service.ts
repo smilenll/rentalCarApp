@@ -2,7 +2,6 @@ import {Contract} from "../database/entities/contract.entity";
 import {Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 
 @Injectable()
 export class ContractsService {

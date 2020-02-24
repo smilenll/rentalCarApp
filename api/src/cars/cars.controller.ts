@@ -6,13 +6,13 @@ import {Car} from "../database/entities/car.entity";
 export class CarsController {
 
     constructor(
-        private readonly contractsService: CarsService,
+        private readonly carsService: CarsService,
     ) {
     }
 
     @Get()
     async getCars(
     ): Promise<Car[]> {
-        return await this.contractsService.getOpenContracts();
+        return await this.carsService.getCars();
     }
 }

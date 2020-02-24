@@ -10,8 +10,6 @@ describe('Contracts Controller', () => {
         },
     };
 
-    const reviewDTO = {title: 'title', description: 'description'};
-
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             controllers: [ContractsController],
@@ -37,7 +35,7 @@ describe('Contracts Controller', () => {
             // Act
             await controller.getOpenContracts();
             // Expect
-            console.log(contractService);
+
             expect(contractService.getOpen).toHaveBeenCalledTimes(1);
             spy.mockClear();
         });
@@ -54,5 +52,4 @@ describe('Contracts Controller', () => {
         });
     });
 
-})
-;
+});

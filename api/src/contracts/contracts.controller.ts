@@ -13,6 +13,6 @@ export class ContractsController {
     @Get()
     async getOpenContracts(
     ): Promise<Contract[]> {
-        return await this.contractsService.getOpenContracts();
+        return await this.contractsService.getOpen();
     }
 }

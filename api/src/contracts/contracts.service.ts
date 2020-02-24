@@ -9,7 +9,7 @@ export class ContractsService {
         @InjectRepository(Contract) private readonly contractsRepository: Repository<Contract>,
     ) {}
 
-    public async getOpenContracts(): Promise<Contract[]> {
+    public async getOpen(): Promise<Contract[]> {
         return await this.contractsRepository.find({ where: { name: { first: "Timber", last: "Saw" } } });
     }
 

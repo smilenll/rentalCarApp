@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import getContracts from '../services/contracts.service';
+import { getContracts } from '../services/contracts.service';
 import Contract from '../contract/contract';
 
 

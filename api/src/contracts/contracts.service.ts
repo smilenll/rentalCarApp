@@ -10,7 +10,7 @@ export class ContractsService {
     ) {}
 
     public async getOpen(): Promise<Contract[]> {
-        return await this.contractsRepository.find({ where: { name: { first: "Timber", last: "Saw" } } });
+        return await this.contractsRepository.find();
     }
 
 }

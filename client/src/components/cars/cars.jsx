@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCars } from '../services/contracts.service';
+import { getCars } from '../../services/contracts.service';
 import Car from '../car/car';
 
 const Cars = () => {

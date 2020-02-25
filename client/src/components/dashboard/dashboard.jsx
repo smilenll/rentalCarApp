@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { getContracts } from '../services/contracts.service';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getContracts } from '../../redux';
 import Contract from '../contract/contract';
 
-
-const Dashboard = () => {
-  const [contracts, setContracts] = useState();
+const Dashboard = ({ contracts, storageContracts }) => {
   useEffect(() => {
-    (async () => {
-      const contractsFromDb = await getContracts();
-      setContracts(contractsFromDb);
-    })();
+    storageContracts();
   }, []);
 
-  return (
-    <div className="row">
-      <div className="col-12">
-        <table className="table table-hover table-dark">
-          <thead>
+  return contracts.loading ? (
+    <h2>Loading</h2>
+  ) : contracts.error ? (
+    <h2>{contracts.error}</h2>
+  ) : (
+      <div className="row">
+        <div className="col-12">
+          <table className="table table-hover table-dark">
+            <thead>
             <tr>
               <th scope="col">Car</th>
               <th scope="col">Customer</th>
@@ -28,61 +28,25 @@ const Dashboard = () => {
               <th scope="col">Current price per day</th>
               <th scope="col">Current total price</th>
             </tr>
-          </thead>
-          <tbody>
-            {
-            contracts
-              ? contracts.map((item) => <Contract key={item.id} contract={item} />)
-              : null
-            }
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>
-                <button type="button" className="btn btn-outline-primary btn-block">Primary</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>
-                <button type="button" className="btn btn-outline-primary btn-block">Primary</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>Bird</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>
-                <button type="button" className="btn btn-outline-primary btn-block">Primary</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+            {contracts
+                  && contracts.allContracts.data
+                  && contracts.allContracts.data.map((item) => (
+                    <Contract key={item.id} contract={item} />
+                  ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
   );
 };
 
 
-export default Dashboard;
+const mapStateToProps = (state) => ({ contracts: state.ContractReducers });
+
+const mapDispatchToProps = (dispatch) => ({
+  storageContracts: () => dispatch(getContracts()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

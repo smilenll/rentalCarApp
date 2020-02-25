@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Contract = ({ contract }) => {
-  console.log(contract);
   return (
     <tr>
       <th scope="row">{contract.car.model}</th>

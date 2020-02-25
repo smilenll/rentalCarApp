@@ -2,8 +2,7 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    CreateDateColumn,
-    UpdateDateColumn, OneToMany,
+    OneToMany,
 } from 'typeorm';
 import {Car} from "./car.entity";
 import {Max} from "class-validator";

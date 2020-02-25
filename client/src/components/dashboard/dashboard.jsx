@@ -13,10 +13,10 @@ const Dashboard = ({ contracts, storageContracts }) => {
   ) : contracts.error ? (
     <h2>{contracts.error}</h2>
   ) : (
-      <div className="row">
-        <div className="col-12">
-          <table className="table table-hover table-dark">
-            <thead>
+    <div className="row">
+      <div className="col-12">
+        <table className="table table-hover table-dark">
+          <thead>
             <tr>
               <th scope="col">Car</th>
               <th scope="col">Customer</th>
@@ -28,17 +28,17 @@ const Dashboard = ({ contracts, storageContracts }) => {
               <th scope="col">Current price per day</th>
               <th scope="col">Current total price</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             {contracts
                   && contracts.allContracts.data
                   && contracts.allContracts.data.map((item) => (
                     <Contract key={item.id} contract={item} />
                   ))}
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
+    </div>
   );
 };
 

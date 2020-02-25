@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { getCars } from '../../services/contracts.service';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getCars } from '../../redux';
 import Car from '../car/car';
 
-const Cars = () => {
-  const [cars, setCars] = useState();
+const Cars = ({ cars, storageCars }) => {
   useEffect(() => {
-    (async () => {
-      const contractsFromDb = await getCars();
-      setCars(contractsFromDb);
-    })();
+    storageCars();
   }, []);
 
-  return (
+  return cars.loading ? (
+    <h2>Loading</h2>
+  ) : cars.error ? (
+    <h2>{cars.error}</h2>
+  ) : (
 
     <div className="container mt-4">
       <div className="row">
-        {
-          cars
-            ? cars.map((item) => <Car key={item.id} car={item} />)
-            : null
-        }
+        {cars
+        && cars.allCars.data
+        && cars.allCars.data.map((item) => (
+          <Car key={item.id} car={item} />
+        ))}
         <div className="col-4">
           <div className="card bg-dark text-white">
             <img
@@ -57,4 +58,10 @@ const Cars = () => {
   );
 };
 
-export default Cars;
+const mapStateToProps = (state) => ({ cars: state.CarReducers });
+
+const mapDispatchToProps = (dispatch) => ({
+  storageCars: () => dispatch(getCars()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cars);

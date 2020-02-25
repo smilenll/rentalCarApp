@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getCars } from '../../redux';
 import Car from '../car/car';
 
@@ -13,14 +14,13 @@ const Cars = ({ cars, storageCars }) => {
   ) : cars.error ? (
     <h2>{cars.error}</h2>
   ) : (
-
     <div className="container mt-4">
       <div className="row">
         {cars
-        && cars.allCars.data
-        && cars.allCars.data.map((item) => (
-          <Car key={item.id} car={item} />
-        ))}
+                && cars.allCars.data
+                && cars.allCars.data.map((item) => (
+                  <Car key={item.id} car={item} />
+                ))}
         <div className="col-4">
           <div className="card bg-dark text-white">
             <img
@@ -56,6 +56,30 @@ const Cars = ({ cars, storageCars }) => {
       </div>
     </div>
   );
+};
+
+Cars.propTypes = {
+  cars: PropTypes.shape({
+    allCars: PropTypes.shape({
+      data: PropTypes.any.isRequired,
+    }),
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+  }),
+  storageCars: PropTypes.func.isRequired,
+};
+
+// not working properly
+Car.defaultProps = {
+  cars: {
+    allCars: {
+      data: [
+        {
+          id: 'no id',
+        },
+      ],
+    },
+  },
 };
 
 const mapStateToProps = (state) => ({ cars: state.CarReducers });

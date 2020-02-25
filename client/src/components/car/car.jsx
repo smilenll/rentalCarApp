@@ -44,7 +44,6 @@ Car.propTypes = {
 
 Car.defaultProps = {
   car: {
-
     id: 'No ID',
     model: 'No model',
     img: 'No image',

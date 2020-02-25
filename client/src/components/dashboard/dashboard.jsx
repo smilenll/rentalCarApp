@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getContracts } from '../../redux';
 import Contract from '../contract/contract';
 
@@ -40,6 +41,32 @@ const Dashboard = ({ contracts, storageContracts }) => {
       </div>
     </div>
   );
+};
+
+Dashboard.propTypes = {
+  contracts: PropTypes.shape({
+    allContracts: PropTypes.shape({
+      data: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+  }),
+  storageContracts: PropTypes.func,
+};
+
+Dashboard.defaultProps = {
+  contracts: {
+    allContracts: {
+      data: {
+        id: 'No id',
+      },
+    },
+    error: 'No error',
+    loading: 'Loading',
+  },
+  storageContracts: PropTypes.func,
 };
 
 

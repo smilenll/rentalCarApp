@@ -32,10 +32,10 @@ const Dashboard = ({ contracts, storageContracts }) => {
           </thead>
           <tbody>
             {contracts
-                  && contracts.allContracts.data
-                  && contracts.allContracts.data.map((item) => (
-                    <Contract key={item.id} contract={item} />
-                  ))}
+          && contracts.allContracts.data
+          && contracts.allContracts.data.map((item) => (
+            <Contract key={item.id} contract={item} />
+          ))}
           </tbody>
         </table>
       </div>

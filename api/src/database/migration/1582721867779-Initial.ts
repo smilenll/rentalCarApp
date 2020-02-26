@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class Initial1582127763262 implements MigrationInterface {
-    name = 'Initial1582127763262';
+export class Initial1582721867779 implements MigrationInterface {
+    name = 'Initial1582721867779'
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query(`CREATE TABLE "contracts" ("id" SERIAL NOT NULL, "firstName" character varying NOT NULL, "lastName" character varying NOT NULL, "age" integer NOT NULL, "days" integer NOT NULL, "isDeleted" boolean NOT NULL DEFAULT false, "pickUpDateTime" TIMESTAMP NOT NULL, "returnDateTime" TIMESTAMP DEFAULT null, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "carId" integer, CONSTRAINT "PK_2c7b8f3a7b1acdd49497d83d0fb" PRIMARY KEY ("id"))`, undefined);
@@ -18,4 +18,5 @@ export class Initial1582127763262 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "cars"`, undefined);
         await queryRunner.query(`DROP TABLE "contracts"`, undefined);
     }
+
 }

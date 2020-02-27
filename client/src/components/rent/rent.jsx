@@ -45,12 +45,20 @@ const Rent = ({ cars, match, sendRentForm }) => {
     car = cars.allCars.data.find((item) => item.id === +match.params.carid);
   }
 
+  const calcDays = () => {
+    const today = new Date().getTime();
+    const delivery = new Date(deliveryDate).getTime();
+    const differenceInTime = delivery - today;
+
+    return Math.ceil(differenceInTime / (1000 * 3600 * 24));
+  };
+
   const rentForm = {
     firstName,
     lastName,
     age,
-    days: 2,
-    pickUpDateTime: '2020-02-19T13:19:06.000Z',
+    days: calcDays(),
+    expectedDropOf: deliveryDate,
   };
 
   const getTaxes = (pricePerDay, differenceInDays) => {
@@ -94,10 +102,7 @@ const Rent = ({ cars, match, sendRentForm }) => {
   };
 
   const calculateBull = () => {
-    const today = new Date().getTime();
-    const delivery = new Date(deliveryDate).getTime();
-    const differenceInTime = delivery - today;
-    const days = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    const days = calcDays();
     const pricePerDay = car.carClass.price;
 
     setBill(getTaxes(pricePerDay, days));
@@ -196,11 +201,8 @@ const Rent = ({ cars, match, sendRentForm }) => {
               type="button"
               className="btn btn-dark"
               onClick={() => {
-                const formErrors = validateForm(rentForm);
-                if (formErrors.errors > 0) {
-                  return setErrors(formErrors);
-                }
-                return sendRentForm(rentForm);
+              console.log(errors);
+                return errors.errors === 0 && sendRentForm(rentForm);
               }}
             >
               Dark

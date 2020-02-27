@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { postRent } from '../../redux';
 import Car from '../car/car';
 
 const Rent = ({ cars, match, sendRentForm }) => {
+  const currentDateTime = new Date().toISOString();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [age, setAge] = useState();
-  const [pickUpDateTime, setPickUpDateTime] = useState();
+  const [age, setAge] = useState(0);
+  const [deliveryDate, setDeliveryDate] = useState(
+    currentDateTime
+      .substring(0, currentDateTime.length - 1)
+      .slice(0, 16),
+  );
+  const [bill, setBill] = useState({
+    price: 0,
+    taxes: [],
+  });
   const [errors, setErrors] = useState({
     errors: 0,
     firstName: '',
@@ -33,7 +42,7 @@ const Rent = ({ cars, match, sendRentForm }) => {
   if (cars.allCars.length <= 0) {
     car = demoCar;
   } else {
-    car = cars.allCars.data.find((item) => item.id == match.params.carid);
+    car = cars.allCars.data.find((item) => item.id === +match.params.carid);
   }
 
   const rentForm = {
@@ -44,30 +53,81 @@ const Rent = ({ cars, match, sendRentForm }) => {
     pickUpDateTime: '2020-02-19T13:19:06.000Z',
   };
 
-  const validateForm = (values) => {
+  const getTaxes = (pricePerDay, differenceInDays) => {
+    const calculatedBill = {
+      price: 0,
+      taxes: [],
+    };
+    calculatedBill.price = pricePerDay * differenceInDays;
+    const basicPrice = {
+      newPrice: calculatedBill.price,
+      massage: `Car class ${car.carClass.name} for ${car.carClass.price}$/day for ${differenceInDays} days`,
+    };
+    calculatedBill.taxes.push(basicPrice);
+
+    if (differenceInDays > 2 && differenceInDays <= 6) {
+      calculatedBill.price *= 0.85;
+      const tax = {
+        newPrice: calculatedBill.price,
+        massage: '15% Discount for 2 to 6 days',
+      };
+      calculatedBill.taxes.push(tax);
+    }
+    if (differenceInDays >= 7) {
+      calculatedBill.price *= 0.75;
+      const tax = {
+        newPrice: calculatedBill.price,
+        massage: '25% Discount up to 7 days',
+      };
+      calculatedBill.taxes.push(tax);
+    }
+    if (rentForm.age < 25) {
+      calculatedBill.price *= 1.25;
+      const tax = {
+        newPrice: calculatedBill.price,
+        massage: 'Yong fee increase price buy 20%',
+      };
+      calculatedBill.taxes.push(tax);
+    }
+
+    return calculatedBill;
+  };
+
+  const calculateBull = () => {
+    const today = new Date().getTime();
+    const delivery = new Date(deliveryDate).getTime();
+    const differenceInTime = delivery - today;
+    const days = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    const pricePerDay = car.carClass.price;
+
+    setBill(getTaxes(pricePerDay, days));
+  };
+
+  const validateForm = () => {
     const currentErrors = { errors: 0 };
 
-    if (values.firstName.trim() === '') {
+    if (firstName.trim() === '') {
       currentErrors.errors += 1;
       currentErrors.firstName = 'First name must be not empty';
     }
-    if (values.lastName.trim() === '') {
+    if (lastName.trim() === '') {
       currentErrors.errors += 1;
       currentErrors.lastName = 'Last name must be not empty';
     }
-    if (!values.age) {
+    if (!age) {
       currentErrors.errors += 1;
       currentErrors.age = 'Age must be not empty';
     }
-    if (values.age && values.age < 18) {
+    if (age && age < 18) {
       currentErrors.errors += 1;
       currentErrors.age = 'You are too yong to drive';
     }
-
-    return currentErrors;
+    setErrors(currentErrors);
   };
 
-  const currentDateTime = new Date().toISOString();
+  useEffect(calculateBull, [age, deliveryDate]);
+  useEffect(validateForm, [age, firstName, lastName, deliveryDate]);
+
   return (
     <div className="container">
       <div className="row">
@@ -120,20 +180,17 @@ const Rent = ({ cars, match, sendRentForm }) => {
               </div>
             </div>
             <div className="col-md-12 mb-3">
-              <label htmlFor="validationServer02">Date</label>
+              <label htmlFor="dropOff">Date</label>
               <input
                 type="datetime-local"
-                min={currentDateTime.substring(0, currentDateTime.length - 1)}
-                className="form-control is-valid"
-                value={pickUpDateTime}
-                onChange={(e) => setPickUpDateTime(e.target.value)}
-                id="validationServer02"
+                min={currentDateTime.substring(0, currentDateTime.length - 1).slice(0, 16)}
+                className="form-control"
+                value={deliveryDate}
+                onChange={(e) => setDeliveryDate(e.target.value)}
+                id="dropOff"
                 placeholder="Last name"
                 required
               />
-              <div className="invalid-feedback">
-                {errors.firstName}
-              </div>
             </div>
             <button
               type="button"
@@ -154,13 +211,24 @@ const Rent = ({ cars, match, sendRentForm }) => {
           <h2>Estimated pronChangeice</h2>
           <table className="table table-striped table-dark">
             <tbody>
+              {bill && bill.taxes.map((item) => (
+                <tr key={item.massage}>
+                  <td>
+                    {item.newPrice}
+                    $
+                  </td>
+                  <td>{item.massage}</td>
+                </tr>
+              ))}
               <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-              </tr>
-              <tr>
-                <td>Jacob</td>
-                <td>Thornton</td>
+                <td>
+                  Total
+                </td>
+                <td>
+                  {bill.price}
+                  {' '}
+                  $/day
+                </td>
               </tr>
             </tbody>
           </table>

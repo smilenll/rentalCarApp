@@ -41,8 +41,7 @@ const main = async () => {
     contract.lastName = 'Lyubenov',
     contract.car = carAsaved,
     contract.age = 20,
-    contract.days = 2,
-    contract.pickUpDateTime = '2020-02-19 15:19:06';
+    contract.expectedReturnDate = '2020-02-19 15:19:06';
     await contractRepo.save(contract);
 
     await connection.close();

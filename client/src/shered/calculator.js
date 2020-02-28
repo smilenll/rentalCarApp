@@ -7,6 +7,7 @@ export const calcDays = (expectedReturnDate) => {
 };
 
 export const calculateDiscounts = (differenceInDays) => {
+
   let tax = {
     price: 0,
     massage: '',
@@ -24,8 +25,10 @@ export const calculateDiscounts = (differenceInDays) => {
       price: 0.75,
       massage: '25% Discount up to 7 days',
     };
+
     return tax;
   }
+  return false;
 };
 
 export const calculateTaxes = (age) => (
@@ -41,3 +44,26 @@ export const calculateBasePrice = (car, differenceInDays) => (
     massage: `Car class ${car.carClass.name} for ${car.carClass.price}$/day for ${differenceInDays} days`,
   }
 );
+
+export const calculateTotalBill = (age, car, calculatedDays) => {
+  const getBill = [
+    calculateBasePrice(car, calculatedDays),
+    calculateDiscounts(calculatedDays),
+    calculateTaxes(age),
+  ];
+  const createdBill = getBill.reduce((acc, item) => {
+    acc.price = item && item.price
+      ? item.price * acc.price
+      : acc.price;
+    acc.massages = item && item.massage
+      ? [...acc.massages, item.massage]
+      : acc.massages;
+    return acc;
+  }, {
+    price: 1,
+    massages: [],
+  });
+
+  return createdBill;
+};
+

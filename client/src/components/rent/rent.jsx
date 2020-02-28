@@ -4,9 +4,7 @@ import { postRent } from '../../redux';
 import Car from '../car/car';
 import {
   calcDays,
-  calculateDiscounts,
-  calculateBasePrice,
-  calculateTaxes,
+  calculateTotalBill,
 } from '../../shered/calculator';
 
 const Rent = ({ cars, match, sendRentForm }) => {
@@ -63,26 +61,7 @@ const Rent = ({ cars, match, sendRentForm }) => {
   };
 
   // BUG on empty Form
-  const buildBill = () => {
-    const getBill = [
-      calculateBasePrice(car, calculatedDays),
-      calculateDiscounts(calculatedDays),
-      calculateTaxes(age),
-    ];
-    const createdBill = getBill.reduce((acc, item) => {
-      acc.price = item && item.price
-        ? item.price * acc.price
-        : acc.price;
-      acc.massages = item && item.massage
-        ? [...acc.massages, item.massage]
-        : acc.massages;
-      return acc;
-    }, {
-      price: 1,
-      massages: [],
-    });
-    setBill(createdBill);
-  };
+  const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 
   const validateForm = () => {
     const currentErrors = { errors: 0 };
@@ -194,7 +173,6 @@ const Rent = ({ cars, match, sendRentForm }) => {
                 <tr key={item}>
                   <td>
                     {item}
-                    $
                   </td>
                 </tr>
               ))}

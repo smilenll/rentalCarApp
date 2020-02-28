@@ -56,4 +56,21 @@ describe('ContractsService', () => {
             expect(result).toBe('test');
         });
     });
+
+    describe('initialPrice method', () => {
+        it('should check for discounts', () => {
+            //Arrange
+            const age = 24;
+            const initialDate = "2020-02-27 15:13:35";
+            const expectReturnDate = "2020-03-04 15:13:00";
+            const price = 20;
+            const output = 127.5;
+
+            //Act
+            const result = service.initialPrice(price, age, initialDate, expectReturnDate);
+            // Assert
+            expect(result).toEqual(output);
+
+        });
+    });
 });

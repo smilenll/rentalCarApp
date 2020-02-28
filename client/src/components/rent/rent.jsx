@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { postRent } from '../../redux';
 import Car from '../car/car';
+import {
+  calcDays,
+  calculateDiscounts,
+  calculateBasePrice,
+  calculateTaxes,
+} from '../../shered/calculator';
 
 const Rent = ({ cars, match, sendRentForm }) => {
   const currentDateTime = new Date().toISOString();
@@ -15,13 +21,14 @@ const Rent = ({ cars, match, sendRentForm }) => {
   );
   const [bill, setBill] = useState({
     price: 0,
-    taxes: [],
+    massages: [],
   });
   const [errors, setErrors] = useState({
     errors: 0,
     firstName: '',
     lastName: '',
     age: '',
+    date: '',
   });
 
   const demoCar = {
@@ -45,67 +52,36 @@ const Rent = ({ cars, match, sendRentForm }) => {
     car = cars.allCars.data.find((item) => item.id === +match.params.carid);
   }
 
-  const calcDays = () => {
-    const today = new Date().getTime();
-    const delivery = new Date(deliveryDate).getTime();
-    const differenceInTime = delivery - today;
-
-    return Math.ceil(differenceInTime / (1000 * 3600 * 24));
-  };
+  const calculatedDays = calcDays(deliveryDate);
 
   const rentForm = {
     firstName,
     lastName,
     age,
-    days: calcDays(),
-    expectedDropOf: deliveryDate,
+    days: calculatedDays,
+    expectedReturnDate: deliveryDate,
   };
 
-  const getTaxes = (pricePerDay, differenceInDays) => {
-    const calculatedBill = {
-      price: 0,
-      taxes: [],
-    };
-    calculatedBill.price = pricePerDay * differenceInDays;
-    const basicPrice = {
-      newPrice: calculatedBill.price,
-      massage: `Car class ${car.carClass.name} for ${car.carClass.price}$/day for ${differenceInDays} days`,
-    };
-    calculatedBill.taxes.push(basicPrice);
-
-    if (differenceInDays > 2 && differenceInDays <= 6) {
-      calculatedBill.price *= 0.85;
-      const tax = {
-        newPrice: calculatedBill.price,
-        massage: '15% Discount for 2 to 6 days',
-      };
-      calculatedBill.taxes.push(tax);
-    }
-    if (differenceInDays >= 7) {
-      calculatedBill.price *= 0.75;
-      const tax = {
-        newPrice: calculatedBill.price,
-        massage: '25% Discount up to 7 days',
-      };
-      calculatedBill.taxes.push(tax);
-    }
-    if (rentForm.age < 25) {
-      calculatedBill.price *= 1.25;
-      const tax = {
-        newPrice: calculatedBill.price,
-        massage: 'Yong fee increase price buy 20%',
-      };
-      calculatedBill.taxes.push(tax);
-    }
-
-    return calculatedBill;
-  };
-
-  const calculateBull = () => {
-    const days = calcDays();
-    const pricePerDay = car.carClass.price;
-
-    setBill(getTaxes(pricePerDay, days));
+  // BUG on empty Form
+  const buildBill = () => {
+    const getBill = [
+      calculateBasePrice(car, calculatedDays),
+      calculateDiscounts(calculatedDays),
+      calculateTaxes(age),
+    ];
+    const createdBill = getBill.reduce((acc, item) => {
+      acc.price = item && item.price
+        ? item.price * acc.price
+        : acc.price;
+      acc.massages = item && item.massage
+        ? [...acc.massages, item.massage]
+        : acc.massages;
+      return acc;
+    }, {
+      price: 1,
+      massages: [],
+    });
+    setBill(createdBill);
   };
 
   const validateForm = () => {
@@ -127,10 +103,14 @@ const Rent = ({ cars, match, sendRentForm }) => {
       currentErrors.errors += 1;
       currentErrors.age = 'You are too yong to drive';
     }
+    if (calculatedDays < 1) {
+      currentErrors.errors += 1;
+      currentErrors.date = 'You date is invalid';
+    }
     setErrors(currentErrors);
   };
 
-  useEffect(calculateBull, [age, deliveryDate]);
+  useEffect(buildBill, [age, deliveryDate]);
   useEffect(validateForm, [age, firstName, lastName, deliveryDate]);
 
   return (
@@ -200,10 +180,7 @@ const Rent = ({ cars, match, sendRentForm }) => {
             <button
               type="button"
               className="btn btn-dark"
-              onClick={() => {
-              console.log(errors);
-                return errors.errors === 0 && sendRentForm(rentForm);
-              }}
+              onClick={() => errors.errors === 0 && sendRentForm(rentForm)}
             >
               Dark
             </button>
@@ -213,13 +190,12 @@ const Rent = ({ cars, match, sendRentForm }) => {
           <h2>Estimated pronChangeice</h2>
           <table className="table table-striped table-dark">
             <tbody>
-              {bill && bill.taxes.map((item) => (
-                <tr key={item.massage}>
+              {bill && bill.massages.map((item) => (
+                <tr key={item}>
                   <td>
-                    {item.newPrice}
+                    {item}
                     $
                   </td>
-                  <td>{item.massage}</td>
                 </tr>
               ))}
               <tr>

@@ -24,5 +24,4 @@ export class ContractsService {
     public initialPrice(price: number, age: number, initialDate: string, expectReturnDate: string) {
         return 127.5;
     }
-
 }

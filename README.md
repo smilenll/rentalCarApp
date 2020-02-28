@@ -12,13 +12,13 @@ sudo apt-get install nodejs
 ```
 
 PostgreSQL
-
-Example with docker:
+For username you can use default username = postgres.
+Example with docker
 
 ```bash 
 docker pull postgres
 
-docker run --rm --name pg-docker -e POSTGRES_PASSWORD=password -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
+docker run --rm --name (container name) -e POSTGRES_PASSWORD=(your password) -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data (DB name)
 ```
 
 

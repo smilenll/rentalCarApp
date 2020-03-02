@@ -60,6 +60,9 @@ const Rent = ({ cars, match, sendRentForm }) => {
     expectedReturnDate: deliveryDate,
   };
 
+  const carId = match.params.carid;
+
+  const createRequest = () => ({ ...rentForm, carId });
   // BUG on empty Form
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 
@@ -159,7 +162,7 @@ const Rent = ({ cars, match, sendRentForm }) => {
             <button
               type="button"
               className="btn btn-dark"
-              onClick={() => errors.errors === 0 && sendRentForm(rentForm)}
+              onClick={() => errors.errors === 0 && sendRentForm(createRequest())}
             >
               Dark
             </button>

@@ -1,6 +1,9 @@
 import React from 'react';
 import {
-  calculateTaxes, calculateBasePrice, calculateDiscounts
+  calculateTaxes,
+  calculateBasePrice,
+  calculateDiscounts,
+  calculateReturnPrice,
 } from './calculator';
 
 describe('Calculator', () => {
@@ -48,53 +51,54 @@ describe('Calculator', () => {
 
   describe('calculateReturnPrice', () => {
     test('it should return the predicted bill', () => {
-      const contractDays = 3;
+      const contractDays = 2;
+      const actualDays = 2;
+      const contract = {
+        age: 26,
+        car: {
+          carClass: {
+            price: 20,
+          },
+        },
+      };
+
+      const output = 40;
+
+      expect(calculateReturnPrice(contract, contractDays, actualDays)).toEqual(output);
+    });
+
+    test('it should return the price with 20% penalty for 4 days', () => {
+      const contractDays = 1;
       const actualDays = 3;
-      const price = 60;
+      const contract = {
+        age: 26,
+        car: {
+          carClass: {
+            price: 20,
+          },
+        },
+      };
 
-      const output = 60;
+      const output = 68;
 
-      expect(calculateReturnPrice(contractDays, actualDays, price)).toEqual(output);
+      expect(calculateReturnPrice(contract, contractDays, actualDays)).toEqual(output);
     });
 
-    test('it should return the price with 20% penalty for 2 days', () => {
-      const contractDays = 3;
-      const actualDays = 5;
-      const price = 60;
-
-      const output = 108;
-
-      expect(calculateReturnPrice(contractDays, actualDays, price)).toEqual(output);
-    });
-
-    test('it should return the price with 20% penalty for 2 days', () => {
-      const contractDays = 3;
-      const actualDays = 5;
-      const price = 60;
-
-      const output = 108;
-
-      expect(calculateReturnPrice(contractDays, actualDays, price)).toEqual(output);
-    });
-
-    test('it should return the price with 20% penalty for 2 days', () => {
-      const contractDays = 3;
-      const actualDays = 5;
-      const price = 60;
-
-      const output = 108;
-
-      expect(calculateReturnPrice(contractDays, actualDays, price)).toEqual(output);
-    });
-
-    test('it should return the price with 50% penalty for 5 days', () => {
-      const contractDays = 3;
+    test('it should return the price with 50% penalty for 8 days', () => {
+      const contractDays = 1;
       const actualDays = 9;
-      const price = 60;
+      const contract = {
+        age: 26,
+        car: {
+          carClass: {
+            price: 20,
+          },
+        },
+      };
 
-      const output = 240;
+      const output = 260;
 
-      expect(calculateReturnPrice(contractDays, actualDays, price)).toEqual(output);
+      expect(calculateReturnPrice(contract, contractDays, actualDays)).toEqual(output);
     });
   });
 });

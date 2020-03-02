@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { calcDays, calculateTotalBill } from '../../shered/calculator';
+import { calcDays, calculateTotalBill, calculateReturnPrice } from '../../shered/calculator';
 
 const Contract = ({ contract }) => {
 
@@ -9,6 +9,7 @@ const Contract = ({ contract }) => {
   const currentDays = calcDays(contract.initialDate, new Date());
   const estimatedDays = calcDays(contract.initialDate, contract.expectedReturnDate);
   const estimatedBill = calculateTotalBill(contract.age, contract.car, estimatedDays);
+  const finalPrice = calculateReturnPrice(contract, estimatedDays, currentDays);
   return (
     <tr>
       <th scope="row">{contract.car.model}</th>
@@ -22,8 +23,8 @@ const Contract = ({ contract }) => {
       </td>
       <td>{estimatedBill.price / estimatedDays}</td>
       <td>{currentDays}</td>
-      <td>-</td>
-      <td>-</td>
+      <td>{(finalPrice / currentDays).toFixed(2)}</td>
+      <td>{finalPrice}</td>
       <td>
         <button type="button" className="btn btn-outline-primary btn-block">Return car</button>
       </td>

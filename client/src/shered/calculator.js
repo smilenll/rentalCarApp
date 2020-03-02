@@ -65,4 +65,21 @@ export const calculateTotalBill = (age, car, calculatedDays) => {
   });
 };
 
-export const calculateReturnPrice = (contractDays, actualDays, price) => ('test');
+export const calculateReturnPrice = (contract, estimatedDays, currentDays) => {
+
+  if ((currentDays - estimatedDays) <= 0) {
+    return calculateTotalBill(contract.age, contract.car, currentDays)
+      .price;
+  }
+  const extraDays = currentDays - estimatedDays;
+  let contractPrice = calculateTotalBill(contract.age, contract.car, estimatedDays)
+    .price;
+
+  if (extraDays <= 2) {
+
+    contractPrice += contract.car.carClass.price * 1.2 * extraDays;
+    return contractPrice;
+  }
+  contractPrice += contract.car.carClass.price * 1.5 * extraDays;
+  return contractPrice;
+};

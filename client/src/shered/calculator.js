@@ -51,7 +51,7 @@ export const calculateTotalBill = (age, car, calculatedDays) => {
     calculateDiscounts(calculatedDays),
     calculateTaxes(age),
   ];
-  const createdBill = getBill.reduce((acc, item) => {
+  return getBill.reduce((acc, item) => {
     acc.price = item && item.price
       ? item.price * acc.price
       : acc.price;
@@ -63,7 +63,6 @@ export const calculateTotalBill = (age, car, calculatedDays) => {
     price: 1,
     massages: [],
   });
-
-  return createdBill;
 };
 
+export const calculateReturnPrice = (contractDays, actualDays, price) => ('test');

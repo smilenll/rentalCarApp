@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { calcDays, calculateTotalBill, calculateReturnPrice } from '../../shered/calculator';
+import { returnCar } from '../../services';
 
-const Contract = ({ contract }) => {
+const Contract = ({ contract, }) => {
 
-  //Need sum validation or refreshing of currentDays
+  // Need sum validation or refreshing of currentDays
   // The best will be if it is live :)
   const currentDays = calcDays(contract.initialDate, new Date());
   const estimatedDays = calcDays(contract.initialDate, contract.expectedReturnDate);
@@ -26,7 +27,7 @@ const Contract = ({ contract }) => {
       <td>{(finalPrice / currentDays).toFixed(2)}</td>
       <td>{finalPrice}</td>
       <td>
-        <button type="button" className="btn btn-outline-primary btn-block">Return car</button>
+        <button type="button" className="btn btn-outline-primary btn-block" onClick={() => returnCar(contract.id, {returnDateTime: new Date()})}>Return car</button>
       </td>
 
     </tr>

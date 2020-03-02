@@ -76,7 +76,6 @@ export const calculateReturnPrice = (contract, estimatedDays, currentDays) => {
     .price;
 
   if (extraDays <= 2) {
-
     contractPrice += contract.car.carClass.price * 1.2 * extraDays;
     return contractPrice;
   }

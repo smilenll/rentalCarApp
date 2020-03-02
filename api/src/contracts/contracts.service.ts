@@ -24,6 +24,14 @@ export class ContractsService {
 
         return await this.contractsRepository.save(contractEntity);
     }
+
+    public async returnCar(contractId:string,  body: any): Promise<Contract> {
+
+        const contract = await this.contractsRepository.findOne(contractId);
+        contract.returnDateTime = body.returnDateTime;
+
+        return await this.contractsRepository.save(contract);
+    }
     //Calculate expected price for the contract
     public initialPrice(price: number, age: number, initialDate: string, expectReturnDate: string) {
         return 127.5;

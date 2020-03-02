@@ -1,5 +1,5 @@
-export const calcDays = (expectedReturnDate) => {
-  const today = new Date().getTime();
+export const calcDays = (initialDate = new Date(), expectedReturnDate) => {
+  const today = new Date(initialDate).getTime();
   const delivery = new Date(expectedReturnDate).getTime();
   const differenceInTime = delivery - today;
 

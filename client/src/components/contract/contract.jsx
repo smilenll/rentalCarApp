@@ -1,16 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { calcDays, calculateTotalBill } from '../../shered/calculator';
 
 const Contract = ({ contract }) => {
+
+  //Need sum validation or refreshing of currentDays
+  // The best will be if it is live :)
+  const currentDays = calcDays(contract.initialDate, new Date());
+  const estimatedDays = calcDays(contract.initialDate, contract.expectedReturnDate);
+  const estimatedBill = calculateTotalBill(contract.age, contract.car, estimatedDays);
   return (
     <tr>
       <th scope="row">{contract.car.model}</th>
       <td>{`${contract.firstName} ${contract.lastName}`}</td>
-      <td>{contract.pickUpDateTime}</td>
-      <td>@mdo</td>
-      <td>{contract.days}</td>
-      <td>-</td>
-      <td>-</td>
+      <td>{contract.initialDate}</td>
+      <td>{contract.expectedReturnDate}</td>
+      <td>
+        {estimatedDays}
+        {' '}
+        days
+      </td>
+      <td>{estimatedBill.price / estimatedDays}</td>
+      <td>{currentDays}</td>
       <td>-</td>
       <td>-</td>
       <td>

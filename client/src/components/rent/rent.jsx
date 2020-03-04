@@ -50,7 +50,8 @@ const Rent = ({ cars, match, sendRentForm }) => {
     car = cars.allCars.data.find((item) => item.id === +match.params.carid);
   }
 
-  const calculatedDays = calcDays(deliveryDate);
+  const calculatedDays = calcDays(new Date(), deliveryDate);
+
 
   const rentForm = {
     firstName,

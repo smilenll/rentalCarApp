@@ -32,6 +32,7 @@ export class ContractsService {
 
         return await this.contractsRepository.save(contract);
     }
+
     //Calculate expected price for the contract
     public initialPrice(price: number, age: number, initialDate: string, expectReturnDate: string) {
         return 127.5;

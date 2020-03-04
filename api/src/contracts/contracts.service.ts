@@ -20,8 +20,8 @@ export class ContractsService {
     public async createContract(body: any): Promise<ShowContractDTO> {
 
         const contractEntity: any = this.contractsRepository.create(body);
-
         contractEntity.car = await this.carsRepository.findOne(body.car);
+        await this.changeCarStatus(contractEntity.car.id);
 
         return await this.contractsRepository.save(contractEntity);
     }
@@ -30,8 +30,15 @@ export class ContractsService {
 
         const contract = await this.contractsRepository.findOne(contractId);
         contract.returnDateTime = body.returnDateTime;
+        await this.changeCarStatus(contract.car.id);
 
         return await this.contractsRepository.save(contract);
+    }
+
+    private async changeCarStatus(id): Promise<Car> {
+        const car = await this.carsRepository.findOne(id);
+        car.isFree = !car.isFree;
+        return await this.carsRepository.save(car);
     }
 
     //Calculate expected price for the contract

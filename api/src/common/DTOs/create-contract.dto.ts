@@ -3,7 +3,7 @@ import {
     IsNotEmpty,
     Length,
     IsNumber,
-    IsDateString
+    IsDateString, Min
 } from 'class-validator';
 
 export class CreateContractDTO {
@@ -20,6 +20,7 @@ export class CreateContractDTO {
 
     @IsNumber()
     @IsNotEmpty()
+    @Min(18)
     public age: number;
 
     @IsNotEmpty()

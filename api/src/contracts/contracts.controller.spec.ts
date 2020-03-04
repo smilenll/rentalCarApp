@@ -5,7 +5,7 @@ import {ContractsService} from "./contracts.service";
 describe('Contracts Controller', () => {
     let controller: ContractsController;
     const contractService = {
-        getOpen() {
+        getOpenContracts() {
             /* empty */
         },
     };
@@ -31,18 +31,18 @@ describe('Contracts Controller', () => {
     describe('getOpenContracts method should', () => {
         it('calls contractsService.getOpen', async () => {
             // Arrange
-            const spy = jest.spyOn(contractService, 'getOpen');
+            const spy = jest.spyOn(contractService, 'getOpenContracts');
             // Act
             await controller.getOpenContracts();
             // Expect
 
-            expect(contractService.getOpen).toHaveBeenCalledTimes(1);
+            expect(contractService.getOpenContracts).toHaveBeenCalledTimes(1);
             spy.mockClear();
         });
         it('returns the result from contractsService.getOpen method', async () => {
             // Arrange
             const spy = jest
-                .spyOn(contractService, 'getOpen')
+                .spyOn(contractService, 'getOpenContracts')
                 .mockImplementation(async () => 'test');
             // Act
             const response = await controller.getOpenContracts();

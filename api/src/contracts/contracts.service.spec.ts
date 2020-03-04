@@ -32,7 +32,7 @@ describe('ContractsService', () => {
         expect(service).toBeDefined();
     });
 
-    describe('getOpen method should', () => {
+    describe('getOpenContracts method should', () => {
 
         it('Call find method', async () => {
             // Arrange
@@ -42,7 +42,7 @@ describe('ContractsService', () => {
                 .spyOn(contractRepository, 'find')
                 .mockReturnValue(Promise.resolve(foundContracts));
             // Act
-            await service.getOpen();
+            await service.getOpenContracts();
             // Assert
             expect(spy).toBeCalledTimes(1);
         });
@@ -51,7 +51,7 @@ describe('ContractsService', () => {
             // Arrange
             const spy = jest.spyOn(contractRepository, 'find').mockReturnValue('test');
             // Act
-            const result = await service.getOpen();
+            const result = await service.getOpenContracts();
             // Assert
             expect(result).toBe('test');
         });

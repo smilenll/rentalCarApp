@@ -1,7 +1,8 @@
 import {ShowCarDTO} from "./show-car.dto";
 import {Publish} from "../decorators/publish";
+import {Car} from "../../database/entities/car.entity";
 
-export class ShowContractDTO {
+export class CloseContractDTO {
 
     @Publish()
     public id: number;
@@ -21,6 +22,9 @@ export class ShowContractDTO {
     @Publish()
     public expectedReturnDate: string;
 
+    @Publish()
+    public returnDateTime: string;
+
     @Publish(ShowCarDTO)
-    public car: ShowCarDTO;
+    public car: Car;
 }

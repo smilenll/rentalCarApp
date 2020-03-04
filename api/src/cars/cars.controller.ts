@@ -1,6 +1,7 @@
-import {Controller, Get} from "@nestjs/common";
+import {Controller, Get, UseInterceptors} from "@nestjs/common";
 import {CarsService} from "./cars.service";
-import {Car} from "../database/entities/car.entity";
+import {ShowCarDTO} from "../common/DTOs/show-car.dto";
+import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
 
 @Controller('cars')
 export class CarsController {
@@ -11,8 +12,9 @@ export class CarsController {
     }
 
     @Get()
+    @UseInterceptors(new TransformInterceptor(ShowCarDTO))
     async getCars(
-    ): Promise<Car[]> {
+    ): Promise<ShowCarDTO[]> {
         return await this.carsService.getCars();
     }
 }

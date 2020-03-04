@@ -26,7 +26,7 @@ const main = async () => {
     carClassC.name = 'C';
     carClassC.price = 40;
     carClassC.isDeleted = false;
-    const carCSaved =  await classRepo.save(carClassB);
+    const classCSaved =  await classRepo.save(carClassB);
 
     const carA = carRepo.create();
     carA.model = 'VW polo';
@@ -45,16 +45,16 @@ const main = async () => {
     const carBsaved = await carRepo.save(carB);
 
     const carC = carRepo.create();
-    carC.model = 'VW golf';
+    carC.model = 'VW passat';
     carC.img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG/1200px-VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG\n';
     carC.isFree = false;
-    carC.carClass = carCSaved;
+    carC.carClass = classCSaved;
     carC.isDeleted = false;
     const carCsaved = await carRepo.save(carC);
 
     const contract = contractRepo.create();
-    contract.firstName = 'Smilen',
-    contract.lastName = 'Lyubenov',
+    contract.firstName = 'Ivan',
+    contract.lastName = 'Ivanov',
     contract.car = carAsaved,
     contract.age = 20,
     contract.initialDate = '2020-02-15 15:19:06',

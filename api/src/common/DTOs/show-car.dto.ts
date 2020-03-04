@@ -13,16 +13,8 @@ export class ShowCarDTO {
     public img: string;
 
     @Publish()
-    public age: number;
-
-    @Publish()
     public isFree: boolean;
 
-    @Publish()
-    public pickUpDateTime: number;
-
-    @Publish()
-    public returnDateTime: number;
 
     @Publish(ShowCarClassDTO)
     public carClass: ShowCarClassDTO;

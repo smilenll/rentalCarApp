@@ -5,6 +5,7 @@ import {
     ManyToOne,
 } from 'typeorm';
 import {Car} from "./car.entity";
+import {ShowCarDTO} from "../../common/DTOs/show-car.dto";
 
 @Entity('contracts')
 export class Contract {

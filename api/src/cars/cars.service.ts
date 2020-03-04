@@ -14,4 +14,9 @@ export class CarsService {
         return await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
     }
 
+    public async getCarById(id): Promise<ShowCarDTO> {
+        return await this.carsRepository.findOne(id);
+    }
+
+
 }

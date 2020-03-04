@@ -14,7 +14,7 @@ export class ContractsService {
     ) {}
 
     public async getOpenContracts(): Promise<ShowContractDTO[]> {
-        return await this.contractsRepository.find();
+        return await this.contractsRepository.find({ where: { isDeleted: false, returnDateTime: null } });
     }
 
     public async createContract(body: any): Promise<ShowContractDTO> {

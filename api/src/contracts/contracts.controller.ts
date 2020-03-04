@@ -17,6 +17,7 @@ export class ContractsController {
     @Get()
     @UseInterceptors(new TransformInterceptor(ShowContractDTO))
     async getOpenContracts(): Promise<ShowContractDTO[]> {
+
         return await this.contractsService.getOpenContracts();
     }
 

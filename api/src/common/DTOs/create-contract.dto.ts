@@ -23,6 +23,10 @@ export class CreateContractDTO {
     @Min(18)
     public age: number;
 
+    @IsNumber()
+    @IsNotEmpty()
+    public car: number;
+
     @IsNotEmpty()
     @IsDateString()
     public initialDate: Date;

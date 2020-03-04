@@ -31,7 +31,7 @@ const main = async () => {
     const carA = carRepo.create();
     carA.model = 'VW polo';
     carA.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4';
-    carA.isFree = false;
+    carA.isFree = true;
     carA.carClass = classASaved;
     carA.isDeleted = false;
     const carAsaved = await carRepo.save(carA);
@@ -39,7 +39,7 @@ const main = async () => {
     const carB = carRepo.create();
     carB.model = 'VW golf';
     carB.img = 'https://www.autocar.co.uk/sites/autocar.co.uk/files/styles/gallery_slide/public/images/car-reviews/first-drives/legacy/99-vw-golf-mk8-front.jpg?itok=dVq1_mix';
-    carB.isFree = false;
+    carB.isFree = true;
     carB.carClass = classBSaved;
     carB.isDeleted = false;
     const carBsaved = await carRepo.save(carB);
@@ -47,7 +47,7 @@ const main = async () => {
     const carC = carRepo.create();
     carC.model = 'VW passat';
     carC.img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG/1200px-VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG\n';
-    carC.isFree = false;
+    carC.isFree = true;
     carC.carClass = classCSaved;
     carC.isDeleted = false;
     const carCsaved = await carRepo.save(carC);

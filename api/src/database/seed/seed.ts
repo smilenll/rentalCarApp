@@ -26,7 +26,7 @@ const main = async () => {
     carClassC.name = 'C';
     carClassC.price = 40;
     carClassC.isDeleted = false;
-    await classRepo.save(carClassB);
+    const carCSaved =  await classRepo.save(carClassB);
 
     const carA = carRepo.create();
     carA.model = 'VW polo';
@@ -35,6 +35,22 @@ const main = async () => {
     carA.carClass = classASaved;
     carA.isDeleted = false;
     const carAsaved = await carRepo.save(carA);
+
+    const carB = carRepo.create();
+    carB.model = 'VW golf';
+    carB.img = 'https://www.autocar.co.uk/sites/autocar.co.uk/files/styles/gallery_slide/public/images/car-reviews/first-drives/legacy/99-vw-golf-mk8-front.jpg?itok=dVq1_mix';
+    carB.isFree = false;
+    carB.carClass = classBSaved;
+    carB.isDeleted = false;
+    const carBsaved = await carRepo.save(carB);
+
+    const carC = carRepo.create();
+    carC.model = 'VW golf';
+    carC.img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG/1200px-VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG\n';
+    carC.isFree = false;
+    carC.carClass = carCSaved;
+    carC.isDeleted = false;
+    const carCsaved = await carRepo.save(carC);
 
     const contract = contractRepo.create();
     contract.firstName = 'Smilen',
@@ -45,12 +61,22 @@ const main = async () => {
     contract.expectedReturnDate = '2020-02-19 15:19:06';
     await contractRepo.save(contract);
 
+    const contract2 = contractRepo.create();
+    contract2.firstName = 'Smilen',
+    contract2.lastName = 'Lyubenov',
+    contract2.car = carBsaved,
+    contract2.age = 30,
+    contract2.initialDate = '2020-02-15 15:19:06',
+    contract2.expectedReturnDate = '2020-02-19 15:19:06';
+    await contractRepo.save(contract2);
+
     await connection.close();
 
     // tslint:disable-next-line:no-console
     console.log(`Data seeded successfully`);
 
 };
+
 
 main()
     // tslint:disable-next-line:no-console

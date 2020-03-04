@@ -28,7 +28,6 @@ const Rent = ({ cars, match, sendRentForm }) => {
     age: '',
     date: '',
   });
-
   const demoCar = {
     id: 1,
     model: 'DEMO CAR',
@@ -52,18 +51,15 @@ const Rent = ({ cars, match, sendRentForm }) => {
 
   const calculatedDays = calcDays(new Date(), deliveryDate);
 
-
-  const rentForm = {
+  const createRequest = () => ({
     firstName,
     lastName,
-    age,
-    days: calculatedDays,
-    expectedReturnDate: deliveryDate,
-  };
+    age: +age,
+    car: +match.params.carid,
+    initialDate: new Date().toISOString(),
+    expectedReturnDate: new Date(deliveryDate).toISOString(),
+  });
 
-  const carId = match.params.carid;
-
-  const createRequest = () => ({ ...rentForm, carId });
   // BUG on empty Form
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 

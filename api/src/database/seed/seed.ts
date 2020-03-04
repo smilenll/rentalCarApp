@@ -70,6 +70,15 @@ const main = async () => {
     contract2.expectedReturnDate = '2020-02-19 15:19:06';
     await contractRepo.save(contract2);
 
+    const contract3 = contractRepo.create();
+    contract2.firstName = 'Marin',
+        contract2.lastName = 'Marinov',
+        contract2.car = carCsaved,
+        contract2.age = 30,
+        contract2.initialDate = '2020-02-15 15:19:06',
+        contract2.expectedReturnDate = '2020-02-19 15:19:06';
+    await contractRepo.save(contract2);
+
     await connection.close();
 
     // tslint:disable-next-line:no-console

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { postRent } from '../../redux';
 import Car from '../car/car';
 import {
@@ -7,7 +8,7 @@ import {
   calculateTotalBill,
 } from '../../shered/calculator';
 
-const Rent = ({ cars, match, sendRentForm }) => {
+const Rent = ({ cars, match, sendRentForm, redirectTo }) => {
   const currentDateTime = new Date().toISOString();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -28,6 +29,7 @@ const Rent = ({ cars, match, sendRentForm }) => {
     age: '',
     date: '',
   });
+
   const demoCar = {
     id: 1,
     model: 'DEMO CAR',
@@ -59,7 +61,6 @@ const Rent = ({ cars, match, sendRentForm }) => {
     initialDate: new Date().toISOString(),
     expectedReturnDate: new Date(deliveryDate).toISOString(),
   });
-
   // BUG on empty Form
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 
@@ -91,6 +92,10 @@ const Rent = ({ cars, match, sendRentForm }) => {
 
   useEffect(buildBill, [age, deliveryDate]);
   useEffect(validateForm, [age, firstName, lastName, deliveryDate]);
+
+  if (redirectTo.redirectTo) {
+    return <Redirect to={redirectTo} />;
+  }
 
   return (
     <div className="container">
@@ -194,11 +199,11 @@ const Rent = ({ cars, match, sendRentForm }) => {
   );
 };
 
-// const mapStateToProps = (state) => ({
-//   numOfCakes: state.cake.numOfCakes,
-// });
 
-const mapStateToProps = (state) => ({ cars: state.CarReducers });
+const mapStateToProps = (state) => ({
+  cars: state.CarReducers,
+  redirectTo: state.RedirectReducers,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   sendRentForm: (formData) => dispatch(postRent(formData)),

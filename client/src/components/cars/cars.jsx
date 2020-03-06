@@ -17,16 +17,16 @@ const Cars = ({ cars, storageCars }) => {
     .filter((item) => item.model.toLowerCase().includes(car.toLowerCase()));
 
   return cars.loading ? (
-    <h2>Loading</h2>
+    <h3>Loading</h3>
   ) : cars.error ? (
-    <h2>{cars.error}</h2>
+    <h3>{cars.error}</h3>
   ) : (
     <div className="container mt-4">
       <div className="row">
         <div className="active-cyan-3 active-cyan-4 mb-4">
           <input
             className="form-control mb-2"
-            type="text"
+            type="search"
             value={q}
             placeholder="Search"
             aria-label="Search"
@@ -44,21 +44,28 @@ const Cars = ({ cars, storageCars }) => {
       {
         search
         && (
-        <div className="row">
-          <h1>Search result</h1>
-          <div className="row">
-            {
-              search.map((item) => (
-                <Car key={item.id} car={item} />
-              ))
-            }
-          </div>
-        </div>
+          search.length > 0 ? (
+            <div className="row">
+              <h3>Search result</h3>
+              <div className="row">
+                {
+                      search.map((item) => (
+                        <Car key={item.id} car={item} />
+                      ))
+                    }
+              </div>
+            </div>
+          )
+            : (
+              <div className="row">
+                <h2 className="notFound">No result</h2>
+              </div>
+            )
         )
       }
       <hr />
       <div className="row">
-        <h1>All cars</h1>
+        <h3>All cars</h3>
         <div className="row">
           {cars
           && cars.allCars.data

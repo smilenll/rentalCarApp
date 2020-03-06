@@ -1,5 +1,4 @@
 export const calcDays = (initialDate, expectedReturnDate) => {
-
   const today = new Date(initialDate).getTime();
   const delivery = new Date(expectedReturnDate).getTime();
   const differenceInTime = delivery - today;
@@ -13,7 +12,6 @@ export const calculateDiscounts = (differenceInDays) => {
     price: 0,
     massage: '',
   };
-
   if (differenceInDays > 2 && differenceInDays <= 6) {
     tax = {
       price: 0.85,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { calcDays, calculateTotalBill, calculateReturnPrice } from '../../shered/calculator';
 import { returnCar } from '../../services';
 
-const Contract = ({ contract, }) => {
+const Contract = ({ contract }) => {
 
   // Need sum validation or refreshing of currentDays
   // The best will be if it is live :)
@@ -14,7 +14,7 @@ const Contract = ({ contract, }) => {
   return (
     <tr>
       <th scope="row">{contract.car.model}</th>
-      <td>{`${contract.firstName} ${contract.lastName}`}</td>
+      <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
       <td>{contract.initialDate}</td>
       <td>{contract.expectedReturnDate}</td>
       <td>
@@ -27,9 +27,8 @@ const Contract = ({ contract, }) => {
       <td>{(finalPrice / currentDays).toFixed(2)}</td>
       <td>{finalPrice}</td>
       <td>
-        <button type="button" className="btn btn-outline-primary btn-block" onClick={() => returnCar(contract.id, {returnDateTime: new Date()})}>Return car</button>
+        <button type="button" className="btn btn-outline-primary btn-block" onClick={() => returnCar(contract.id, { returnDateTime: new Date()})}>Return car</button>
       </td>
-
     </tr>
   );
 };

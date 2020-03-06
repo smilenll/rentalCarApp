@@ -18,7 +18,7 @@ const Car = ({ car }) => {
           <h5 className="card-title">{car.model}</h5>
           <p className="card-text">{car.carClass.price}</p>
           <p className="card-text">{car.carClass.name}</p>
-          <NavLink activeClassName="active" className="btn btn-dark" to={btnLink}>Rent</NavLink>
+          <NavLink car="rent-car" className="btn btn-dark" to={btnLink}>Rent</NavLink>
         </div>
       </div>
     </div>

@@ -21,7 +21,6 @@ export class ContractsController {
         return await this.contractsService.getOpenContracts();
     }
 
-    //Move car to Params
     @Post()
     @UseInterceptors(new TransformInterceptor(ShowContractDTO))
     public async createContract(

@@ -162,6 +162,7 @@ const Rent = ({ cars, match, sendRentForm, redirectTo }) => {
               />
             </div>
             <button
+              id="car-submit-btn"
               type="button"
               className="btn btn-dark"
               onClick={() => errors.errors === 0 && sendRentForm(createRequest())}

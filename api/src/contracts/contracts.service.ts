@@ -5,6 +5,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
+import {SystemError} from "../common/exeptions/system.error";
 
 @Injectable()
 export class ContractsService {
@@ -27,7 +28,7 @@ export class ContractsService {
     }
 
     public async returnCar(contractId:string,  body: { returnDateTime: string }): Promise<CloseContractDTO> {
-
+        this.validateData(body.returnDateTime);
         const contract = await this.contractsRepository.findOne(contractId);
         contract.returnDateTime = body.returnDateTime;
         await this.changeCarStatus(contract.car.id);
@@ -41,8 +42,21 @@ export class ContractsService {
         return await this.carsRepository.save(car);
     }
 
-    //Calculate expected price for the contract
-    public initialPrice(price: number, age: number, initialDate: string, expectReturnDate: string) {
-        return 127.5;
+    private validateData(date: string): void{
+
+        const tenMinutes= 600000;
+
+        //By Greenwitch
+        const towHours= 7200000;
+        const now = new Date().getTime() - towHours;
+
+        const returnDate = new Date(date).getTime();
+        const differenceInTime = now - returnDate;
+        if(differenceInTime < 0) {
+            throw new SystemError('This is a call from the future.', 404);
+        }
+        if(differenceInTime > tenMinutes) {
+            throw new SystemError('Session expired', 404);
+        }
     }
 }

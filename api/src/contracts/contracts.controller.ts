@@ -1,10 +1,10 @@
-import {Body, Controller, Get, Param, Post, Put, UseInterceptors, ValidationPipe} from "@nestjs/common";
+import {Body, Controller, Get, Param, Post, Put, UseFilters, UseInterceptors, ValidationPipe} from "@nestjs/common";
 import {ContractsService} from "./contracts.service";
-import {Contract} from "../database/entities/contract.entity";
 import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
+import {SystemErrorFilter} from "../common/decorators/filters/error.filter";
 
 @Controller('contracts')
 export class ContractsController {
@@ -33,6 +33,7 @@ export class ContractsController {
 
     //Move car to Params
     @Put(':id')
+    @UseFilters(SystemErrorFilter)
     @UseInterceptors(new TransformInterceptor(CloseContractDTO))
     public async returnCar(
         @Param('id') contractId: string,

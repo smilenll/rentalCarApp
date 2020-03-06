@@ -13,8 +13,7 @@ export class CarsController {
 
     @Get()
     @UseInterceptors(new TransformInterceptor(ShowCarDTO))
-    async getCars(
-    ): Promise<ShowCarDTO[]> {
+    async getCars(): Promise<ShowCarDTO[]> {
         return await this.carsService.getCars();
     }
 

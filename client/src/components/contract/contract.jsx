@@ -7,7 +7,8 @@ const Contract = ({ contract }) => {
 
   // Need sum validation or refreshing of currentDays
   // The best will be if it is live :)
-  const currentDays = calcDays(contract.initialDate, new Date());
+  const currentDateTime = new Date().toISOString().slice(0, 16);
+  const currentDays = calcDays(contract.initialDate, currentDateTime);
   const estimatedDays = calcDays(contract.initialDate, contract.expectedReturnDate);
   const estimatedBill = calculateTotalBill(contract.age, contract.car, estimatedDays);
   const finalPrice = calculateReturnPrice(contract, estimatedDays, currentDays);

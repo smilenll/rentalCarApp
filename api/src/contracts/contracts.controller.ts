@@ -37,6 +37,7 @@ export class ContractsController {
     public async returnCar(
         @Param('id') contractId: string,
         @Body() body: any): Promise<CloseContractDTO> {
+        //Validate DATE !!!
         return await this.contractsService.returnCar(contractId, body);
     }
 }

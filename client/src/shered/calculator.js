@@ -1,4 +1,11 @@
 export const calcDays = (initialDate, expectedReturnDate) => {
+  const regexDataValidate = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d(?:\.\d+)?Z?/gm;
+
+  if (!expectedReturnDate.match(regexDataValidate)
+    && !expectedReturnDate.match(regexDataValidate)) {
+    console.log('Invalid data');
+  }
+
   const today = new Date(initialDate).getTime();
   const delivery = new Date(expectedReturnDate).getTime();
   const differenceInTime = delivery - today;

@@ -45,11 +45,7 @@ export class ContractsService {
     private validateData(date: string): void{
 
         const tenMinutes= 600000;
-
-        //By Greenwitch
-        const towHours= 7200000;
-        const now = new Date().getTime() - towHours;
-
+        const now = new Date().getTime();
         const returnDate = new Date(date).getTime();
         const differenceInTime = now - returnDate;
         if(differenceInTime < 0) {

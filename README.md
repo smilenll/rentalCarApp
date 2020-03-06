@@ -93,3 +93,12 @@ Start React server:
 npm run start
 ```
 
+You can run unit tests
+```bash
+npm run test
+```
+
+You can run end-to-end tests
+```bash
+nightwatch src/nightwatch/nw-test.js
+```

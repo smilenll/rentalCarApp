@@ -7,6 +7,7 @@ import {
   calcDays,
   calculateTotalBill,
 } from '../../shered/calculator';
+import './rent.css';
 
 const Rent = ({ cars, match, sendRentForm, redirectTo }) => {
   const currentDateTime = new Date().toISOString();
@@ -164,36 +165,49 @@ const Rent = ({ cars, match, sendRentForm, redirectTo }) => {
             <button
               id="car-submit-btn"
               type="button"
-              className="btn btn-dark"
+              className="btn btn-outline-success btn-block"
               onClick={() => errors.errors === 0 && sendRentForm(createRequest())}
             >
-              Dark
+              Rent car
             </button>
           </div>
         </div>
         <div className="col-4">
-          <h2>Estimated pronChangeice</h2>
-          <table className="table table-striped table-dark">
-            <tbody>
-              {bill && bill.massages.map((item) => (
-                <tr key={item}>
-                  <td>
-                    {item}
-                  </td>
-                </tr>
-              ))}
-              <tr>
-                <td>
-                  Total
-                </td>
-                <td>
-                  {bill.price}
-                  {' '}
-                  $/day
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <h4 className="text-right">Estimated price</h4>
+          {
+            bill.price === 1.2 ?
+              (
+                <h5 className="text-right empty-form-msg">For estimated price fill the form</h5>
+              )
+              : (
+                <table className="table table-striped table-dark ">
+                  <tbody>
+                  {bill && bill.massages.map((item) => (
+                    <tr key={item}>
+                      <td colSpan="2" className="text-right">
+                        {item}
+                      </td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td>
+                      <h2>
+                        Total
+                      </h2>
+                    </td>
+                    <td className="text-right">
+                      <h2>
+                        {bill.price}
+                        {' '}
+                        $
+                      </h2>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              )
+          }
+
         </div>
       </div>
     </div>

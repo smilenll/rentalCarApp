@@ -8,6 +8,7 @@ const Car = ({ car }) => {
 
   return (
     <div className="col-4">
+      <NavLink to={btnLink}>
       <div className="card bg-dark text-white">
         <img
           className="card-img"
@@ -15,13 +16,16 @@ const Car = ({ car }) => {
           alt="Card"
         />
         <div className="card-img-overlay">
-          <h5 className="card-title">{car.model}</h5>
-          <p className="card-text">{car.carClass.price}</p>
-          <p className="card-text">{car.carClass.name}</p>
-          <NavLink car="rent-car" className="btn btn-dark" to={btnLink}>Rent</NavLink>
+          <h5 className="card-title"><strong>{car.model}</strong></h5>
+          <p className="card-text"><strong>{car.carClass.price}</strong></p>
+          <p className="card-text"><strong>{car.carClass.name}</strong></p>
+          {/*Rent button Can be removed*/}
+          <NavLink car="rent-car" className="btn btn-outline-light" to={btnLink}>Rent</NavLink>
         </div>
       </div>
+      </NavLink>
     </div>
+
   );
 };
 

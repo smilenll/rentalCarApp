@@ -17,6 +17,4 @@ export class CarsService {
     public async getCarById(id): Promise<ShowCarDTO> {
         return await this.carsRepository.findOne(id);
     }
-
-
 }

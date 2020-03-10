@@ -23,7 +23,7 @@ const Cars = ({ cars, storageCars }) => {
   ) : (
     <div className="container mt-4">
       <div className="row">
-        <div className="active-cyan-3 active-cyan-4 mb-4">
+        <div className="col-3">
           <input
             className="form-control mb-2"
             type="search"
@@ -32,6 +32,8 @@ const Cars = ({ cars, storageCars }) => {
             aria-label="Search"
             onChange={(e) => setQ(e.target.value)}
           />
+        </div>
+        <div className="col-1">
           <button
             className="btn btn-outline-success my-2 my-sm-0"
             type="submit"
@@ -49,10 +51,10 @@ const Cars = ({ cars, storageCars }) => {
               <h3>Search result</h3>
               <div className="row">
                 {
-                      search.map((item) => (
-                        <Car key={item.id} car={item} />
-                      ))
-                    }
+                    search.map((item) => (
+                      <Car key={item.id} car={item} />
+                    ))
+                  }
               </div>
             </div>
           )

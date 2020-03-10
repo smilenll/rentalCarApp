@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { calcDays,
+import {
+  calcDays,
   calculateTotalBill,
   calculateReturnPrice,
 } from '../../shered/calculator';
@@ -9,6 +10,7 @@ import { returnCar } from '../../services';
 
 const Contract = ({ contract }) => {
   const [date, setDate] = useState(new Date());
+  const [btnDisable, setBtnDisable] = useState(false);
   const currentDateTime = new Date(date).toISOString();
   const currentDays = calcDays(contract.initialDate, currentDateTime);
   const estimatedDays = calcDays(contract.initialDate, contract.expectedReturnDate);
@@ -18,6 +20,12 @@ const Contract = ({ contract }) => {
   function tick() {
     setDate(new Date());
   }
+
+  const sendReturnCarRequest = async () => {
+    setBtnDisable(true);
+    const car = await returnCar(contract.id, { returnDateTime: currentDateTime });
+    car && setBtnDisable(false);
+  };
 
   useEffect(() => {
     const timerID = setInterval(() => tick(), 10000);
@@ -42,13 +50,27 @@ const Contract = ({ contract }) => {
       <td>{(finalPrice / currentDays).toFixed(2)}</td>
       <td>{finalPrice}</td>
       <td>
-        <button
-          type="button"
-          className="btn btn-outline-primary btn-block"
-          onClick={() => returnCar(contract.id, { returnDateTime: currentDateTime })}
-        >
-          Return car
-        </button>
+        {
+          btnDisable
+            ? (
+              <button
+                type="button"
+                className="btn btn-outline-primary btn-block"
+                disabled
+              >
+                Return car
+              </button>
+            )
+            : (
+              <button
+                type="button"
+                className="btn btn-outline-primary btn-block"
+                onClick={() => sendReturnCarRequest()}
+              >
+                Return car
+              </button>
+            )
+        }
       </td>
     </tr>
   );
@@ -57,6 +79,9 @@ const Contract = ({ contract }) => {
 Contract.propTypes = {
   contract: PropTypes.shape(
     {
+      id: PropTypes.string,
+      initialDate: PropTypes.string,
+      expectedReturnDate: PropTypes.string,
       firstName: PropTypes.string,
       lastName: PropTypes.string,
       pickUpDateTime: PropTypes.string,
@@ -70,6 +95,8 @@ Contract.propTypes = {
 
 Contract.defaultProps = {
   contract: {
+    initialDate: 'no date',
+    expectedReturnDate: 'no date',
     firstName: 'No name',
     lastName: 'No name',
     pickUpDateTime: 'No name',

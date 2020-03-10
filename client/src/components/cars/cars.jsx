@@ -83,9 +83,7 @@ const Cars = ({ cars, storageCars }) => {
 
 Cars.propTypes = {
   cars: PropTypes.shape({
-    allCars: PropTypes.shape({
-      data: PropTypes.any.isRequired,
-    }),
+    allCars: PropTypes.any.isRequired,
     error: PropTypes.string,
     loading: PropTypes.bool,
   }),
@@ -95,14 +93,11 @@ Cars.propTypes = {
 // not working properly
 Car.defaultProps = {
   cars: {
-    allCars: {
-      data: [
-        {
-          id: 'no id',
-        },
-      ],
-    },
+    allCars: [],
+    error: '',
+    loading: true,
   },
+  storageCars: [],
 };
 
 const mapStateToProps = (state) => ({ cars: state.CarReducers });

@@ -45,24 +45,15 @@ const Dashboard = ({ contracts, storageContracts }) => {
 
 Dashboard.propTypes = {
   contracts: PropTypes.shape({
-    allContracts: PropTypes.shape({
-      data: PropTypes.shape({
-        id: PropTypes.string,
-      }),
-    }),
+    allContracts: PropTypes.any.isRequired,
     error: PropTypes.string,
     loading: PropTypes.bool,
   }),
   storageContracts: PropTypes.func,
 };
-
 Dashboard.defaultProps = {
   contracts: {
-    allContracts: {
-      data: {
-        id: 'No id',
-      },
-    },
+    allContracts: [],
     error: 'No error',
     loading: 'Loading',
   },

@@ -79,7 +79,7 @@ const Contract = ({ contract }) => {
 Contract.propTypes = {
   contract: PropTypes.shape(
     {
-      id: PropTypes.string,
+      id: PropTypes.number,
       initialDate: PropTypes.string,
       expectedReturnDate: PropTypes.string,
       firstName: PropTypes.string,

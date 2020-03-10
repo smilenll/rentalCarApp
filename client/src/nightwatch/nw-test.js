@@ -30,7 +30,7 @@ module.exports = {
   },
   'step five: Go to golf': function (browser) {
     browser
-      .click('a[car="rent-car"]')
+      .click('[data-car="select"]')
       .assert.containsText('[class="card-title"]', 'golf');
   },
   'step six: Fill the form and send it': function (browser) {

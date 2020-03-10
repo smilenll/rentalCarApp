@@ -95,6 +95,8 @@ const Rent = ({ cars, match, sendRentForm, redirectTo }) => {
   useEffect(validateForm, [age, firstName, lastName, deliveryDate]);
 
   if (redirectTo.redirectTo) {
+    console.log(redirectTo);
+    redirectTo = null;
     return <Redirect to={redirectTo} />;
   }
 

@@ -4,6 +4,7 @@ import {
   FETCH_CARS_SUCCESS,
   FETCH_CARS_FAILURE,
 } from './carTypes';
+import { redirect } from '../redirect/redirectActions';
 
 export const fetchCarsRequest = () => ({
   type: FETCH_CARS_REQUEST,
@@ -22,6 +23,10 @@ export const fetchCarsFailure = (error) => ({
 export const getCars = () => (dispatch) => {
   dispatch(fetchCarsRequest());
   axios.get('http://localhost:4000/api/cars')
-    .then((response) => dispatch(fetchCarsSuccess(response)))
+    .then((response) => {
+      dispatch(redirect(null));
+      dispatch(fetchCarsSuccess(response));
+    })
+
     .catch((error) => dispatch(fetchCarsFailure(error.message)));
 };

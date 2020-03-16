@@ -27,7 +27,7 @@ export class ContractsService {
         return await this.contractsRepository.save(contractEntity);
     }
 
-    public async returnCar(contractId:string,  body: { returnDateTime: string }): Promise<CloseContractDTO> {
+    public async returnCar(contractId:string,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
         this.validateData(body.returnDateTime);
         const contract = await this.contractsRepository.findOne(contractId);
         contract.returnDateTime = body.returnDateTime;
@@ -42,7 +42,7 @@ export class ContractsService {
         return await this.carsRepository.save(car);
     }
 
-    private validateData(date: string): void{
+    private validateData(date: Date): void{
 
         const tenMinutes= 600000;
         const now = new Date().getTime();

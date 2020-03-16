@@ -17,13 +17,13 @@ export class CloseContractDTO {
     public age: number;
 
     @Publish()
-    public initialDate: string;
+    public initialDate: Date;
 
     @Publish()
-    public expectedReturnDate: string;
+    public expectedReturnDate: Date;
 
     @Publish()
-    public returnDateTime: string;
+    public returnDateTime: Date;
 
     @Publish(ShowCarDTO)
     public car: Car;

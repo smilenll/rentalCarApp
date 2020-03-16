@@ -9,6 +9,9 @@ const main = async () => {
     const classRepo = connection.getRepository(CarClass);
     const carRepo = connection.getRepository(Car);
     const contractRepo = connection.getRepository(Contract);
+    const rentDate = new Date(new Date()
+        .setMonth(new Date()
+            .getMonth() + 1));
 
     const carClassA = classRepo.create();
     carClassA.name = 'A';
@@ -31,7 +34,7 @@ const main = async () => {
     const carA = carRepo.create();
     carA.model = 'VW polo';
     carA.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4';
-    carA.isFree = true;
+    carA.isFree = false;
     carA.carClass = classASaved;
     carA.isDeleted = false;
     const carAsaved = await carRepo.save(carA);
@@ -47,36 +50,27 @@ const main = async () => {
     const carC = carRepo.create();
     carC.model = 'VW passat';
     carC.img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG/1200px-VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG\n';
-    carC.isFree = true;
+    carC.isFree = false;
     carC.carClass = classCSaved;
     carC.isDeleted = false;
     const carCsaved = await carRepo.save(carC);
 
     const contract = contractRepo.create();
-    contract.firstName = 'Ivan',
-    contract.lastName = 'Ivanov',
-    contract.car = carAsaved,
-    contract.age = 20,
-    contract.initialDate = '2020-02-15 15:19:06',
-    contract.expectedReturnDate = '2020-02-19 15:19:06';
+    contract.firstName = 'Ivan';
+    contract.lastName = 'Ivanov';
+    contract.car = carAsaved;
+    contract.age = 20;
+    contract.initialDate = new Date();
+    contract.expectedReturnDate = rentDate;
     await contractRepo.save(contract);
 
     const contract2 = contractRepo.create();
-    contract2.firstName = 'Smilen',
-    contract2.lastName = 'Lyubenov',
-    contract2.car = carBsaved,
-    contract2.age = 30,
-    contract2.initialDate = '2020-02-15 15:19:06',
-    contract2.expectedReturnDate = '2020-02-19 15:19:06';
-    await contractRepo.save(contract2);
-
-    const contract3 = contractRepo.create();
-    contract2.firstName = 'Marin',
-        contract2.lastName = 'Marinov',
-        contract2.car = carCsaved,
-        contract2.age = 30,
-        contract2.initialDate = '2020-02-15 15:19:06',
-        contract2.expectedReturnDate = '2020-02-19 15:19:06';
+    contract2.firstName = 'Smilen';
+    contract2.lastName = 'Lyubenov';
+    contract2.car = carCsaved;
+    contract2.age = 30;
+    contract2.initialDate = new Date();
+    contract2.expectedReturnDate = rentDate;
     await contractRepo.save(contract2);
 
     await connection.close();

@@ -18,7 +18,7 @@ Example with docker
 ```bash 
 docker pull postgres
 
-docker run --rm --name (container name) -e POSTGRES_PASSWORD=(your password) -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data (DB name)
+docker run --rm --name (container name) -e POSTGRES_PASSWORD=(your password) -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data (image name)
 ```
 
 

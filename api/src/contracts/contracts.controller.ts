@@ -11,10 +11,10 @@ export class ContractsController {
 
     constructor(
         private readonly contractsService: ContractsService,
-    ) {
-    }
+    ) {}
 
     @Get()
+    @UseFilters(SystemErrorFilter)
     @UseInterceptors(new TransformInterceptor(ShowContractDTO))
     async getOpenContracts(): Promise<ShowContractDTO[]> {
 
@@ -22,23 +22,24 @@ export class ContractsController {
     }
 
     @Post()
+    @UseFilters(SystemErrorFilter)
     @UseInterceptors(new TransformInterceptor(ShowContractDTO))
     public async createContract(
         @Body(new ValidationPipe({
             transform: true,
             whitelist: true,
         })) body: CreateContractDTO): Promise<ShowContractDTO> {
+
         return await this.contractsService.createContract(body);
     }
 
-    //Move car to Params
     @Put(':id')
     @UseFilters(SystemErrorFilter)
     @UseInterceptors(new TransformInterceptor(CloseContractDTO))
     public async returnCar(
         @Param('id') contractId: string,
         @Body() body: any): Promise<CloseContractDTO> {
-        //Validate DATE !!!
+
         return await this.contractsService.returnCar(contractId, body);
     }
 }

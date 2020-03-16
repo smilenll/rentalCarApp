@@ -3,6 +3,7 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Car} from "../database/entities/car.entity";
 import {ShowCarDTO} from "../common/DTOs/show-car.dto";
+import {SystemError} from "../common/exeptions/system.error";
 
 @Injectable()
 export class CarsService {
@@ -15,6 +16,13 @@ export class CarsService {
     }
 
     public async getCarById(id): Promise<ShowCarDTO> {
-        return await this.carsRepository.findOne(id);
+
+        const car = await this.carsRepository
+            .findOne({id, isFree: true, isDeleted: false});
+
+        if(!car){
+            throw new SystemError('Car not found.', 404);
+        }
+        return car;
     }
 }

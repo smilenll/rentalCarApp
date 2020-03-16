@@ -6,6 +6,7 @@ import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
 import {SystemError} from "../common/exeptions/system.error";
+import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 
 @Injectable()
 export class ContractsService {
@@ -15,13 +16,30 @@ export class ContractsService {
     ) {}
 
     public async getOpenContracts(): Promise<ShowContractDTO[]> {
-        return await this.contractsRepository.find({ where: { isDeleted: false, returnDateTime: null } });
+        const contracts: ShowContractDTO[] = await this.contractsRepository
+            .find({ where: { isDeleted: false, returnDateTime: null } });
+
+        if(!contracts) {
+            throw new SystemError('Contracts not found.', 404);
+        }
+
+        return contracts;
     }
 
+    // Change type
     public async createContract(body: any): Promise<ShowContractDTO> {
-
         const contractEntity: any = this.contractsRepository.create(body);
-        contractEntity.car = await this.carsRepository.findOne(body.car);
+        contractEntity.car = await this.carsRepository
+            .findOne({id: body.car, isFree: true, isDeleted: false});
+
+        if(!contractEntity.car) {
+            throw new SystemError('Car not found.', 404);
+        }
+
+        this.validateData(body.initialDate);
+
+        this.validatePeriod(body.initialDate, body.expectedReturnDate);
+
         await this.changeCarStatus(contractEntity.car.id);
 
         return await this.contractsRepository.save(contractEntity);
@@ -30,6 +48,11 @@ export class ContractsService {
     public async returnCar(contractId:string,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
         this.validateData(body.returnDateTime);
         const contract = await this.contractsRepository.findOne(contractId);
+
+        if(!contract) {
+            throw new SystemError('Contract not found.', 404);
+        }
+
         contract.returnDateTime = body.returnDateTime;
         await this.changeCarStatus(contract.car.id);
 
@@ -39,6 +62,7 @@ export class ContractsService {
     private async changeCarStatus(id): Promise<Car> {
         const car = await this.carsRepository.findOne(id);
         car.isFree = !car.isFree;
+
         return await this.carsRepository.save(car);
     }
 
@@ -53,6 +77,16 @@ export class ContractsService {
         }
         if(differenceInTime > tenMinutes) {
             throw new SystemError('Session expired', 404);
+        }
+    }
+
+    private validatePeriod(startDate: string, endDate: string): void{
+
+        const start = new Date(startDate).getTime();
+        const end = new Date(endDate).getTime();
+        const differenceInTime = end - start;
+        if(differenceInTime < 0) {
+            throw new SystemError('Incorrect return date ', 404);
         }
     }
 }

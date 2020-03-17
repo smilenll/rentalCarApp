@@ -12,7 +12,13 @@ export class CarsService {
     ) {}
 
     public async getCars(): Promise<ShowCarDTO[]> {
-        return await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
+        const cars = await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
+
+        if(!cars){
+            throw new SystemError('Cars not found.', 404);
+        }
+
+        return cars
     }
 
     public async getCarById(id): Promise<ShowCarDTO> {

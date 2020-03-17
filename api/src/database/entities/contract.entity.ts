@@ -5,7 +5,6 @@ import {
     ManyToOne,
 } from 'typeorm';
 import {Car} from "./car.entity";
-import {ShowCarDTO} from "../../common/DTOs/show-car.dto";
 
 @Entity('contracts')
 export class Contract {
@@ -26,13 +25,13 @@ export class Contract {
     public isDeleted: boolean;
 
     @Column({type: 'timestamp'})
-    initialDate: string;
+    initialDate: Date;
 
     @Column({type: 'timestamp'})
-    expectedReturnDate: string;
+    expectedReturnDate: Date;
 
     @Column({type: 'timestamp', default: null})
-    returnDateTime: string;
+    returnDateTime: Date;
 
     @ManyToOne(type => Car, car => car.contracts, { eager: true })
     public car: Car;

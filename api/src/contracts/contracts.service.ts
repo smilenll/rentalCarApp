@@ -7,6 +7,8 @@ import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
 import {SystemError} from "../common/exeptions/system.error";
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
+import {NotFoundError} from "../common/exeptions/not-found.error";
+import {ValidationError} from "../common/exeptions/validation.error";
 
 @Injectable()
 export class ContractsService {
@@ -16,11 +18,12 @@ export class ContractsService {
     ) {}
 
     public async getOpenContracts(): Promise<ShowContractDTO[]> {
+
         const contracts: ShowContractDTO[] = await this.contractsRepository
             .find({ where: { isDeleted: false, returnDateTime: null } });
 
         if(!contracts) {
-            throw new SystemError('Contracts not found.', 404);
+            throw new NotFoundError('Contracts not found.');
         }
 
         return contracts;
@@ -45,7 +48,7 @@ export class ContractsService {
         return await this.contractsRepository.save(contractEntity);
     }
 
-    public async returnCar(contractId:string,  body: { returnDateTime: string }): Promise<CloseContractDTO> {
+    public async returnCar(contractId:string,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
         this.validateData(body.returnDateTime);
         const contract = await this.contractsRepository.findOne(contractId);
 
@@ -66,7 +69,7 @@ export class ContractsService {
         return await this.carsRepository.save(car);
     }
 
-    private validateData(date: string): void{
+    private validateData(date: Date): void{
 
         const tenMinutes= 600000;
         const now = new Date().getTime();

@@ -5,7 +5,6 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
-import {SystemError} from "../common/exeptions/system.error";
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {NotFoundError} from "../common/exeptions/not-found.error";
 import {ValidationError} from "../common/exeptions/validation.error";
@@ -29,14 +28,13 @@ export class ContractsService {
         return contracts;
     }
 
-    // Change type
     public async createContract(body: any): Promise<ShowContractDTO> {
         const contractEntity: any = this.contractsRepository.create(body);
         contractEntity.car = await this.carsRepository
             .findOne({id: body.car, isFree: true, isDeleted: false});
 
         if(!contractEntity.car) {
-            throw new SystemError('Car not found.', 400);
+            throw new ValidationError('Incorrect car');
         }
 
         this.validateData(body.initialDate);
@@ -48,18 +46,18 @@ export class ContractsService {
         return await this.contractsRepository.save(contractEntity);
     }
 
-    public async returnCar(contractId:string,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
+    public async returnCar(contractId:number,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
         this.validateData(body.returnDateTime);
         const contract = await this.contractsRepository.findOne(contractId);
 
         if(!contract) {
-            throw new SystemError('Contract not found.', 400);
+            throw new NotFoundError(`Contract with id ${contractId}`);
         }
 
         contract.returnDateTime = body.returnDateTime;
         await this.changeCarStatus(contract.car.id);
 
-        return await this.contractsRepository.save(contract);
+        return contract;
     }
 
     private async changeCarStatus(id): Promise<Car> {
@@ -75,11 +73,12 @@ export class ContractsService {
         const now = new Date().getTime();
         const returnDate = new Date(date).getTime();
         const differenceInTime = now - returnDate;
+
         if(differenceInTime < 0) {
-            throw new SystemError('This is a call from the future.', 400);
+            throw new ValidationError('Invalid date');
         }
         if(differenceInTime > tenMinutes) {
-            throw new SystemError('Invalid data', 400);
+            throw new ValidationError('Invalid date');
         }
     }
 
@@ -89,7 +88,7 @@ export class ContractsService {
         const end = new Date(endDate).getTime();
         const differenceInTime = end - start;
         if(differenceInTime < 0) {
-            throw new SystemError('Incorrect return date ', 400);
+            throw new ValidationError('Incorrect return date ');
         }
     }
 }

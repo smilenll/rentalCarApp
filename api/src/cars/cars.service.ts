@@ -3,7 +3,7 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Car} from "../database/entities/car.entity";
 import {ShowCarDTO} from "../common/DTOs/show-car.dto";
-import {SystemError} from "../common/exeptions/system.error";
+import {NotFoundError} from "../common/exeptions/not-found.error";
 
 @Injectable()
 export class CarsService {
@@ -15,7 +15,7 @@ export class CarsService {
         const cars = await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
 
         if(!cars){
-            throw new SystemError('Cars not found.', 404);
+            throw new NotFoundError('Cars not found.');
         }
 
         return cars
@@ -27,7 +27,7 @@ export class CarsService {
             .findOne({id, isFree: true, isDeleted: false});
 
         if(!car){
-            throw new SystemError('Car not found.', 404);
+            throw new NotFoundError(`Car with  id ${id} not found`);
         }
         return car;
     }

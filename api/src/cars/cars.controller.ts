@@ -3,6 +3,7 @@ import {CarsService} from "./cars.service";
 import {ShowCarDTO} from "../common/DTOs/show-car.dto";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
 import {SystemErrorFilter} from "../common/decorators/filters/error.filter";
+import {NotFoundErrorFilter} from "../common/decorators/filters/not-found-error.filter";
 
 @Controller('cars')
 export class CarsController {
@@ -13,6 +14,7 @@ export class CarsController {
     }
 
     @Get()
+    @UseFilters(NotFoundErrorFilter)
     @UseInterceptors(new TransformInterceptor(ShowCarDTO))
     async getCars(): Promise<ShowCarDTO[]> {
 
@@ -20,7 +22,7 @@ export class CarsController {
     }
 
     @Get(':id')
-    @UseFilters(SystemErrorFilter)
+    @UseFilters(NotFoundErrorFilter)
     @UseInterceptors(new TransformInterceptor(ShowCarDTO))
     async getCarById(
         @Param('id') carId: number

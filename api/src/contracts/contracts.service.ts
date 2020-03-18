@@ -1,5 +1,5 @@
 import {Contract} from "../database/entities/contract.entity";
-import {Repository} from "typeorm";
+import {getManager, Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
@@ -40,9 +40,14 @@ export class ContractsService {
 
         this.validatePeriod(body.initialDate, body.expectedReturnDate);
 
-        await this.changeCarStatus(contractEntity.car.id);
+        contractEntity.car = this.changeCarStatus(contractEntity.car);
 
-        return await this.contractsRepository.save(contractEntity);
+        return await getManager().transaction(async transactionalEntityManager => {
+
+            await transactionalEntityManager.getRepository(Car).save(contractEntity.car);
+
+            return await transactionalEntityManager.getRepository(Contract).save(contractEntity);
+        });
     }
 
     public async returnCar(contractId:string,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
@@ -54,16 +59,21 @@ export class ContractsService {
         }
 
         contract.returnDateTime = body.returnDateTime;
-        await this.changeCarStatus(contract.car.id);
+        contract.car = await this.changeCarStatus(contract.car);
 
-        return await this.contractsRepository.save(contract);
+
+        return await getManager().transaction(async transactionalEntityManager => {
+
+            await transactionalEntityManager.getRepository(Car).save(contract.car);
+
+            return await transactionalEntityManager.getRepository(Contract).save(contract);
+        });
     }
 
-    private async changeCarStatus(id): Promise<Car> {
-        const car = await this.carsRepository.findOne(id);
+    private changeCarStatus(car): Car {
         car.isFree = !car.isFree;
 
-        return await this.carsRepository.save(car);
+        return car;
     }
 
     private validateData(date: Date): void{

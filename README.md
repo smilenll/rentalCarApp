@@ -81,6 +81,11 @@ Seed database(Not required)
 npm run seed
 ```
 
+Start Nest server:
+```bash
+npm run start:dev
+```
+
 ####In client folder
 
 Install npm packages:

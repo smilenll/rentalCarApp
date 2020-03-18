@@ -7,6 +7,8 @@ import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
 import {SystemError} from "../common/exeptions/system.error";
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
+import {NotFoundError} from "../common/exeptions/not-found.error";
+import {ValidationError} from "../common/exeptions/validation.error";
 
 @Injectable()
 export class ContractsService {
@@ -16,11 +18,12 @@ export class ContractsService {
     ) {}
 
     public async getOpenContracts(): Promise<ShowContractDTO[]> {
+
         const contracts: ShowContractDTO[] = await this.contractsRepository
             .find({ where: { isDeleted: false, returnDateTime: null } });
 
         if(!contracts) {
-            throw new SystemError('Contracts not found.', 404);
+            throw new NotFoundError('Contracts not found.');
         }
 
         return contracts;
@@ -33,7 +36,7 @@ export class ContractsService {
             .findOne({id: body.car, isFree: true, isDeleted: false});
 
         if(!contractEntity.car) {
-            throw new SystemError('Car not found.', 404);
+            throw new SystemError('Car not found.', 400);
         }
 
         this.validateData(body.initialDate);
@@ -55,7 +58,7 @@ export class ContractsService {
         const contract = await this.contractsRepository.findOne(contractId);
 
         if(!contract) {
-            throw new SystemError('Contract not found.', 404);
+            throw new SystemError('Contract not found.', 400);
         }
 
         contract.returnDateTime = body.returnDateTime;
@@ -83,10 +86,10 @@ export class ContractsService {
         const returnDate = new Date(date).getTime();
         const differenceInTime = now - returnDate;
         if(differenceInTime < 0) {
-            throw new SystemError('This is a call from the future.', 404);
+            throw new SystemError('This is a call from the future.', 400);
         }
         if(differenceInTime > tenMinutes) {
-            throw new SystemError('Session expired', 404);
+            throw new SystemError('Invalid data', 400);
         }
     }
 
@@ -96,7 +99,7 @@ export class ContractsService {
         const end = new Date(endDate).getTime();
         const differenceInTime = end - start;
         if(differenceInTime < 0) {
-            throw new SystemError('Incorrect return date ', 404);
+            throw new SystemError('Incorrect return date ', 400);
         }
     }
 }

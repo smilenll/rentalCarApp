@@ -5,6 +5,8 @@ import {TransformInterceptor} from "../common/interseptors/transform.interseptor
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
 import {SystemErrorFilter} from "../common/decorators/filters/error.filter";
+import {NotFoundErrorFilter} from "../common/decorators/filters/not-found-error.filter";
+import {ValidationErrorFilter} from "../common/decorators/filters/validation-error.filter";
 
 @Controller('contracts')
 export class ContractsController {
@@ -14,7 +16,7 @@ export class ContractsController {
     ) {}
 
     @Get()
-    @UseFilters(SystemErrorFilter)
+    @UseFilters(SystemErrorFilter, NotFoundErrorFilter, ValidationErrorFilter)
     @UseInterceptors(new TransformInterceptor(ShowContractDTO))
     async getOpenContracts(): Promise<ShowContractDTO[]> {
 

@@ -25,10 +25,10 @@ export class Contract {
     public isDeleted: boolean;
 
     @Column({type: 'timestamp'})
-    initialDate: Date;
+    initialDateTime: Date;
 
     @Column({type: 'timestamp'})
-    expectedReturnDate: Date;
+    expectedReturnDateTime: Date;
 
     @Column({type: 'timestamp', default: null})
     returnDateTime: Date;

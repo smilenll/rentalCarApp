@@ -27,10 +27,10 @@ export class Car {
     public isDeleted: boolean;
 
     @CreateDateColumn({type: 'timestamp'})
-    createdAt: number;
+    createdAt: Date;
 
     @UpdateDateColumn({type: 'timestamp'})
-    updatedAt: number;
+    updatedAt: Date;
 
     @ManyToOne(type => CarClass, carClass => carClass.cars, { eager: true })
     public carClass: CarClass;

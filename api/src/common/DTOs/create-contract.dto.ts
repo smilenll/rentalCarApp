@@ -30,9 +30,9 @@ export class CreateContractDTO {
 
     @IsNotEmpty()
     @IsDateString()
-    public initialDate: Date;
+    public initialDateTime: Date;
 
     @IsNotEmpty()
     @IsDateString()
-    public expectedReturnDate: Date;
+    public expectedReturnDateTime: Date;
 }

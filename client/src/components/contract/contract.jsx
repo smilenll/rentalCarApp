@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
@@ -12,8 +12,8 @@ const Contract = ({ contract }) => {
   const [date, setDate] = useState(new Date());
   const [btnDisable, setBtnDisable] = useState(false);
   const currentDateTime = new Date(date).toISOString();
-  const currentDays = calcDays(contract.initialDate, currentDateTime);
-  const estimatedDays = calcDays(contract.initialDate, contract.expectedReturnDate);
+  const currentDays = calcDays(contract.initialDateTime, currentDateTime);
+  const estimatedDays = calcDays(contract.initialDateTime, contract.expectedReturnDateTime);
   const estimatedBill = calculateTotalBill(contract.age, contract.car, estimatedDays);
   const finalPrice = calculateReturnPrice(contract, estimatedDays, currentDays);
 
@@ -38,8 +38,8 @@ const Contract = ({ contract }) => {
     <tr>
       <th scope="row">{contract.car.model}</th>
       <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
-      <td>{moment(contract.initialDate).format('Do MMMM  YYYY, H:mm')}</td>
-      <td>{moment(contract.expectedReturnDate).format('Do MMMM  YYYY, H:mm')}</td>
+      <td>{moment(contract.initialDateTime).format('Do MMMM  YYYY, H:mm')}</td>
+      <td>{moment(contract.expectedReturnDateTime).format('Do MMMM  YYYY, H:mm')}</td>
       <td>
         {estimatedDays}
         {' '}
@@ -80,8 +80,8 @@ Contract.propTypes = {
   contract: PropTypes.shape(
     {
       id: PropTypes.number,
-      initialDate: PropTypes.string,
-      expectedReturnDate: PropTypes.string,
+      initialDateTime: PropTypes.string,
+      expectedReturnDateTime: PropTypes.string,
       firstName: PropTypes.string,
       lastName: PropTypes.string,
       pickUpDateTime: PropTypes.string,
@@ -95,8 +95,8 @@ Contract.propTypes = {
 
 Contract.defaultProps = {
   contract: {
-    initialDate: 'no date',
-    expectedReturnDate: 'no date',
+    initialDateTime: 'no date',
+    expectedReturnDateTime: 'no date',
     firstName: 'No name',
     lastName: 'No name',
     pickUpDateTime: 'No name',

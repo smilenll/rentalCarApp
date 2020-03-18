@@ -83,8 +83,8 @@ export class ContractsService {
 
         const tenMinutes= 600000;
         const now = new Date().getTime();
-        const returnDate = new Date(date).getTime();
-        const differenceInTime = now - returnDate;
+        const returnDateTime = new Date(date).getTime();
+        const differenceInTime = now - returnDateTime;
         if(differenceInTime < 0) {
             throw new SystemError('This is a call from the future.', 400);
         }

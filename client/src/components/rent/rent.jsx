@@ -61,8 +61,8 @@ const Rent = ({
     lastName,
     age: +age,
     car: +match.params.carid,
-    initialDate: new Date().toISOString(),
-    expectedReturnDate: new Date(deliveryDate).toISOString(),
+    initialDateTime: new Date().toISOString(),
+    expectedReturnDateTime: new Date(deliveryDate).toISOString(),
   });
   // BUG on empty Form
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));

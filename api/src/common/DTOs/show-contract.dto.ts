@@ -16,10 +16,10 @@ export class ShowContractDTO {
     public age: number;
 
     @Publish()
-    public initialDate: Date;
+    public initialDateTime: Date;
 
     @Publish()
-    public expectedReturnDate: Date;
+    public expectedReturnDateTime: Date;
 
     @Publish(ShowCarDTO)
     public car: ShowCarDTO;

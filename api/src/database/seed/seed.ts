@@ -60,8 +60,8 @@ const main = async () => {
     contract.lastName = 'Ivanov';
     contract.car = carAsaved;
     contract.age = 20;
-    contract.initialDate = new Date();
-    contract.expectedReturnDate = rentDate;
+    contract.initialDateTime = new Date();
+    contract.expectedReturnDateTime = rentDate;
     await contractRepo.save(contract);
 
     const contract2 = contractRepo.create();
@@ -69,8 +69,8 @@ const main = async () => {
     contract2.lastName = 'Lyubenov';
     contract2.car = carCsaved;
     contract2.age = 30;
-    contract2.initialDate = new Date();
-    contract2.expectedReturnDate = rentDate;
+    contract2.initialDateTime = new Date();
+    contract2.expectedReturnDateTime = rentDate;
     await contractRepo.save(contract2);
 
     await connection.close();

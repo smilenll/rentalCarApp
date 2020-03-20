@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCars } from '../../redux';
+import {getCars} from '../../redux';
 import Car from '../car/car';
 import Search from '../../shered/search/search';
 
-const Cars = ({ cars, storageCars }) => {
+const Cars = ({cars, storageCars}) => {
   useEffect(() => {
     storageCars();
   }, []);
@@ -20,17 +20,17 @@ const Cars = ({ cars, storageCars }) => {
     <div className="container mt-4">
       <Search items={carsArray} />
       <div className="row">
-        <h3>All cars</h3>
-        <div className="row">
-          {cars
-          && cars.allCars.data
-          && carsArray.map((item) => (
-            <Car key={item.id} car={item} />
-          ))}
-        </div>
+        <h3 className="my-3 mx-auto">OURS CARS</h3>
       </div>
-
+      <div className="row">
+        {cars
+        && cars.allCars.data
+        && carsArray.map((item) => (
+          <Car key={item.id} car={item} />
+        ))}
+      </div>
     </div>
+
   );
 };
 
@@ -53,7 +53,7 @@ Car.defaultProps = {
   storageCars: [],
 };
 
-const mapStateToProps = (state) => ({ cars: state.CarReducers });
+const mapStateToProps = (state) => ({cars: state.CarReducers});
 
 const mapDispatchToProps = (dispatch) => ({
   storageCars: () => dispatch(getCars()),

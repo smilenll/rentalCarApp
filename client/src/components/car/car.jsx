@@ -5,10 +5,6 @@ import './car.css';
 
 const Car = ({ car }) => {
 
-  if (!car) {
-    return <h1>Loading car...</h1>
-  }
-
   const btnLink = `/rent/${car.id}`;
 
   return (

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './car.css';
 
 const Car = ({ car }) => {
+
+  if (!car) {
+    return <h1>Loading car...</h1>
+  }
+
   const btnLink = `/rent/${car.id}`;
 
   return (
@@ -34,7 +39,6 @@ const Car = ({ car }) => {
         </div>
       </NavLink>
     </div>
-
   );
 };
 

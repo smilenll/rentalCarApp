@@ -8,14 +8,27 @@ import {
   calculateTotalBill,
 } from '../../shered/calculator';
 import './rent.css';
+import { singleCar } from '../../services';
 
 const Rent = ({
   cars, match, sendRentForm, redirectTo,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const currentDateTime = new Date().toISOString();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [age, setAge] = useState(0);
+  const [car, setCar] = useState({
+    id: 1,
+    model: 'VW polo',
+    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4',
+    isFree: true,
+    carClass: {
+      id: 1,
+      name: 'A',
+      price: 0,
+    },
+  });
   const [deliveryDate, setDeliveryDate] = useState(
     currentDateTime
       .substring(0, currentDateTime.length - 1)
@@ -32,27 +45,6 @@ const Rent = ({
     age: '',
     date: '',
   });
-
-  const demoCar = {
-    id: 1,
-    model: 'DEMO CAR',
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3A…02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4',
-    isFree: false,
-    isDeleted: false,
-    carClass: {
-      id: 1,
-      name: 'A',
-      price: 20,
-      isDeleted: false,
-    },
-  };
-
-  let car = {};
-  if (cars.allCars.length <= 0) {
-    car = demoCar;
-  } else {
-    car = cars.allCars.data.find((item) => item.id === +match.params.carid);
-  }
 
   const calculatedDays = calcDays(new Date(), deliveryDate);
 
@@ -95,6 +87,19 @@ const Rent = ({
 
   useEffect(buildBill, [age, deliveryDate]);
   useEffect(validateForm, [age, firstName, lastName, deliveryDate]);
+  useEffect(() => {
+    if (cars.allCars.data) {
+      setCar(cars.allCars.data.find((item) => item.id === +match.params.carid));
+    } else {
+      setIsLoading(true);
+      const fetchData = async () => {
+        const result = await singleCar(match.params.carid);
+        setCar(result);
+        setIsLoading(false);
+      };
+      fetchData();
+    }
+  }, []);
 
   if (redirectTo.redirectTo) {
     return <Redirect to={redirectTo} />;
@@ -103,7 +108,7 @@ const Rent = ({
   return (
     <div className="container">
       <div className="row">
-        <Car car={car} />
+        {isLoading ? <div>Loading</div> : <Car car={car} />}
         <div className="col-4">
           <div className="form-row">
             <div className="col-md-12 mb-3">
@@ -177,7 +182,7 @@ const Rent = ({
         <div className="col-4">
           <h4 className="text-right">Estimated price</h4>
           {
-            bill.price === 1.2
+            bill.price <= 1.2
               ? (
                 <h5 className="text-right empty-form-msg">For estimated price fill the form</h5>
               )

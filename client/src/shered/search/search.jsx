@@ -43,14 +43,16 @@ const Search = ({ items }) => {
             <h3 className="col-lg-12 my-3 mx-auto">Search result</h3>
             {
               result.map((item) => (
+                <div className="col-lg-4">
                 <Car key={item.id} car={item} />
+                </div>
               ))
             }
           </div>
         )
           : (
-            <div className="row col-lg-12 not-found mt-3">
-              <h5 className="col-lg-12 mx-auto mt-1 text-center">
+            <div data-name="notFound" className="row col-lg-12 not-found mt-3">
+              <h5 className="codl-lg-12 mx-auto mt-1 text-center">
                 <strong>No result!</strong>Car not found or is busy right now.
                 {' '}
               </h5>

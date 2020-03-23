@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
+import React, {useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {getCars} from '../../redux';
+import { getCars } from '../../redux';
 import Car from '../car/car';
 import Search from '../../shered/search/search';
 
@@ -26,7 +26,9 @@ const Cars = ({cars, storageCars}) => {
         {cars
         && cars.allCars.data
         && carsArray.map((item) => (
-          <Car key={item.id} car={item} />
+          <div className="col-lg-4 mb-4">
+            <Car key={item.id} car={item} />
+          </div>
         ))}
       </div>
     </div>

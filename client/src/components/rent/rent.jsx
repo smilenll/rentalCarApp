@@ -62,13 +62,13 @@ const Rent = ({
   const validateForm = () => {
     const currentErrors = { errors: 0 };
 
-    if (firstName.trim() === '') {
+    if (firstName.length < 3) {
       currentErrors.errors += 1;
-      currentErrors.firstName = 'First name must be not empty';
+      currentErrors.firstName = 'First name must be at lease 3 characters';
     }
-    if (lastName.trim() === '') {
+    if (lastName.length < 3) {
       currentErrors.errors += 1;
-      currentErrors.lastName = 'Last name must be not empty';
+      currentErrors.lastName = 'Last name must be at lease 3 characters';
     }
     if (!age) {
       currentErrors.errors += 1;
@@ -108,8 +108,8 @@ const Rent = ({
   return (
     <div className="container">
       <div className="row">
-        {isLoading ? <div>Loading</div> : <Car car={car} />}
-        <div className="col-4">
+        {isLoading ? <div>Loading</div> : <div className="col-lg-12"><Car car={car} /></div>}
+        <div className="col-lg-6 mt-5">
           <div className="form-row">
             <div className="col-md-12 mb-3">
               <label htmlFor="firstName">First name</label>
@@ -179,7 +179,7 @@ const Rent = ({
             </button>
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-6 mt-5">
           <h4 className="text-right">Estimated price</h4>
           {
             bill.price <= 1.2

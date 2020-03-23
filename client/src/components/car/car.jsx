@@ -8,7 +8,7 @@ const Car = ({ car }) => {
   const btnLink = `/rent/${car.id}`;
 
   return (
-    <div className="col-lg-4 mb-4">
+    <>
       <NavLink to={btnLink}>
         <div className="card bg-dark text-white">
           <img
@@ -34,7 +34,7 @@ const Car = ({ car }) => {
           </div>
         </div>
       </NavLink>
-    </div>
+    </>
   );
 };
 

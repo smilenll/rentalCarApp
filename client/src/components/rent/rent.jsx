@@ -6,9 +6,12 @@ import Car from '../car/car';
 import {
   calcDays,
   calculateTotalBill,
-} from '../../shered/calculator';
+} from '../../shared/calculator';
 import './rent.css';
 import { singleCar } from '../../services';
+import Input from '../../shared/forms/Input';
+import DateInput from '../../shared/forms/DateInput';
+import validateForm from '../../shared/forms/validate-form';
 
 const Rent = ({
   cars, match, sendRentForm, redirectTo,
@@ -17,10 +20,11 @@ const Rent = ({
   const currentDateTime = new Date().toISOString();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [formStartValidation, setFormStartValidation] = useState(false);
   const [age, setAge] = useState(0);
   const [car, setCar] = useState({
     id: 1,
-    model: 'VW polo',
+    model: 'Default CAR',
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4',
     isFree: true,
     carClass: {
@@ -29,21 +33,13 @@ const Rent = ({
       price: 0,
     },
   });
-  const [deliveryDate, setDeliveryDate] = useState(
-    currentDateTime
-      .substring(0, currentDateTime.length - 1)
-      .slice(0, 16),
-  );
+  const [deliveryDate, setDeliveryDate] = useState(currentDateTime);
   const [bill, setBill] = useState({
     price: 0,
     massages: [],
   });
   const [errors, setErrors] = useState({
     errors: 0,
-    firstName: '',
-    lastName: '',
-    age: '',
-    date: '',
   });
 
   const calculatedDays = calcDays(new Date(), deliveryDate);
@@ -56,37 +52,16 @@ const Rent = ({
     initialDateTime: new Date().toISOString(),
     expectedReturnDateTime: new Date(deliveryDate).toISOString(),
   });
+
   // BUG on empty Form
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 
-  const validateForm = () => {
-    const currentErrors = { errors: 0 };
-
-    if (firstName.trim() === '') {
-      currentErrors.errors += 1;
-      currentErrors.firstName = 'First name must be not empty';
-    }
-    if (lastName.trim() === '') {
-      currentErrors.errors += 1;
-      currentErrors.lastName = 'Last name must be not empty';
-    }
-    if (!age) {
-      currentErrors.errors += 1;
-      currentErrors.age = 'Age must be not empty';
-    }
-    if (age && age < 18) {
-      currentErrors.errors += 1;
-      currentErrors.age = 'You are too yong to drive';
-    }
-    if (calculatedDays < 1) {
-      currentErrors.errors += 1;
-      currentErrors.date = 'You date is invalid';
-    }
-    setErrors(currentErrors);
+  const validate = () => {
+    setErrors(validateForm(firstName, lastName, age, calculatedDays));
   };
 
   useEffect(buildBill, [age, deliveryDate]);
-  useEffect(validateForm, [age, firstName, lastName, deliveryDate]);
+  useEffect(validate, [age, firstName, lastName, deliveryDate]);
   useEffect(() => {
     if (cars.allCars.data) {
       setCar(cars.allCars.data.find((item) => item.id === +match.params.carid));
@@ -108,78 +83,54 @@ const Rent = ({
   return (
     <div className="container">
       <div className="row">
-        {isLoading ? <div>Loading</div> : <Car car={car} />}
-        <div className="col-4">
+        {isLoading ? <div>Loading</div> : <div className="col-lg-12"><Car car={car} /></div>}
+        <div className="col-lg-6 mt-5">
           <div className="form-row">
-            <div className="col-md-12 mb-3">
-              <label htmlFor="firstName">First name</label>
-              <input
-                type="text"
-                className={`form-control ${errors.firstName && 'is-invalid'}`}
-                id="firstName"
-                placeholder="First name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-              <div className="invalid-feedback">
-                {errors.firstName}
-              </div>
-            </div>
-            <div className="col-md-12 mb-3">
-              <label htmlFor="lastName">Last name</label>
-              <input
-                type="text"
-                className={`form-control ${errors.lastName && 'is-invalid'}`}
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                id="lastName"
-                placeholder="Last name"
-                required
-              />
-              <div className="invalid-feedback">
-                {errors.lastName}
-              </div>
-            </div>
-            <div className="col-md-12 mb-3">
-              <label htmlFor="age">Age</label>
-              <input
-                type="number"
-                className={`form-control ${errors.age && 'is-invalid'}`}
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                id="age"
-                placeholder="Last name"
-                required
-              />
-              <div className="invalid-feedback">
-                {errors.age}
-              </div>
-            </div>
-            <div className="col-md-12 mb-3">
-              <label htmlFor="dropOff">Date</label>
-              <input
-                type="datetime-local"
-                min={currentDateTime.substring(0, currentDateTime.length - 1).slice(0, 16)}
-                className="form-control"
-                value={deliveryDate}
-                onChange={(e) => setDeliveryDate(e.target.value)}
-                id="dropOff"
-                placeholder="Last name"
-                required
-              />
-            </div>
+            <Input
+              label="First name"
+              type="text"
+              id="firstName"
+              value={firstName}
+              error={errors.firstName}
+              setInput={setFirstName}
+              formStartValidation={formStartValidation}
+            />
+            <Input
+              label="Last name"
+              type="text"
+              id="lastName"
+              value={lastName}
+              error={errors.lastName}
+              setInput={setLastName}
+              formStartValidation={formStartValidation}
+            />
+            <Input
+              label="Age"
+              type="number"
+              id="age"
+              value={age}
+              error={errors.age}
+              setInput={setAge}
+              formStartValidation={formStartValidation}
+            />
+            <DateInput
+              currentDateTime={currentDateTime}
+              setDeliveryDate={setDeliveryDate}
+            />
             <button
               id="car-submit-btn"
               type="button"
               className="btn btn-outline-success btn-block"
-              onClick={() => errors.errors === 0 && sendRentForm(createRequest())}
+              onClick={() => {
+                setFormStartValidation(true);
+                errors.errors === 0 && sendRentForm(createRequest());
+              }}
             >
               Rent car
             </button>
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-6 mt-5">
           <h4 className="text-right">Estimated price</h4>
           {
             bill.price <= 1.2

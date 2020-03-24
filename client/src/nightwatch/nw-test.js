@@ -18,8 +18,8 @@ module.exports = {
     browser
       .setValue('input[type=search]', 'Lada')
       .click('button[type="submit"]')
-      .waitForElementVisible('h2[class="notFound"]')
-      .assert.containsText('h2[class="notFound"]', 'No result')
+      .waitForElementVisible('[data-name=notFound]')
+      .assert.containsText('[data-name=notFound]', 'No result')
       .clearValue('input[type=search]');
   },
   'step four: Search for golf': function (browser) {

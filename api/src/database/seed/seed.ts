@@ -33,7 +33,9 @@ const main = async () => {
 
     const carA = carRepo.create();
     carA.model = 'VW polo';
-    carA.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4';
+    carA.img = 'https://img.drivemag.net/media' +
+        '' +
+        '/default/0001/57/2018-VW-Polo-GTI-at-Frankfurt-Motor-Show-0-2633-default-large.jpeg';
     carA.isFree = false;
     carA.carClass = classASaved;
     carA.isDeleted = false;

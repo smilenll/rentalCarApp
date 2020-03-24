@@ -5,7 +5,7 @@ import {
   calcDays,
   calculateTotalBill,
   calculateReturnPrice,
-} from '../../shered/calculator';
+} from '../../shared/calculator';
 import { returnCar } from '../../services';
 
 const Contract = ({ contract }) => {

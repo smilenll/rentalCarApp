@@ -10,6 +10,7 @@ import {
 import './rent.css';
 import { singleCar } from '../../services';
 import Input from '../../shared/forms/Input';
+import DateInput from '../../shared/forms/DateInput';
 
 const Rent = ({
   cars, match, sendRentForm, redirectTo,
@@ -31,11 +32,7 @@ const Rent = ({
       price: 0,
     },
   });
-  const [deliveryDate, setDeliveryDate] = useState(
-    currentDateTime
-      .substring(0, currentDateTime.length - 1)
-      .slice(0, 16),
-  );
+  const [deliveryDate, setDeliveryDate] = useState(currentDateTime);
   const [bill, setBill] = useState({
     price: 0,
     massages: [],
@@ -140,26 +137,18 @@ const Rent = ({
               setInput={setAge}
               formStartValidation={formStartValidation}
             />
-            <div className="col-md-12 mb-3">
-              <label htmlFor="dropOff">Date</label>
-              <input
-                type="datetime-local"
-                min={currentDateTime.substring(0, currentDateTime.length - 1).slice(0, 16)}
-                className="form-control"
-                value={deliveryDate}
-                onChange={(e) => setDeliveryDate(e.target.value)}
-                id="dropOff"
-                placeholder="Last name"
-                required
-              />
-            </div>
+            <DateInput
+              currentDateTime={currentDateTime}
+              setDeliveryDate={setDeliveryDate}
+            />
             <button
               id="car-submit-btn"
               type="button"
               className="btn btn-outline-success btn-block"
               onClick={() => {
                 setFormStartValidation(true);
-                errors.errors === 0 && sendRentForm(createRequest())}}
+                errors.errors === 0 && sendRentForm(createRequest());
+              }}
             >
               Rent car
             </button>

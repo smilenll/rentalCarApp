@@ -27,7 +27,7 @@ Input.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   id: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.any,
   error: PropTypes.string,
   setInput: PropTypes.func,
   formStartValidation: PropTypes.bool,

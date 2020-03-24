@@ -1,0 +1,14 @@
+.car-text-board {
+    background-color: rgba(33, 37, 41, 0.6);
+    padding: 4px 10px;
+    border-radius: 0.25rem;
+}
+
+.car-class {
+    position: absolute;
+    bottom: 16px;
+    background-color: rgba(40, 167, 69, 0.6);
+    padding: 3px 10px;
+    border-radius: 0.25rem;
+    border: 1px solid #28a745;
+}

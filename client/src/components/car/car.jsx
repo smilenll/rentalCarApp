@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-
+import './car.css';
 
 const Car = ({ car }) => {
+
   const btnLink = `/rent/${car.id}`;
 
   return (
-    <div className="col-4">
+    <div className="col-lg-4 mb-4">
       <NavLink to={btnLink}>
         <div className="card bg-dark text-white">
           <img
@@ -16,14 +17,24 @@ const Car = ({ car }) => {
             alt="Card"
           />
           <div data-car="select" className="card-img-overlay">
-            <h5 className="card-title"><strong>{car.model}</strong></h5>
-            <p className="card-text"><strong>{car.carClass.price}</strong></p>
-            <p className="card-text"><strong>{car.carClass.name}</strong></p>
+            <h5 className="card-title"><strong className="car-text-board">{car.model}</strong></h5>
+            <p className="card-text">
+              <strong className="car-text-board">
+                Price:
+                {car.carClass.price}
+                {' '}
+                $
+              </strong>
+            </p>
+            <p className="card-text">
+              <strong className="car-class">
+                {car.carClass.name}
+              </strong>
+            </p>
           </div>
         </div>
       </NavLink>
     </div>
-
   );
 };
 

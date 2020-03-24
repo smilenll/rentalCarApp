@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCars } from '../../redux';
+import {getCars} from '../../redux';
 import Car from '../car/car';
+import Search from '../../shered/search/search';
 
-const Cars = ({ cars, storageCars }) => {
-  const [search, setSearch] = useState();
-  const [q, setQ] = useState();
+const Cars = ({cars, storageCars}) => {
   useEffect(() => {
     storageCars();
   }, []);
 
   const carsArray = cars.allCars.data;
-
-  const searchCar = (car) => carsArray
-    .filter((item) => item.model.toLowerCase().includes(car.toLowerCase()));
 
   return cars.loading ? (
     <h3>Loading</h3>
@@ -22,62 +18,19 @@ const Cars = ({ cars, storageCars }) => {
     <h3>{cars.error}</h3>
   ) : (
     <div className="container mt-4">
+      <Search items={carsArray} />
       <div className="row">
-        <div className="col-3">
-          <input
-            className="form-control mb-2"
-            type="search"
-            value={q}
-            placeholder="Search"
-            aria-label="Search"
-            onChange={(e) => setQ(e.target.value)}
-          />
-        </div>
-        <div className="col-1">
-          <button
-            className="btn btn-outline-success my-2 my-sm-0"
-            type="submit"
-            onClick={() => setSearch(searchCar(q))}
-          >
-            Search
-          </button>
-        </div>
+        <h3 className="my-3 mx-auto">OURS CARS</h3>
       </div>
-      {
-        search
-        && (
-          search.length > 0 ? (
-            <div className="row">
-              <h3>Search result</h3>
-              <div className="row">
-                {
-                    search.map((item) => (
-                      <Car key={item.id} car={item} />
-                    ))
-                  }
-              </div>
-            </div>
-          )
-            : (
-              <div className="row">
-                <h2 className="notFound">No result</h2>
-              </div>
-            )
-        )
-      }
-      <hr />
       <div className="row">
-        <h3>All cars</h3>
-        <div className="row">
-          {cars
-          && cars.allCars.data
-          && carsArray.map((item) => (
-            <Car key={item.id} car={item} />
-          ))}
-        </div>
+        {cars
+        && cars.allCars.data
+        && carsArray.map((item) => (
+          <Car key={item.id} car={item} />
+        ))}
       </div>
-
     </div>
+
   );
 };
 
@@ -100,7 +53,7 @@ Car.defaultProps = {
   storageCars: [],
 };
 
-const mapStateToProps = (state) => ({ cars: state.CarReducers });
+const mapStateToProps = (state) => ({cars: state.CarReducers});
 
 const mapDispatchToProps = (dispatch) => ({
   storageCars: () => dispatch(getCars()),

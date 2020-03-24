@@ -6,9 +6,10 @@ import Car from '../car/car';
 import {
   calcDays,
   calculateTotalBill,
-} from '../../shered/calculator';
+} from '../../shared/calculator';
 import './rent.css';
 import { singleCar } from '../../services';
+import Input from '../../shared/forms/Input';
 
 const Rent = ({
   cars, match, sendRentForm, redirectTo,
@@ -17,6 +18,7 @@ const Rent = ({
   const currentDateTime = new Date().toISOString();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [formStartValidation, setFormStartValidation] = useState(false);
   const [age, setAge] = useState(0);
   const [car, setCar] = useState({
     id: 1,
@@ -111,51 +113,33 @@ const Rent = ({
         {isLoading ? <div>Loading</div> : <div className="col-lg-12"><Car car={car} /></div>}
         <div className="col-lg-6 mt-5">
           <div className="form-row">
-            <div className="col-md-12 mb-3">
-              <label htmlFor="firstName">First name</label>
-              <input
-                type="text"
-                className={`form-control ${errors.firstName && 'is-invalid'}`}
-                id="firstName"
-                placeholder="First name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-              <div className="invalid-feedback">
-                {errors.firstName}
-              </div>
-            </div>
-            <div className="col-md-12 mb-3">
-              <label htmlFor="lastName">Last name</label>
-              <input
-                type="text"
-                className={`form-control ${errors.lastName && 'is-invalid'}`}
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                id="lastName"
-                placeholder="Last name"
-                required
-              />
-              <div className="invalid-feedback">
-                {errors.lastName}
-              </div>
-            </div>
-            <div className="col-md-12 mb-3">
-              <label htmlFor="age">Age</label>
-              <input
-                type="number"
-                className={`form-control ${errors.age && 'is-invalid'}`}
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                id="age"
-                placeholder="Last name"
-                required
-              />
-              <div className="invalid-feedback">
-                {errors.age}
-              </div>
-            </div>
+            <Input
+              label="First name"
+              type="text"
+              id="firstName"
+              value={firstName}
+              error={errors.firstName}
+              setInput={setFirstName}
+              formStartValidation={formStartValidation}
+            />
+            <Input
+              label="Last name"
+              type="text"
+              id="lastName"
+              value={lastName}
+              error={errors.lastName}
+              setInput={setLastName}
+              formStartValidation={formStartValidation}
+            />
+            <Input
+              label="Age"
+              type="number"
+              id="age"
+              value={age}
+              error={errors.age}
+              setInput={setAge}
+              formStartValidation={formStartValidation}
+            />
             <div className="col-md-12 mb-3">
               <label htmlFor="dropOff">Date</label>
               <input
@@ -173,7 +157,9 @@ const Rent = ({
               id="car-submit-btn"
               type="button"
               className="btn btn-outline-success btn-block"
-              onClick={() => errors.errors === 0 && sendRentForm(createRequest())}
+              onClick={() => {
+                setFormStartValidation(true);
+                errors.errors === 0 && sendRentForm(createRequest())}}
             >
               Rent car
             </button>

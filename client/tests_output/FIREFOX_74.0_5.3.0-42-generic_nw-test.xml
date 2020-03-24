@@ -5,9 +5,9 @@
 
   <testsuite name="nw-test"
     errors="0" failures="0" hostname="" id="" package="nw-test" skipped="0"
-    tests="7" time="5.199" timestamp="">
+    tests="7" time="3.492" timestamp="">
   
-    <testcase name="step one: navigate to Dashboard" classname="nw-test" time="1.100" assertions="1">
+    <testcase name="step one: navigate to Dashboard" classname="nw-test" time="0.4200" assertions="1">
 
     
     </testcase>
@@ -15,7 +15,7 @@
     <testcase name="step two: navigate to Cars" classname="nw-test" time="0.2480" assertions="0">
     </testcase>
   
-    <testcase name="step three: Search for Lada" classname="nw-test" time="0.3930" assertions="2">
+    <testcase name="step three: Search for Lada" classname="nw-test" time="0.4030" assertions="2">
 
     
 
@@ -27,7 +27,7 @@
     
     </testcase>
   
-    <testcase name="step five: Go to golf" classname="nw-test" time="0.3270" assertions="1">
+    <testcase name="step five: Go to golf" classname="nw-test" time="0.3140" assertions="1">
 
     
     </testcase>
@@ -35,7 +35,7 @@
     <testcase name="step six: Fill the form and send it" classname="nw-test" time="0.5570" assertions="0">
     </testcase>
   
-    <testcase name="step seven: Search for golf" classname="nw-test" time="2.287" assertions="1">
+    <testcase name="step seven: Search for golf" classname="nw-test" time="1.263" assertions="1">
 
     
     </testcase>

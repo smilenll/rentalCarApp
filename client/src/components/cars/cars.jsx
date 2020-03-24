@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getCars } from '../../redux';
 import Car from '../car/car';
-import Search from '../../shered/search/search';
+import Search from '../../shared/search/search';
 
 const Cars = ({cars, storageCars}) => {
   useEffect(() => {

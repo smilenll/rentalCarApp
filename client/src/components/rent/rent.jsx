@@ -11,6 +11,7 @@ import './rent.css';
 import { singleCar } from '../../services';
 import Input from '../../shared/forms/Input';
 import DateInput from '../../shared/forms/DateInput';
+import validateForm from '../../shared/forms/validate-form';
 
 const Rent = ({
   cars, match, sendRentForm, redirectTo,
@@ -23,7 +24,7 @@ const Rent = ({
   const [age, setAge] = useState(0);
   const [car, setCar] = useState({
     id: 1,
-    model: 'VW polo',
+    model: 'Default CAR',
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4',
     isFree: true,
     carClass: {
@@ -39,10 +40,6 @@ const Rent = ({
   });
   const [errors, setErrors] = useState({
     errors: 0,
-    firstName: '',
-    lastName: '',
-    age: '',
-    date: '',
   });
 
   const calculatedDays = calcDays(new Date(), deliveryDate);
@@ -55,37 +52,16 @@ const Rent = ({
     initialDateTime: new Date().toISOString(),
     expectedReturnDateTime: new Date(deliveryDate).toISOString(),
   });
+
   // BUG on empty Form
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 
-  const validateForm = () => {
-    const currentErrors = { errors: 0 };
-
-    if (firstName.length < 3) {
-      currentErrors.errors += 1;
-      currentErrors.firstName = 'First name must be at lease 3 characters';
-    }
-    if (lastName.length < 3) {
-      currentErrors.errors += 1;
-      currentErrors.lastName = 'Last name must be at lease 3 characters';
-    }
-    if (!age) {
-      currentErrors.errors += 1;
-      currentErrors.age = 'Age must be not empty';
-    }
-    if (age && age < 18) {
-      currentErrors.errors += 1;
-      currentErrors.age = 'You are too yong to drive';
-    }
-    if (calculatedDays < 1) {
-      currentErrors.errors += 1;
-      currentErrors.date = 'You date is invalid';
-    }
-    setErrors(currentErrors);
+  const validate = () => {
+    setErrors(validateForm(firstName, lastName, age, calculatedDays));
   };
 
   useEffect(buildBill, [age, deliveryDate]);
-  useEffect(validateForm, [age, firstName, lastName, deliveryDate]);
+  useEffect(validate, [age, firstName, lastName, deliveryDate]);
   useEffect(() => {
     if (cars.allCars.data) {
       setCar(cars.allCars.data.find((item) => item.id === +match.params.carid));

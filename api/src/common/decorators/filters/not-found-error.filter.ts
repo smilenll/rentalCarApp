@@ -1,17 +1,16 @@
 import { Catch, ExceptionFilter, ArgumentsHost } from '@nestjs/common';
-import { Response } from 'express';
 import {NotFoundError} from "../../exeptions/not-found.error";
+import {SystemErrorFilter} from "./error.filter";
 
 
 @Catch(NotFoundError)
-export class NotFoundErrorFilter implements ExceptionFilter {
-    public catch(exception: NotFoundError, host: ArgumentsHost) {
-        const ctx = host.switchToHttp();
-        const response = ctx.getResponse<Response>();
+export class NotFoundErrorFilter extends SystemErrorFilter implements ExceptionFilter {
+    constructor() {
+        super();
+    }
 
-        response.status(404).json({
-            status: 404,
-            error: exception.message,
-        });
+    public catch(exception: NotFoundError, host: ArgumentsHost) {
+        exception.code = 404;
+        super.catch(exception, host)
     }
 }

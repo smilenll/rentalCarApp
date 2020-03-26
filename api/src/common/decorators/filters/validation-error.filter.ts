@@ -1,17 +1,17 @@
 import { Catch, ExceptionFilter, ArgumentsHost } from '@nestjs/common';
-import { Response } from 'express';
 import { ValidationError } from "../../exeptions/validation.error";
+import {SystemErrorFilter} from "./error.filter";
 
 
 @Catch(ValidationError)
-export class ValidationErrorFilter implements ExceptionFilter {
-    public catch(exception: ValidationError, host: ArgumentsHost) {
-        const ctx = host.switchToHttp();
-        const response = ctx.getResponse<Response>();
+export class ValidationErrorFilter extends SystemErrorFilter implements ExceptionFilter {
 
-        response.status(400).json({
-            status: 400,
-            error: exception.message,
-        });
+    constructor() {
+        super();
+    }
+
+    public catch(exception: ValidationError, host: ArgumentsHost) {
+        exception.code = 400;
+        super.catch(exception, host)
     }
 }

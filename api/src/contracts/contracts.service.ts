@@ -5,7 +5,6 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
-import {SystemError} from "../common/exeptions/system.error";
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {NotFoundError} from "../common/exeptions/not-found.error";
 import {ValidationError} from "../common/exeptions/validation.error";
@@ -19,29 +18,21 @@ export class ContractsService {
 
     public async getOpenContracts(): Promise<ShowContractDTO[]> {
 
-        const contracts: ShowContractDTO[] = await this.contractsRepository
+        return await this.contractsRepository
             .find({ where: { isDeleted: false, returnDateTime: null } });
-
-        if(!contracts) {
-            throw new NotFoundError('Contracts not found.');
-        }
-
-        return contracts;
     }
 
-    // Change type
     public async createContract(body: any): Promise<ShowContractDTO> {
         const contractEntity: any = this.contractsRepository.create(body);
         contractEntity.car = await this.carsRepository
             .findOne({id: body.car, isFree: true, isDeleted: false});
 
         if(!contractEntity.car) {
-            throw new SystemError('Car not found.', 400);
+            throw new ValidationError('Incorrect car');
         }
 
-        this.validateData(body.initialDate);
-
-        this.validatePeriod(body.initialDate, body.expectedReturnDate);
+        this.validateData(body.initialDateTime);
+        this.validatePeriod(body.initialDateTime, body.expectedReturnDateTime);
 
         contractEntity.car = this.changeCarStatus(contractEntity.car);
 
@@ -53,13 +44,17 @@ export class ContractsService {
         });
     }
 
-    public async returnCar(contractId:string,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
-        this.validateData(body.returnDateTime);
-        const contract = await this.contractsRepository.findOne(contractId);
+    public async returnCar(contractId:number,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
+
+        const contract = await this.contractsRepository
+            .findOne({id: contractId, returnDateTime: null, isDeleted: false});
 
         if(!contract) {
-            throw new SystemError('Contract not found.', 400);
+            throw new NotFoundError(`Contract with ID ${contractId} do not exist`);
         }
+
+        this.validateData(body.returnDateTime);
+        this.validatePeriod(contract.initialDateTime, body.returnDateTime);
 
         contract.returnDateTime = body.returnDateTime;
         contract.car = await this.changeCarStatus(contract.car);
@@ -83,23 +78,25 @@ export class ContractsService {
 
         const tenMinutes= 600000;
         const now = new Date().getTime();
-        const returnDateTime = new Date(date).getTime();
-        const differenceInTime = now - returnDateTime;
+        const initialDateTime = new Date(date).getTime();
+        const differenceInTime = now - initialDateTime;
+
         if(differenceInTime < 0) {
-            throw new SystemError('This is a call from the future.', 400);
+            throw new ValidationError('Invalid date');
         }
         if(differenceInTime > tenMinutes) {
-            throw new SystemError('Invalid data', 400);
+            throw new ValidationError('Invalid date');
         }
     }
 
-    private validatePeriod(startDate: string, endDate: string): void{
+    private validatePeriod(startDate: Date, endDate: Date): void{
 
         const start = new Date(startDate).getTime();
         const end = new Date(endDate).getTime();
         const differenceInTime = end - start;
+
         if(differenceInTime < 0) {
-            throw new SystemError('Incorrect return date ', 400);
+            throw new ValidationError('Incorrect return date ');
         }
     }
 }

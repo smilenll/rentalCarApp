@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getCars } from '../../redux';
@@ -6,11 +6,22 @@ import Car from '../car/car';
 import Search from '../../shared/search/search';
 
 const Cars = ({ cars, storageCars }) => {
+  const [result, setResult] = useState();
+  const [q, setQ] = React.useState('');
+
+
   useEffect(() => {
     storageCars();
   }, []);
 
   const carsArray = cars.allCars.data;
+  useEffect(() => {
+    if (carsArray) {
+      const results = carsArray
+        .filter((item) => item.model.toLowerCase().includes(q.toLowerCase()));
+      setResult(results);
+    }
+  }, [q]);
 
   return cars.loading ? (
     <h3>Loading</h3>
@@ -18,18 +29,23 @@ const Cars = ({ cars, storageCars }) => {
     <h3>{cars.error}</h3>
   ) : (
     <div className="container mt-4">
-      <Search items={carsArray} />
+      <Search items={carsArray} setQ={setQ} />
       <div className="row">
         <h3 className="my-3 mx-auto">OURS CARS</h3>
       </div>
       <div className="row">
-        {cars
-        && cars.allCars.data
-        && carsArray.map((item) => (
-          <div key={item.id} className="col-lg-4 mb-4">
-            <Car car={item} />
-          </div>
-        ))}
+        {result
+          ? result.map((item) => (
+            <div key={item.id} className="col-lg-4 mb-4">
+              <Car car={item} />
+            </div>
+          ))
+          : carsArray
+          && carsArray.map((item) => (
+            <div key={item.id} className="col-lg-4 mb-4">
+              <Car car={item} />
+            </div>
+          ))}
       </div>
     </div>
 
@@ -55,7 +71,7 @@ Car.defaultProps = {
   storageCars: [],
 };
 
-const mapStateToProps = (state) => ({cars: state.CarReducers});
+const mapStateToProps = (state) => ({ cars: state.CarReducers });
 
 const mapDispatchToProps = (dispatch) => ({
   storageCars: () => dispatch(getCars()),

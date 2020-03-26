@@ -31,8 +31,7 @@ export class ContractsService {
             throw new ValidationError('Incorrect car');
         }
 
-        this.validateInitialData(body.initialDateTime);
-
+        this.validateData(body.initialDateTime);
         this.validatePeriod(body.initialDateTime, body.expectedReturnDateTime);
 
         contractEntity.car = this.changeCarStatus(contractEntity.car);
@@ -47,12 +46,14 @@ export class ContractsService {
 
     public async returnCar(contractId:number,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
 
-        const contract = await this.contractsRepository.findOne(contractId);
+        const contract = await this.contractsRepository
+            .findOne({id: contractId, returnDateTime: null, isDeleted: false});
 
         if(!contract) {
-            throw new NotFoundError(`Contract with id ${contractId}`);
+            throw new NotFoundError(`Contract with ID ${contractId} do not exist`);
         }
 
+        this.validateData(body.returnDateTime);
         this.validatePeriod(contract.initialDateTime, body.returnDateTime);
 
         contract.returnDateTime = body.returnDateTime;
@@ -73,7 +74,7 @@ export class ContractsService {
         return car;
     }
 
-    private validateInitialData(date: Date): void{
+    private validateData(date: Date): void{
 
         const tenMinutes= 600000;
         const now = new Date().getTime();

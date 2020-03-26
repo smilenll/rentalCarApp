@@ -18,14 +18,8 @@ export class ContractsService {
 
     public async getOpenContracts(): Promise<ShowContractDTO[]> {
 
-        const contracts: ShowContractDTO[] = await this.contractsRepository
+        return await this.contractsRepository
             .find({ where: { isDeleted: false, returnDateTime: null } });
-
-        if(!contracts) {
-            throw new NotFoundError('Contracts not found.');
-        }
-
-        return contracts;
     }
 
     public async createContract(body: any): Promise<ShowContractDTO> {
@@ -37,9 +31,9 @@ export class ContractsService {
             throw new ValidationError('Incorrect car');
         }
 
-        this.validateData(body.initialDate);
+        this.validateInitialData(body.initialDateTime);
 
-        this.validatePeriod(body.initialDate, body.expectedReturnDate);
+        this.validatePeriod(body.initialDateTime, body.expectedReturnDateTime);
 
         contractEntity.car = this.changeCarStatus(contractEntity.car);
 
@@ -52,12 +46,14 @@ export class ContractsService {
     }
 
     public async returnCar(contractId:number,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
-        this.validateData(body.returnDateTime);
+
         const contract = await this.contractsRepository.findOne(contractId);
 
         if(!contract) {
             throw new NotFoundError(`Contract with id ${contractId}`);
         }
+
+        this.validatePeriod(contract.initialDateTime, body.returnDateTime);
 
         contract.returnDateTime = body.returnDateTime;
         contract.car = await this.changeCarStatus(contract.car);
@@ -77,12 +73,13 @@ export class ContractsService {
         return car;
     }
 
-    private validateData(date: Date): void{
+    private validateInitialData(date: Date): void{
 
         const tenMinutes= 600000;
         const now = new Date().getTime();
-        const returnDateTime = new Date(date).getTime();
-        const differenceInTime = now - returnDateTime;
+        const initialDateTime = new Date(date).getTime();
+        const differenceInTime = now - initialDateTime;
+
         if(differenceInTime < 0) {
             throw new ValidationError('Invalid date');
         }
@@ -91,11 +88,12 @@ export class ContractsService {
         }
     }
 
-    private validatePeriod(startDate: string, endDate: string): void{
+    private validatePeriod(startDate: Date, endDate: Date): void{
 
         const start = new Date(startDate).getTime();
         const end = new Date(endDate).getTime();
         const differenceInTime = end - start;
+
         if(differenceInTime < 0) {
             throw new ValidationError('Incorrect return date ');
         }

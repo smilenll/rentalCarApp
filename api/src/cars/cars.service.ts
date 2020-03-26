@@ -12,13 +12,8 @@ export class CarsService {
     ) {}
 
     public async getCars(): Promise<ShowCarDTO[]> {
-        const cars = await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
 
-        if(!cars){
-            throw new NotFoundError('Cars not found.');
-        }
-
-        return cars
+        return await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
     }
 
     public async getCarById(id): Promise<ShowCarDTO> {

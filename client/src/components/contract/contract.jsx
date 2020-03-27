@@ -24,10 +24,12 @@ const Contract = ({ contract }) => {
 
   // Bad error handling
   const sendReturnCarRequest = async () => {
-    setBtnDisable(true);
-    const car = await returnCar(contract.id, { returnDateTime: currentDateTime });
-    if (car.name === 'Error') {
+    try {
+      await returnCar(contract.id, { returnDateTime: currentDateTime });
+      setBtnDisable(true);
+    } catch (e) {
       setBtnDisable(false);
+      console.log(e);
     }
   };
 
@@ -62,7 +64,7 @@ const Contract = ({ contract }) => {
                 className="btn btn-outline-primary btn-block"
                 disabled
               >
-                Return car
+                The car is back
               </button>
             )
             : (

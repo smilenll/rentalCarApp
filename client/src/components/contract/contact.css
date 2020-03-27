@@ -1,5 +1,5 @@
 .flipOut {
-    animation: flip 1s ease-out alternate 2 ;
+    animation: flip 200ms ease-out alternate 2 ;
 }
 
 @keyframes flip {

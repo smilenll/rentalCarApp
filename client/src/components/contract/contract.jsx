@@ -7,6 +7,7 @@ import {
   calculateReturnPrice,
 } from '../../shared/calculator';
 import { returnCar } from '../../services';
+import './contact.css';
 
 const Contract = ({ contract }) => {
   const [date, setDate] = useState(new Date());
@@ -21,10 +22,13 @@ const Contract = ({ contract }) => {
     setDate(new Date());
   }
 
+  // Bad error handling
   const sendReturnCarRequest = async () => {
     setBtnDisable(true);
     const car = await returnCar(contract.id, { returnDateTime: currentDateTime });
-    car && setBtnDisable(false);
+    if (car.name === 'Error') {
+      setBtnDisable(false);
+    }
   };
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const Contract = ({ contract }) => {
   });
 
   return (
-    <tr>
+    <tr className={(btnDisable ? 'flipOut' : '')}>
       <th scope="row">{contract.car.model}</th>
       <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
       <td>{moment(contract.initialDateTime).format('Do MMMM  YYYY, H:mm')}</td>
@@ -84,6 +88,7 @@ Contract.propTypes = {
       expectedReturnDateTime: PropTypes.string,
       firstName: PropTypes.string,
       lastName: PropTypes.string,
+      age: PropTypes.number,
       pickUpDateTime: PropTypes.string,
       days: PropTypes.number,
       car: PropTypes.shape({

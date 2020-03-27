@@ -1,0 +1,13 @@
+.flipOut {
+    animation: flip 1s ease-out alternate 2 ;
+}
+
+@keyframes flip {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(90deg);
+    }
+}

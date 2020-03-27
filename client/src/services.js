@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-export const returnCar = async (contractId, returnDate) => {
-  let response;
-  await axios.put(`http://localhost:4000/api/contracts/${contractId}`, returnDate)
-    .then((contract) => response = contract.data)
-    .catch((error) => response = error);
+export const returnCar = (contractId, returnDate) => {
 
-  return response;
+  return axios.put(`http://localhost:4000/api/contracts/${contractId}`, returnDate)
+    .then((contract) => contract.data);
+
 };
 
 export const singleCar = async (carId) => {

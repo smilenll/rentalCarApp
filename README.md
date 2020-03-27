@@ -105,5 +105,5 @@ npm run test
 
 You can run end-to-end tests
 ```bash
-nightwatch src/nightwatch/nw-test.js
+nightwatch src/nightwatch/nw-test.js -e chrome
 ```

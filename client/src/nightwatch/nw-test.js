@@ -1,8 +1,8 @@
-const rentDate = new Date(new Date()
-  .setMonth(new Date()
-    .getMonth() + 1))
-  .toISOString()
-  .slice(0, 16);
+let today = new Date();
+const dd = today.getDate() + 4;
+const mm = today.getMonth() + 1;
+const yyyy = today.getFullYear();
+const returnCarDate = `${mm}-${dd}-${yyyy}`;
 
 module.exports = {
   'step one: navigate to Dashboard': function (browser) {
@@ -38,9 +38,9 @@ module.exports = {
       .setValue('#firstName', 'Night')
       .setValue('#lastName', 'Watch')
       .clearValue('#age')
-      .setValue('#age', '25')
+      .setValue('#age', '24')
       .clearValue('#dropOff')
-      .setValue('#dropOff', rentDate)
+      .setValue('#dropOff', returnCarDate)
       .click('#car-submit-btn');
   },
   'step seven: Search for golf': function (browser) {

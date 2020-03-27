@@ -4,11 +4,6 @@ import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
-import {SystemErrorFilter} from "../common/decorators/filters/error.filter";
-import {NotFoundErrorFilter} from "../common/decorators/filters/not-found-error.filter";
-import {ValidationErrorFilter} from "../common/decorators/filters/validation-error.filter";
-import {ValidationError} from "../common/exeptions/validation.error";
-import {NotFoundError} from "../common/exeptions/not-found.error";
 
 @Controller('contracts')
 export class ContractsController {
@@ -18,7 +13,6 @@ export class ContractsController {
     ) {}
 
     @Get()
-    @UseFilters(NotFoundErrorFilter)
     @UseInterceptors(new TransformInterceptor(ShowContractDTO))
     async getOpenContracts(): Promise<ShowContractDTO[]> {
 
@@ -26,7 +20,6 @@ export class ContractsController {
     }
 
     @Post()
-    @UseFilters(ValidationErrorFilter)
     @UseInterceptors(new TransformInterceptor(ShowContractDTO))
     public async createContract(
         @Body(new ValidationPipe({
@@ -38,7 +31,6 @@ export class ContractsController {
     }
 
     @Put(':id')
-    @UseFilters(ValidationErrorFilter, NotFoundErrorFilter)
     @UseInterceptors(new TransformInterceptor(CloseContractDTO))
     public async returnCar(
         @Param('id') contractId: number,

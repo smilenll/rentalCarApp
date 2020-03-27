@@ -1,5 +1,7 @@
-export class ValidationError extends Error {
-    public constructor(message: string,  public code?: number) {
-        super(message);
+import {SystemError} from "./system.error";
+
+export class ValidationError extends SystemError {
+    public constructor(message?: string) {
+        super(message, 400);
     }
 }

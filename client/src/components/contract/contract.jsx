@@ -8,6 +8,8 @@ import {
 } from '../../shared/calculator';
 import { returnCar } from '../../services';
 import './contact.css';
+import { toast } from 'react-toastify';
+import Notificator from '../notificator/notificator';
 
 const Contract = ({ contract }) => {
   const [date, setDate] = useState(new Date());
@@ -21,7 +23,6 @@ const Contract = ({ contract }) => {
   function tick() {
     setDate(new Date());
   }
-
   // Bad error handling
   const sendReturnCarRequest = async () => {
     try {
@@ -29,7 +30,7 @@ const Contract = ({ contract }) => {
       setBtnDisable(true);
     } catch (e) {
       setBtnDisable(false);
-      console.log(e);
+      toast(<Notificator massage={e.message} />);
     }
   };
 

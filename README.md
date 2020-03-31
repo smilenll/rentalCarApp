@@ -3,13 +3,26 @@ Rental Car App
 
 Requirements:
 
-Node.js 
+Node.js
 
 Example Ubuntu
 
 ```bash
 sudo apt-get install nodejs
 ```
+
+####If you have "docker" can be run bash script for installation
+The script is using default postgreSQL settings:
+```
+database: postgres
+username: postgres
+```
+In main folder run:
+```
+./install.sh
+```
+
+####You can use and custom installation
 
 PostgreSQL
 For username you can use default username = postgres.

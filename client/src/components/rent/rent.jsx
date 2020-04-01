@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { postRent } from '../../redux';
 import Car from '../car/car';
 import {
@@ -12,6 +13,7 @@ import { singleCar } from '../../services';
 import Input from '../../shared/forms/Input';
 import DateInput from '../../shared/forms/DateInput';
 import validateForm from '../../shared/forms/validate-form';
+import Notificator from '../notificator/notificator';
 
 const Rent = ({
   cars, match, sendRentForm, redirectTo,
@@ -68,9 +70,14 @@ const Rent = ({
     } else {
       setIsLoading(true);
       const fetchData = async () => {
-        const result = await singleCar(match.params.carid);
-        setCar(result);
-        setIsLoading(false);
+        try {
+          const result = await singleCar(match.params.carid);
+          setCar(result);
+          setIsLoading(false);
+        } catch (e) {
+          setIsLoading(false);
+          toast(<Notificator massage={e.message} />);
+        }
       };
       fetchData();
     }

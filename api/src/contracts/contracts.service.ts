@@ -9,6 +9,7 @@ import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {NotFoundError} from "../common/exeptions/not-found.error";
 import {ValidationError} from "../common/exeptions/validation.error";
 import {ParamDTO} from "../common/DTOs/param.dto";
+import {ReturnCarDTO} from "../common/DTOs/return-car.dto";
 
 @Injectable()
 export class ContractsService {
@@ -45,7 +46,7 @@ export class ContractsService {
         });
     }
 
-    public async returnCar(contractId:ParamDTO,  body: { returnDateTime: Date }): Promise<CloseContractDTO> {
+    public async returnCar(contractId:ParamDTO,  body: ReturnCarDTO): Promise<CloseContractDTO> {
 
         const contract = await this.contractsRepository
             .findOne({id:contractId.id , returnDateTime: null, isDeleted: false});

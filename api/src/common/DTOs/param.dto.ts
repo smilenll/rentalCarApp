@@ -1,7 +1,6 @@
-import {IsNotEmpty, IsNumber} from "class-validator";
+import { IsNumberString } from 'class-validator';
 
 export class ParamDTO {
-    @IsNumber()
-    @IsNotEmpty()
-    public id: number;
+    @IsNumberString()
+    id: number;
 }

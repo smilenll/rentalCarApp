@@ -22,7 +22,7 @@ export class CarsController {
     @Get(':id')
     @UseInterceptors(new TransformInterceptor(ShowCarDTO))
     async getCarById(
-        @Param('id', new ValidationPipe({
+        @Param(new ValidationPipe({
             transform: true,
             whitelist: true,
         })) carId: ParamDTO,

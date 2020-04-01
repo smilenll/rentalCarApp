@@ -1,27 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Car from '../../components/car/car';
 
 const Input = ({
-  label, type, id, value, error, setInput, formStartValidation
-}) => (
-
-  <div className="col-md-12 mb-3">
-    <label htmlFor={id}>{label}</label>
-    <input
-      type={type}
-      className={`form-control ${error && formStartValidation && 'is-invalid'}`}
-      id={id}
-      placeholder={label}
-      value={value}
-      onChange={(e) => setInput(e.target.value)}
-      required
-    />
-    <div className="invalid-feedback">
-      {formStartValidation && error}
+  label, type, id, value, error, setInput,
+}) => {
+  const [showError, setShowError] = useState(false);
+  return (
+    <div className="col-md-12 mb-3">
+      <label htmlFor={id}>{label}</label>
+      <input
+        type={type}
+        className={`form-control ${error && showError && 'is-invalid'}`}
+        id={id}
+        placeholder={label}
+        value={value}
+        onChange={(e) => {
+          setShowError(true);
+          setInput(e.target.value);
+        }}
+        required
+      />
+      <div className="invalid-feedback">
+        {showError && error}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 Input.propTypes = {
   label: PropTypes.string,

@@ -5,6 +5,7 @@ import {TransformInterceptor} from "../common/interseptors/transform.interseptor
 import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
 import {ParamDTO} from "../common/DTOs/param.dto";
+import {ReturnCarDTO} from "../common/DTOs/return-car.dto";
 
 @Controller('contracts')
 export class ContractsController {
@@ -34,11 +35,11 @@ export class ContractsController {
     @Put(':id')
     @UseInterceptors(new TransformInterceptor(CloseContractDTO))
     public async returnCar(
-        @Param('id',new ValidationPipe({
+        @Param(new ValidationPipe({
             transform: true,
             whitelist: true,
         })) contractId: ParamDTO,
-        @Body() body: any): Promise<ShowContractDTO> {
+        @Body() body: ReturnCarDTO): Promise<ShowContractDTO> {
 
         return await this.contractsService.returnCar(contractId, body);
     }

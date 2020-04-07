@@ -71,9 +71,6 @@ ls -l ormconfig.json
 echo "Create db tables"
 npm run typeorm:run
 
-echo "Seed db"
-npm run seed
-
 echo "Run REST API"
 gnome-terminal --tab --title="restApi" --command="npm run start:dev"
 

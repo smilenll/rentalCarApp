@@ -5,7 +5,6 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
 import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
-import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
 import {NotFoundError} from "../common/exeptions/not-found.error";
 import {ValidationError} from "../common/exeptions/validation.error";
 
@@ -36,8 +35,8 @@ export class ContractsService {
 
         contractEntity.car = this.changeCarStatus(contractEntity.car);
 
-        return await getManager().transaction(async transactionalEntityManager => {
 
+        return await getManager().transaction(async transactionalEntityManager => {
             await transactionalEntityManager.getRepository(Car).save(contractEntity.car);
 
             return await transactionalEntityManager.getRepository(Contract).save(contractEntity);

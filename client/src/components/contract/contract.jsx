@@ -52,10 +52,22 @@ const Contract = ({ contract }) => {
         {' '}
         days
       </td>
-      <td>{estimatedBill.price / estimatedDays}</td>
+      <td>
+        {(estimatedBill.price / estimatedDays).toFixed(2)}
+        {' '}
+        $/days
+      </td>
       <td>{currentDays}</td>
-      <td>{(finalPrice / currentDays).toFixed(2)}</td>
-      <td>{finalPrice}</td>
+      <td>
+        {(finalPrice / currentDays).toFixed(2)}
+        {' '}
+        $/days
+      </td>
+      <td>
+        {finalPrice.toFixed(2)}
+        {' '}
+        $
+      </td>
       <td>
         {
           btnDisable

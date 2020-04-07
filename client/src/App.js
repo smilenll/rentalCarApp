@@ -17,12 +17,15 @@ function App() {
       <Router>
         <Provider store={store}>
           <Navbar />
-          <Switch>
-            <Route path="/" component={Dashboard} exact />
-            <Route path="/cars" component={Cars} />
-            <Route path="/rent/:carid" component={Rent} />
-            <Route render={() => (<h1> 404</h1>)} />
-          </Switch>
+            <div className="container">
+              <Switch>
+                <Route path="/" component={Dashboard} exact />
+                <Route path="/dashboard" component={Dashboard} exact />
+                <Route path="/cars" component={Cars} />
+                <Route path="/rent/:carid" component={Rent} />
+                <Route render={() => (<h1> 404</h1>)} />
+              </Switch>
+            </div>
         </Provider>
       </Router>
       <ToastContainer />

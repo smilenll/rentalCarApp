@@ -1,0 +1,92 @@
+{
+  "carClasses": [
+    {
+      "name": "A",
+      "price": 20
+    },
+    {
+      "name": "B",
+      "price": 30
+    },
+    {
+      "name": "C",
+      "price": 40
+
+    },
+    {
+      "name": "E",
+      "price": 40
+
+    }
+  ],
+  "cars": [
+    {
+      "model": "VW Polo",
+      "img": "https://img.drivemag.net/media/default/0001/57/2018-VW-Polo-GTI-at-Frankfurt-Motor-Show-0-2633-default-large.jpeg",
+      "carClass": "1",
+      "isFree": false
+    },
+    {
+      "model": "VW Golf",
+      "img": "https://www.nastarta.com/wp-content/uploads/2019/10/6fe00595-2020-vw-golf-viii-mk8-1.jpg",
+      "carClass": "2",
+      "isFree": false
+    },
+    {
+      "model": "VW Passat",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG/1200px-VW_Passat_B8_Limousine_2.0_TDI_Highline.JPG",
+      "carClass": "3",
+      "isFree": true
+    },
+    {
+      "model": "VW Tiguan",
+      "img": "https://pictures.dealer.com/j/jackdanielsmotorsvw/1968/f3bac52b25d42dda7b4179decff5a5b6x.jpg",
+      "carClass": "3",
+      "isFree": true
+    },
+    {
+      "model": "VW Touareg",
+      "img": "https://www.monitor.bg/web/files/richeditor/DB2019AU00279.jpg",
+      "carClass": "4",
+      "isFree": true
+    },
+    {
+      "model": "VW Arteon",
+      "img": "https://static.carsdn.co/cldstatic/wp-content/uploads/02-volkswagen-arteon-2019-angle--exterior--front--gold--rural.jpg",
+      "carClass": "4",
+      "isFree": true
+    },
+    {
+      "model": "VW Up Electric",
+      "img": "https://ev-database.uk/img/auto/Volkswagen_e-Up-2019/Volkswagen_e-Up-2019-01@2x.jpg",
+      "carClass": "1",
+      "isFree": true
+    },
+    {
+      "model": "VW Up Electric",
+      "img": "https://ev-database.uk/img/auto/Volkswagen_e-Up-2019/Volkswagen_e-Up-2019-01@2x.jpg",
+      "carClass": "1",
+      "isFree": true
+    },
+    {
+      "model": "VW Polo",
+      "img": "https://img.drivemag.net/media/default/0001/57/2018-VW-Polo-GTI-at-Frankfurt-Motor-Show-0-2633-default-large.jpeg",
+      "carClass": "1",
+      "isFree": false
+    }
+  ],
+  "contracts": [
+    {
+      "firstName": "Smilen",
+      "lastName": "Lyubenov",
+      "car": 1,
+      "age": 30
+    },
+    {
+      "firstName": "Ivan",
+      "lastName": "Ivanov",
+      "car": 2,
+      "age": 30
+    }
+  ]
+}

@@ -37,4 +37,6 @@ export class Car {
 
     @OneToMany( type => Contract, contracts => contracts.car)
     public contracts: Contract[];
+
+    //toggleStatus
 }

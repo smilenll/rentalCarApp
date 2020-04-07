@@ -3,7 +3,6 @@ import {Contract} from "../database/entities/contract.entity";
 import {Test, TestingModule} from "@nestjs/testing";
 import {getRepositoryToken} from "@nestjs/typeorm";
 import {Car} from "../database/entities/car.entity";
-import {getManager} from "typeorm";
 
 describe('ContractsService', () => {
 
@@ -121,7 +120,7 @@ describe('ContractsService', () => {
         it('Find contract',() => {
             // Arrange
             const spy = jest.spyOn(contractRepository, 'findOne');
-            const contract = 1;
+            const contract = {id:1};
             const findContract = {"id": contract, "isDeleted": false, "returnDateTime": null};
             const body = { returnDateTime: now };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Car from '../../components/car/car';
 import './search.css';
@@ -7,7 +7,7 @@ const Search = ({ setQ }) => (
   <div className="row">
     <div className="col-lg-12">
       <div className="row">
-        <div className="col-3">
+        <div className="col-4">
           <input
             className="form-control mb-2"
             type="search"
@@ -23,16 +23,7 @@ const Search = ({ setQ }) => (
 );
 
 Search.propTypes = {
-  items: PropTypes.array,
-};
-
-// not working properly
-Car.defaultProps = {
-  items: {
-    allCars: [],
-    error: '',
-    loading: true,
-  },
+  setQ: PropTypes.func,
 };
 
 export default Search;

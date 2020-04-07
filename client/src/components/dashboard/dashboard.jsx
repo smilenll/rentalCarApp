@@ -24,7 +24,7 @@ const Dashboard = ({ contracts, storageContracts }) => {
               <th scope="col" data-toggle="tooltip " data-placement="top" title="First & Last name">From</th>
               <th scope="col" data-toggle="tooltip" data-placement="top" title="Estimated return date">To</th>
               <th scope="col" data-toggle="tooltip" data-placement="top" title="Estimated days">days</th>
-              <th scope="col" data-toggle="tooltip" data-placement="top" title="Estimated price per day">price</th>
+              <th scope="col" data-toggle="tooltip" data-placement="top" title="Estimated price per day">price $/days</th>
               <th scope="col" data-toggle="tooltip" data-placement="top" title="Days until today">On day</th>
               <th scope="col" data-toggle="tooltip" data-placement="top" title="The price per day which customer has to pay today">Current price</th>
               <th scope="col" data-toggle="tooltip" data-placement="top" title="Total price for now">Total price</th>

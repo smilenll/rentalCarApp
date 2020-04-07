@@ -42,15 +42,18 @@ const Contract = ({ contract }) => {
   });
 
   return (
-    <tr className={(btnDisable ? 'flipOut' : '')}>
+    <tr
+      className={(btnDisable ? 'flipOut' : '')}
+      data-toggle="tooltip "
+      data-placement="top"
+      title={`Class ${contract.car.carClass.name}, regular price per day ${contract.car.carClass.price}`}
+    >
       <th scope="row">{contract.car.model}</th>
       <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
       <td>{moment(contract.initialDateTime).format('Do MMMM  YYYY, H:mm')}</td>
       <td>{moment(contract.expectedReturnDateTime).format('Do MMMM  YYYY, H:mm')}</td>
       <td>
         {estimatedDays}
-        {' '}
-        days
       </td>
       <td>
         {(estimatedBill.price / estimatedDays).toFixed(2)}
@@ -86,7 +89,7 @@ const Contract = ({ contract }) => {
                 className="btn btn-outline-primary btn-block"
                 onClick={() => sendReturnCarRequest()}
               >
-                Return car
+                Return
               </button>
             )
         }

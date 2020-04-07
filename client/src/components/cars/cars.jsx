@@ -30,10 +30,7 @@ const Cars = ({ cars, storageCars }) => {
   ) : (
     <div className="container mt-4">
       <Search items={carsArray} setQ={setQ} />
-      <div className="row">
-        <h3 className="my-3 mx-auto">OURS CARS</h3>
-      </div>
-      <div className="row">
+      <div className="row mt-4">
         {result
           ? result.map((item) => (
             <div key={item.id} className="col-lg-4 mb-4">

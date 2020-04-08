@@ -4,10 +4,9 @@ import {
     Column,
     OneToMany,
 } from 'typeorm';
-import {Car} from "./car.entity";
 
-@Entity('carclasses')
-export class CarClass {
+@Entity('amortizations')
+export class Amortization {
 
     @PrimaryGeneratedColumn('increment')
     public id: number;
@@ -16,11 +15,11 @@ export class CarClass {
     public name: string;
 
     @Column({ type: 'int', default: 0 })
-    public price: number;
+    public from: number;
+
+    @Column({ type: 'int', default: 0 })
+    public to: number;
 
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
-
-    @OneToMany( type => Car, car => car.carClass)
-    public cars: Car[];
 }

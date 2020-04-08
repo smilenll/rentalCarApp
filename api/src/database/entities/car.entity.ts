@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import {CarClass} from "./car-class.entity";
 import {Contract} from "./contract.entity";
+import {Model} from "./model.entity";
 
 @Entity('cars')
 export class Car {
@@ -15,7 +16,7 @@ export class Car {
     public id: number;
 
     @Column('varchar', {length: 200})
-    public model: string;
+    public modelOld: string;
 
     @Column({ type: 'varchar', nullable: true })
     public img: string;
@@ -25,6 +26,9 @@ export class Car {
 
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
+
+    @Column({type: 'boolean', nullable: true})
+    yearOfManufacture: number;
 
     @CreateDateColumn({type: 'timestamp'})
     createdAt: Date;
@@ -37,6 +41,9 @@ export class Car {
 
     @OneToMany( type => Contract, contracts => contracts.car)
     public contracts: Contract[];
+
+    @ManyToOne(type => Model, model => model.cars, { eager: true })
+    public model: Model;
 
     //toggleStatus
 }

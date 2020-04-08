@@ -2,12 +2,13 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToMany,
+    OneToMany, ManyToOne,
 } from 'typeorm';
 import {Car} from "./car.entity";
+import {Manufacturer} from "./manufacturer.entity";
 
-@Entity('carclasses')
-export class CarClass {
+@Entity('models')
+export class Model {
 
     @PrimaryGeneratedColumn('increment')
     public id: number;
@@ -15,12 +16,12 @@ export class CarClass {
     @Column('varchar', {length: 50})
     public name: string;
 
-    @Column({ type: 'int', default: 0 })
-    public price: number;
-
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
 
-    @OneToMany( type => Car, car => car.carClass)
+    @OneToMany( type => Car, car => car.model)
     public cars: Car[];
+
+    @ManyToOne(type => Manufacturer, manufacture => manufacture.models, { eager: true })
+    public manufacture: Manufacturer;
 }

@@ -6,11 +6,11 @@ export class ChangeCarModelColumn1586334111926 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query(`ALTER TABLE "contracts" ALTER COLUMN "returnDateTime" SET DEFAULT null`, undefined);
         await queryRunner.query(`ALTER TABLE "cars" RENAME COLUMN "model" TO "modelOld"`);
+        await queryRunner.query(`ALTER TABLE "cars" ALTER COLUMN "modelOld" DROP NOT NULL`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query(`ALTER TABLE "contracts" ALTER COLUMN "returnDateTime" DROP DEFAULT`, undefined);
         await queryRunner.query(`ALTER TABLE "cars" RENAME COLUMN "modelOld" TO "model"`);
     }
-
 }

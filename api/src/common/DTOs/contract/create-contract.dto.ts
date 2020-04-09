@@ -5,7 +5,6 @@ import {
     IsNumber,
     IsDateString, Min
 } from 'class-validator';
-import {Car} from "../../database/entities/car.entity";
 
 export class CreateContractDTO {
 

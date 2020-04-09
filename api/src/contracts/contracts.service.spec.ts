@@ -121,7 +121,7 @@ describe('ContractsService', () => {
             // Arrange
             const spy = jest.spyOn(contractRepository, 'findOne');
             const contract = {id:1};
-            const findContract = {"id": contract, "isDeleted": false, "returnDateTime": null};
+            const findContract = {"id": contract.id, "isDeleted": false, "returnDateTime": null};
             const body = { returnDateTime: now };
 
             // Act

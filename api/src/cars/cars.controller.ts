@@ -1,6 +1,6 @@
 import {Controller, Get, Param, UseFilters, UseInterceptors, ValidationPipe} from "@nestjs/common";
 import {CarsService} from "./cars.service";
-import {ShowCarDTO} from "../common/DTOs/show-car.dto";
+import {ShowCarDTO} from "../common/DTOs/car/show-car.dto";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
 import {ParamDTO} from "../common/DTOs/param.dto";
 

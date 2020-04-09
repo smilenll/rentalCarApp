@@ -2,13 +2,13 @@ import {Contract} from "../database/entities/contract.entity";
 import {getManager, Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
+import {ShowContractDTO} from "../common/DTOs/contract/show-contract.dto";
 import {Car} from "../database/entities/car.entity";
-import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
+import {CloseContractDTO} from "../common/DTOs/contract/close-contract.dto";
 import {NotFoundError} from "../common/exeptions/not-found.error";
 import {ValidationError} from "../common/exeptions/validation.error";
 import {ParamDTO} from "../common/DTOs/param.dto";
-import {ReturnCarDTO} from "../common/DTOs/return-car.dto";
+import {ReturnCarDTO} from "../common/DTOs/car/return-car.dto";
 
 @Injectable()
 export class ContractsService {

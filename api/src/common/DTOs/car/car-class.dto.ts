@@ -1,4 +1,4 @@
-import {Publish} from "../decorators/publish";
+import {Publish} from "../../decorators/publish";
 
 export class ShowCarClassDTO {
 

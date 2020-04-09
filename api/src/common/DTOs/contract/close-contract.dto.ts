@@ -1,6 +1,6 @@
-import {ShowCarDTO} from "./show-car.dto";
-import {Publish} from "../decorators/publish";
-import {Car} from "../../database/entities/car.entity";
+import {ShowCarDTO} from "../car/show-car.dto";
+import {Publish} from "../../decorators/publish";
+import {Car} from "../../../database/entities/car.entity";
 
 export class CloseContractDTO {
 

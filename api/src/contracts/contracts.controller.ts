@@ -1,11 +1,11 @@
 import {Body, Controller, Get, Param, Post, Put, UseFilters, UseInterceptors, ValidationPipe} from "@nestjs/common";
 import {ContractsService} from "./contracts.service";
-import {ShowContractDTO} from "../common/DTOs/show-contract.dto";
+import {ShowContractDTO} from "../common/DTOs/contract/show-contract.dto";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
-import {CreateContractDTO} from "../common/DTOs/create-contract.dto";
-import {CloseContractDTO} from "../common/DTOs/close-contract.dto";
+import {CreateContractDTO} from "../common/DTOs/contract/create-contract.dto";
+import {CloseContractDTO} from "../common/DTOs/contract/close-contract.dto";
 import {ParamDTO} from "../common/DTOs/param.dto";
-import {ReturnCarDTO} from "../common/DTOs/return-car.dto";
+import {ReturnCarDTO} from "../common/DTOs/car/return-car.dto";
 
 @Controller('contracts')
 export class ContractsController {

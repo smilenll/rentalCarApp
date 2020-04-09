@@ -2,7 +2,7 @@ import {Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Car} from "../database/entities/car.entity";
-import {ShowCarDTO} from "../common/DTOs/show-car.dto";
+import {ShowCarDTO} from "../common/DTOs/car/show-car.dto";
 import {NotFoundError} from "../common/exeptions/not-found.error";
 import {ParamDTO} from "../common/DTOs/param.dto";
 
@@ -13,8 +13,7 @@ export class CarsService {
     ) {}
 
     public async getCars(): Promise<ShowCarDTO[]> {
-        const cars = await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
-        return
+        return await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
     }
 
     public async getCarById(params: ParamDTO): Promise<ShowCarDTO> {
@@ -26,9 +25,5 @@ export class CarsService {
             throw new NotFoundError(`Car with  id ${params.id} not found`);
         }
         return car;
-    }
-
-    private updateCarToV2(V1Car) {
-
     }
 }

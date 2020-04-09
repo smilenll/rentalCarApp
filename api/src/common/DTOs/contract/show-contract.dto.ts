@@ -1,5 +1,5 @@
-import {ShowCarDTO} from "./show-car.dto";
-import {Publish} from "../decorators/publish";
+import {ShowCarDTO} from "../car/show-car.dto";
+import {Publish} from "../../decorators/publish";
 
 export class ShowContractDTO {
 

@@ -12,9 +12,9 @@ export class AmortizationsService {
         @InjectRepository(Amortization) private readonly amortizationsRepository: Repository<Amortization>,
     ) {}
 
-    // public async getCars(): Promise<ShowCarDTO[]> {
-    //     return await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
-    // }
+    public async getAmortizations(): Promise<ShowAmortizationDTO[]> {
+        return await this.amortizationsRepository.find({ where: { isDeleted: false } });
+    }
 
     public async createAmortization(body: CreateAmortizationDTO): Promise<ShowAmortizationDTO> {
         if((body.to - body.from) < 1){

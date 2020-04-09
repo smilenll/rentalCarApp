@@ -10,7 +10,7 @@ import {Publish} from "../../decorators/publish";
 export class ShowAmortizationDTO {
 
     @Publish()
-    public id: string;
+    public id: number;
 
     @Publish()
     public name: string;

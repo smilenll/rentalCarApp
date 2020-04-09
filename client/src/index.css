@@ -2,7 +2,7 @@
   color:#e8e8e8;
 }
 .form-control {
-  background-color: #e8e8e8;
+  background-color: #e8e8e8 !important;
 }
 body {
   background-color: #343a40!important;

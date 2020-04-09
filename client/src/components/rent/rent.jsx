@@ -26,14 +26,22 @@ const Rent = ({
   const [age, setAge] = useState(0);
   const [car, setCar] = useState({
     id: 1,
-    model: 'Default CAR',
+    model: {
+      id: 1,
+      name: 'test',
+      carClass: {
+        id: 1,
+        name: 'A',
+        price: 0,
+      },
+      manufacture: {
+        id: 1,
+        name: 'test',
+      },
+    },
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4',
     isFree: true,
-    carClass: {
-      id: 1,
-      name: 'A',
-      price: 0,
-    },
+
   });
   const [deliveryDate, setDeliveryDate] = useState(currentDateTime);
   const [bill, setBill] = useState({

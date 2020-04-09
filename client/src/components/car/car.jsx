@@ -4,9 +4,8 @@ import { NavLink } from 'react-router-dom';
 import './car.css';
 
 const Car = ({ car }) => {
-
   const btnLink = `/rent/${car.id}`;
-
+  console.log(car);
   return (
     <>
       <NavLink to={btnLink}>
@@ -17,18 +16,24 @@ const Car = ({ car }) => {
             alt="Card"
           />
           <div data-car="select" className="card-img-overlay">
-            <h5 className="card-title"><strong className="car-text-board">{car.model}</strong></h5>
+            <h5 className="card-title">
+              <strong className="car-text-board">
+                {car.model.manufacture.name}
+                {' '}
+                {car.model.name}
+              </strong>
+            </h5>
             <p className="card-text">
               <strong className="car-text-board">
                 Price:
-                {car.carClass.price}
+                {car.model.carClass.price}
                 {' '}
                 $
               </strong>
             </p>
             <p className="card-text">
               <strong className="car-class">
-                {car.carClass.name}
+                {car.model.carClass.name}
               </strong>
             </p>
           </div>

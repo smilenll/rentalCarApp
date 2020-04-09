@@ -18,7 +18,7 @@ const Cars = ({ cars, storageCars }) => {
   useEffect(() => {
     if (carsArray) {
       const results = carsArray
-        .filter((item) => item.model.toLowerCase().includes(q.toLowerCase()));
+        .filter((item) => item.model.name.toLowerCase().includes(q.toLowerCase()));
       setResult(results);
     }
   }, [q]);

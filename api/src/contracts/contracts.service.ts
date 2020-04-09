@@ -7,7 +7,6 @@ import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/contract/close-contract.dto";
 import {NotFoundError} from "../common/exeptions/not-found.error";
 import {ValidationError} from "../common/exeptions/validation.error";
-import {ParamDTO} from "../common/DTOs/param.dto";
 import {ReturnCarDTO} from "../common/DTOs/car/return-car.dto";
 
 @Injectable()
@@ -45,13 +44,13 @@ export class ContractsService {
         });
     }
 
-    public async returnCar(contractId:ParamDTO,  body: ReturnCarDTO): Promise<CloseContractDTO> {
+    public async returnCar(id: number,  body: ReturnCarDTO): Promise<CloseContractDTO> {
 
         const contract = await this.contractsRepository
-            .findOne({id:contractId.id , returnDateTime: null, isDeleted: false});
+            .findOne({id , returnDateTime: null, isDeleted: false});
 
         if(!contract) {
-            throw new NotFoundError(`Contract with ID ${contractId} do not exist`);
+            throw new NotFoundError(`Contract with ID ${id} do not exist`);
         }
 
         this.validateData(body.returnDateTime);

@@ -1,8 +1,7 @@
-import {Controller, Get, Param, UseFilters, UseInterceptors, ValidationPipe} from "@nestjs/common";
+import {Controller, Get, Param, ParseIntPipe, UseFilters, UseInterceptors, ValidationPipe} from "@nestjs/common";
 import {CarsService} from "./cars.service";
 import {ShowCarDTO} from "../common/DTOs/car/show-car.dto";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
-import {ParamDTO} from "../common/DTOs/param.dto";
 
 @Controller('cars')
 export class CarsController {
@@ -22,12 +21,9 @@ export class CarsController {
     @Get(':id')
     @UseInterceptors(new TransformInterceptor(ShowCarDTO))
     async getCarById(
-        @Param(new ValidationPipe({
-            transform: true,
-            whitelist: true,
-        })) carId: ParamDTO,
+        @Param('id', ParseIntPipe) id: number,
     ): Promise<ShowCarDTO> {
 
-        return await this.carsService.getCarById(carId);
+        return await this.carsService.getCarById(id);
     }
 }

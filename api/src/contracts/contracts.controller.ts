@@ -1,10 +1,20 @@
-import {Body, Controller, Get, Param, Post, Put, UseFilters, UseInterceptors, ValidationPipe} from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    ParseIntPipe,
+    Post,
+    Put,
+    UseFilters,
+    UseInterceptors,
+    ValidationPipe
+} from "@nestjs/common";
 import {ContractsService} from "./contracts.service";
 import {ShowContractDTO} from "../common/DTOs/contract/show-contract.dto";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
 import {CreateContractDTO} from "../common/DTOs/contract/create-contract.dto";
 import {CloseContractDTO} from "../common/DTOs/contract/close-contract.dto";
-import {ParamDTO} from "../common/DTOs/param.dto";
 import {ReturnCarDTO} from "../common/DTOs/car/return-car.dto";
 
 @Controller('contracts')
@@ -35,10 +45,7 @@ export class ContractsController {
     @Put(':id')
     @UseInterceptors(new TransformInterceptor(CloseContractDTO))
     public async returnCar(
-        @Param(new ValidationPipe({
-            transform: true,
-            whitelist: true,
-        })) contractId: ParamDTO,
+        @Param('id', ParseIntPipe) contractId: number,
         @Body() body: ReturnCarDTO): Promise<ShowContractDTO> {
 
         return await this.contractsService.returnCar(contractId, body);

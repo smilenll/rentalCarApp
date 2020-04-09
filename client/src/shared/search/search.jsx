@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Car from '../../components/car/car';
 import './search.css';
 
 const Search = ({ setQ }) => (

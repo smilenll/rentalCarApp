@@ -43,16 +43,16 @@ export const calculateTaxes = (age) => (
   }
 );
 
-export const calculateBasePrice = (car, differenceInDays) => (
+export const calculateBasePrice = (carClass, differenceInDays) => (
   {
-    price: car.carClass.price * differenceInDays,
-    massage: `Car class ${car.carClass.name} for ${car.carClass.price}$/day for ${differenceInDays} days`,
+    price: carClass.price * differenceInDays,
+    massage: `Car class ${carClass.name} for ${carClass.price}$/day for ${differenceInDays} days`,
   }
 );
 
 export const calculateTotalBill = (age, car, calculatedDays) => {
   const getBill = [
-    calculateBasePrice(car, calculatedDays),
+    calculateBasePrice(car.model.carClass, calculatedDays),
     calculateDiscounts(calculatedDays),
     calculateTaxes(age),
   ];

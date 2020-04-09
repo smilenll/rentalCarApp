@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import {
   calcDays,
   calculateTotalBill,
@@ -8,7 +9,7 @@ import {
 } from '../../shared/calculator';
 import { returnCar } from '../../services';
 import './contact.css';
-import { toast } from 'react-toastify';
+
 import Notificator from '../notificator/notificator';
 
 const Contract = ({ contract }) => {
@@ -46,9 +47,9 @@ const Contract = ({ contract }) => {
       className={(btnDisable ? 'flipOut' : '')}
       data-toggle="tooltip "
       data-placement="top"
-      title={`Class ${contract.car.carClass.name}, regular price per day ${contract.car.carClass.price}`}
+      title={`Class ${contract.car.model.carClass.name}, regular price per day ${contract.car.model.carClass.price}`}
     >
-      <th scope="row">{contract.car.model}</th>
+      <th scope="row">{contract.car.model.name}</th>
       <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
       <td>{moment(contract.initialDateTime).format('Do MMMM  YYYY, H:mm')}</td>
       <td>{moment(contract.expectedReturnDateTime).format('Do MMMM  YYYY, H:mm')}</td>
@@ -110,7 +111,9 @@ Contract.propTypes = {
       pickUpDateTime: PropTypes.string,
       days: PropTypes.number,
       car: PropTypes.shape({
-        model: PropTypes.string,
+        model: PropTypes.shape({
+          name: PropTypes.string,
+        }),
       }),
     },
   ),

@@ -1,4 +1,14 @@
-import {Body, Controller, Get, Post, UseInterceptors, ValidationPipe} from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Post,
+    UseInterceptors,
+    ValidationPipe
+} from "@nestjs/common";
 import {AmortizationsService} from "./amortizations.service";
 import {TransformInterceptor} from "../common/interseptors/transform.interseptor";
 import {ShowAmortizationDTO} from "../common/DTOs/amortization/show-amortization.dto";
@@ -28,5 +38,13 @@ export class AmortizationsController {
         })) body: CreateAmortizationDTO): Promise<ShowAmortizationDTO> {
 
         return await this.amortizationsService.createAmortization(body);
+    }
+
+    @Delete(':id')
+    @UseInterceptors(new TransformInterceptor(ShowAmortizationDTO))
+    public async deleteAmortization(
+        @Param('id', ParseIntPipe) id: number,
+    ): Promise<ShowAmortizationDTO> {
+        return await this.amortizationsService.deleteAmortization(id);
     }
 }

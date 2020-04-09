@@ -6,6 +6,7 @@ import {
 } from 'typeorm';
 import {Car} from "./car.entity";
 import {Manufacturer} from "./manufacturer.entity";
+import {CarClass} from "./car-class.entity";
 
 @Entity('models')
 export class Model {
@@ -18,6 +19,9 @@ export class Model {
 
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
+
+    @ManyToOne(type => CarClass, carClass => carClass.models, { eager: true })
+    public carClass: CarClass;
 
     @OneToMany( type => Car, car => car.model)
     public cars: Car[];

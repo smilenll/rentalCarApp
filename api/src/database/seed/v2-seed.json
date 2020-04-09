@@ -16,42 +16,84 @@
   "models": [
     {
       "name": "1-series",
-      "manufacture": 1
+      "manufacture": 1,
+      "carClassId": 1
     },
     {
       "name": "3-series",
-      "manufacture": 1
+      "manufacture": 1,
+      "carClassId": 2
     },
     {
       "name": "5-series",
-      "manufacture": 1
+      "manufacture": 1,
+      "carClassId": 3
     },
     {
       "name": "6-series",
-      "manufacture": 1
+      "manufacture": 1,
+      "carClassId": 4
     },
     {
-      "name": "model-S",
-      "manufacture": 3
+      "name": "Model-S",
+      "manufacture": 3,
+      "carClassId": 4
     },
     {
-      "name": "model-3",
-      "manufacture": 3
+      "name": "Model-3",
+      "manufacture": 3,
+      "carClassId": 3
     },
     {
-      "name": "cooper",
-      "manufacture": 4
+      "name": "Cooper",
+      "manufacture": 4,
+      "carClassId": 1
     },
     {
-      "name": "clubman",
-      "manufacture": 4
+      "name": "Clubman",
+      "manufacture": 4,
+      "carClassId": 2
+    },
+    {
+      "name": "Polo",
+      "manufacture": 1,
+      "carClassId": 1
+    },
+    {
+      "name": "Golf",
+      "manufacture": 1,
+      "carClassId": 2
+    },
+    {
+      "name": "Passat",
+      "manufacture": 1,
+      "carClassId": 3
+    },
+    {
+      "name": "Tiguan",
+      "manufacture": 1,
+      "carClassId": 3
+    },
+    {
+      "name": "Touareg",
+      "manufacture":1,
+      "carClassId": 4
+    },
+    {
+      "name": "Arteon",
+      "manufacture": 1,
+      "carClassId": 4
+    },
+    {
+      "name": "Up Electric",
+      "manufacture": 1,
+      "carClassId": 1
     }
   ],
   "cars": [
     {
       "modelId": 1,
       "image": "https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_cg_hero_large/v1/editorial/BMW-1-series-M-Sport-white-2016-%2810%29.jpg",
-      "carClassId": 1,
       "yearOFManufacture": 2014,
       "isFree": true
     },
@@ -65,7 +107,6 @@
     {
       "modelId": 2,
       "image": "https://images.hgmsites.net/hug/2011-bmw-m3-performance-package_100306348_h.jpg",
-      "carClassId": 2,
       "yearOFManufacture": 2011,
       "isFree": true
     },
@@ -79,35 +120,30 @@
     {
       "modelId": 5,
       "image": "https://www.electrive.com/wp-content/uploads/2018/02/tesla-model-s-elektroauto-electric-car-01.png",
-      "carClassId": 4,
       "yearOFManufacture": 2018,
       "isFree": true
     },
     {
       "modelId": 7,
       "image": "https://cdn.motor1.com/images/mgl/Bozvm/s1/mini-john-cooper-works-gp-2020.jpg",
-      "carClassId": 1,
       "yearOFManufacture": 2020,
       "isFree": true
     },
     {
       "modelId": 7,
       "image": "https://usedcarpics.s3.amazonaws.com/204AUTOTOWN/b11426367.jpg",
-      "carClassId": 1,
       "yearOFManufacture": 2008,
       "isFree": true
     },
     {
       "modelId": 7,
       "image": "https://cdn1.carbuyer.co.uk/sites/carbuyer_d7/files/mini-hatchback-2014-front-cornering.jpg",
-      "carClassId": 1,
       "yearOFManufacture": 2014,
       "isFree": true
     },
     {
       "modelId": 8,
       "image": "https://images.dealersync.com/cloud/userdocumentprod/2659/Photos/307757/20190115184452947_2014_mini_cooper_clubman-pic-3771956625271938048-1024x768.jpg?_=08cbb8c7b324580ded472b45b6b9ddfd1b29a963",
-      "carClassId": 2,
       "yearOFManufacture": 2014,
       "isFree": true
     }

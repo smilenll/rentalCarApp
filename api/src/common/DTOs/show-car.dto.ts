@@ -1,5 +1,6 @@
 import {Publish} from "../decorators/publish";
 import {ShowCarClassDTO} from "./car-class.dto";
+import {Model} from "../../database/entities/model.entity";
 
 export class ShowCarDTO {
 
@@ -7,7 +8,7 @@ export class ShowCarDTO {
     public id: number;
 
     @Publish()
-    public model: string;
+    public model: Model;
 
     @Publish()
     public img: string;

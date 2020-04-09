@@ -4,7 +4,7 @@ import {
     Column,
     OneToMany,
 } from 'typeorm';
-import {Car} from "./car.entity";
+import {Model} from "./model.entity";
 
 @Entity('carclasses')
 export class CarClass {
@@ -21,6 +21,6 @@ export class CarClass {
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
 
-    @OneToMany( type => Car, car => car.carClass)
-    public cars: Car[];
+    @OneToMany( type => Model, model => model.carClass)
+    public models: Model[];
 }

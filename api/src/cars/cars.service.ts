@@ -13,8 +13,8 @@ export class CarsService {
     ) {}
 
     public async getCars(): Promise<ShowCarDTO[]> {
-
-        return await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
+        const cars = await this.carsRepository.find({ where: { isDeleted: false, isFree: true } });
+        return
     }
 
     public async getCarById(params: ParamDTO): Promise<ShowCarDTO> {
@@ -26,5 +26,9 @@ export class CarsService {
             throw new NotFoundError(`Car with  id ${params.id} not found`);
         }
         return car;
+    }
+
+    private updateCarToV2(V1Car) {
+
     }
 }

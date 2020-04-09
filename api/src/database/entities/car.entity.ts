@@ -15,9 +15,6 @@ export class Car {
     @PrimaryGeneratedColumn('increment')
     public id: number;
 
-    @Column('varchar', {length: 200})
-    public modelOld: string;
-
     @Column({ type: 'varchar', nullable: true })
     public img: string;
 
@@ -27,7 +24,7 @@ export class Car {
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
 
-    @Column({type: 'boolean', nullable: true})
+    @Column({type: 'int', nullable: true})
     yearOfManufacture: number;
 
     @CreateDateColumn({type: 'timestamp'})
@@ -35,9 +32,6 @@ export class Car {
 
     @UpdateDateColumn({type: 'timestamp'})
     updatedAt: Date;
-
-    @ManyToOne(type => CarClass, carClass => carClass.cars, { eager: true })
-    public carClass: CarClass;
 
     @OneToMany( type => Contract, contracts => contracts.car)
     public contracts: Contract[];

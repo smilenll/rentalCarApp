@@ -11,4 +11,4 @@ import {Amortization} from "../database/entities/amortization.entity";
     controllers: [AmortizationsController],
     providers: [AmortizationsService],
 })
-export class CarsModule {}
+export class AmortizationsModule {}

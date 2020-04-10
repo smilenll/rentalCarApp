@@ -5,6 +5,9 @@ import {
   FETCH_RENT_FAILURE,
 } from './rentTypes';
 import { redirect } from '../redirect/redirectActions';
+import {
+  API_DOMAIN_NAME,
+} from '../../configs/configs';
 
 export const fetchRentRequest = () => ({
   type: FETCH_RENT_REQUEST,
@@ -22,7 +25,7 @@ export const fetchRentFailure = (error) => ({
 
 export const postRent = (body) => (dispatch) => {
   dispatch(fetchRentRequest());
-  axios.post('http://localhost:4000/api/contracts', body)
+  axios.post(`${API_DOMAIN_NAME}/contracts`, body)
     .then((response) => {
       dispatch(fetchRentSuccess(response));
       dispatch(redirect('/'));

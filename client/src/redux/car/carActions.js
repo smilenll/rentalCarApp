@@ -5,6 +5,7 @@ import {
   FETCH_CARS_FAILURE,
 } from './carTypes';
 import { redirect } from '../redirect/redirectActions';
+import { API_DOMAIN_NAME } from '../../configs/configs';
 
 export const fetchCarsRequest = () => ({
   type: FETCH_CARS_REQUEST,
@@ -22,7 +23,7 @@ export const fetchCarsFailure = (error) => ({
 
 export const getCars = () => (dispatch) => {
   dispatch(fetchCarsRequest());
-  axios.get('http://localhost:4000/api/cars')
+  axios.get(`${API_DOMAIN_NAME}/cars`)
     .then((response) => {
       dispatch(redirect(null));
       dispatch(fetchCarsSuccess(response));

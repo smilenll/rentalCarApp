@@ -18,16 +18,16 @@ function App() {
       <Router>
         <Provider store={store}>
           <Navbar />
-            <div className="container">
-              <Switch>
-                <Route path="/" component={Dashboard} exact />
-                <Route path="/dashboard" component={Dashboard} exact />
-                <Route path="/cars" component={Cars} />
-                <Route path="/rent/:carid" component={Rent} />
-                <Route path="/amortization" component={Amortization} />
-                <Route render={() => (<h1> 404</h1>)} />
-              </Switch>
-            </div>
+          <div className="container">
+            <Switch>
+              <Route path="/" component={Dashboard} exact />
+              <Route path="/dashboard" component={Dashboard} exact />
+              <Route path="/cars" component={Cars} />
+              <Route path="/rent/:carid" component={Rent} />
+              <Route path="/amortization" component={Amortization} />
+              <Route render={() => (<h1> 404</h1>)} />
+            </Switch>
+          </div>
         </Provider>
       </Router>
       <ToastContainer />

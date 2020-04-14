@@ -4,7 +4,6 @@ import ShowAmortization from './show-amortizations';
 
 
 const Amortization = () => (
-  <>
     <div className="row">
       <div className="col-lg-6">
         <CreateAmortization />
@@ -13,6 +12,5 @@ const Amortization = () => (
         <ShowAmortization />
       </div>
     </div>
-  </>
 );
 export default Amortization;

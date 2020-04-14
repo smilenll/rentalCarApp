@@ -12,7 +12,7 @@ import './rent.css';
 import { singleCar } from '../../services';
 import Input from '../../shared/forms/Input';
 import DateInput from '../../shared/forms/DateInput';
-import validateForm from '../../shared/forms/validate-form';
+import { validateRentForm } from '../../shared/forms/validate-form';
 import Notificator from '../notificator/notificator';
 
 const Rent = ({
@@ -67,7 +67,7 @@ const Rent = ({
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 
   const validate = () => {
-    setErrors(validateForm(firstName, lastName, age, calculatedDays));
+    setErrors(validateRentForm(firstName, lastName, age, calculatedDays));
   };
 
   useEffect(buildBill, [age, deliveryDate]);

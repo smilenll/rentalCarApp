@@ -29,7 +29,7 @@ export const getAmortizations = (dispatch) => {
 
 export const postAmortization = (body) => (dispatch) => {
   dispatch(fetchAmortizationRequest());
-  axios.post(`${API_DOMAIN_NAME}/contracts`, body)
+  axios.post(`${API_DOMAIN_NAME}/amortizations`, body)
     .then((response) => {
       dispatch(fetchAmortizationSuccess(response));
     })
@@ -38,7 +38,7 @@ export const postAmortization = (body) => (dispatch) => {
 
 export const deleteAmortization = (id) => (dispatch) => {
   dispatch(fetchAmortizationRequest());
-  axios.delete(`${API_DOMAIN_NAME}/contracts/${id}`)
+  axios.delete(`${API_DOMAIN_NAME}/amortizations/${id}`)
     .then((response) => {
       dispatch(fetchAmortizationSuccess(response));
     })

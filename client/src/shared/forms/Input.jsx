@@ -6,6 +6,7 @@ const Input = ({
   label, type, id, value, error, setInput,
 }) => {
   const [showError, setShowError] = useState(false);
+
   return (
     <div className="col-md-12 mb-3">
       <label htmlFor={id}>{label}</label>

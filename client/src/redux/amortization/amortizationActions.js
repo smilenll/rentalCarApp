@@ -20,7 +20,7 @@ export const fetchAmortizationFailure = (error) => ({
   payload: error,
 });
 
-export const getAmortizations = (dispatch) => {
+export const getAmortizations = () => (dispatch) => {
   dispatch(fetchAmortizationRequest());
   axios.get(`${API_DOMAIN_NAME}/amortizations`)
     .then((response) => dispatch(fetchAmortizationSuccess(response)))

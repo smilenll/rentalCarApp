@@ -125,7 +125,7 @@ describe('ContractsService', () => {
             const body = { returnDateTime: now };
 
             // Act
-            service.returnCar(contract, body);
+            service.returnCar(contract.id, body);
             // Assert
             expect(spy).toHaveBeenCalled();
             expect(spy).toHaveBeenCalledWith(findContract);

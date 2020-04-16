@@ -19,9 +19,17 @@ export class AmortizationsService {
     }
 
     public async createAmortization(body: CreateAmortizationDTO): Promise<ShowAmortizationDTO> {
+
+        const findAmortization = await this.amortizationsRepository.findOne({where: { name: body.name}})
+
+        if (findAmortization) {
+            throw new ValidationError('Amortization filter with this name all ready exist.');
+        }
+
         if((body.to - body.from) < 1){
             throw new ValidationError('Range must be at leas one year');
         }
+
         const amortization: any = await this.amortizationsRepository.create(body);
 
         return this.amortizationsRepository.save(amortization);

@@ -14,7 +14,6 @@ export class AmortizationsService {
     ) {}
 
     public async getAmortizations(): Promise<ShowAmortizationDTO[]> {
-
         return await this.amortizationsRepository.find({ where: { isDeleted: false } });
     }
 
@@ -38,6 +37,7 @@ export class AmortizationsService {
     public async deleteAmortization(id: number): Promise<ShowAmortizationDTO> {
         const amortization: Amortization = await this.amortizationsRepository
             .findOne({where: {id, isDeleted:false}});
+
         if(!amortization){
             throw new NotFoundError('Amortization not found')
         }

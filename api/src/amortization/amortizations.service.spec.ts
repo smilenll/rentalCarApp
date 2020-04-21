@@ -1,45 +1,25 @@
-import {ContractsService} from "../contracts/contracts.service";
-import {Test, TestingModule} from "@nestjs/testing";
-import {getRepositoryToken} from "@nestjs/typeorm";
-import {Contract} from "../database/entities/contract.entity";
-import {Car} from "../database/entities/car.entity";
 import {AmortizationsService} from "./amortizations.service";
 import {Amortization} from "../database/entities/amortization.entity";
 import {Repository} from "typeorm";
 
 describe('AmortizationsService', () => {
 
-    // let service: AmortizationsService;
-    // let amortizationsRepository: any;
-    //
-    // beforeEach(async () => {
-    //     amortizationsRepository = {
-    //         find() {
-    //             /* empty */
-    //         },
-    //         findOne() {
-    //             /* empty */
-    //         },
-    //     };
-    //
-    //     const module: TestingModule = await Test.createTestingModule({
-    //         providers: [
-    //             AmortizationsService,
-    //             {
-    //                 provide: getRepositoryToken(Amortization),
-    //                 useValue: amortizationsRepository,
-    //             },
-    //         ],
-    //     }).compile();
-    //
-    //     service = module.get<AmortizationsService>(AmortizationsService);
-    // });
+    const getAmortiozation = {
+        id:1,
+        name: 'Test',
+        from: 0,
+        to: 2,
+        isDeleted: false
+    };
 
     const getAmortizationService = () => {
         const amortizationsRepository = new Repository<Amortization>();
 
         jest.spyOn(amortizationsRepository, 'find')
             .mockImplementation(async () => Promise.resolve([]));
+
+        jest.spyOn(amortizationsRepository, 'findOne')
+            .mockImplementation(async () => Promise.resolve(getAmortiozation));
 
         const service = new AmortizationsService(amortizationsRepository);
         // jest.spyOn(service, 'getToday')
@@ -62,6 +42,7 @@ describe('AmortizationsService', () => {
             const spy = jest
                 .spyOn(amortizationsRepository, 'find')
                 .mockReturnValue(Promise.resolve(foundAmortizations));
+
             // Act
             await service.getAmortizations();
             // Assert
@@ -93,6 +74,17 @@ describe('AmortizationsService', () => {
             };
 
             expect(service.createAmortization(body)).rejects.toThrow('Range must be at leas one year');
+        });
+    });
+
+    describe('deleteAmortization method should', () => {
+
+        it('Throw error if filter with this name all ready exist', () => {
+            // Arrange
+            const { service } = getAmortizationService();
+            const id = 1;
+
+            expect(service.deleteAmortization(id)).rejects.toThrow('Amortization not found');
         });
     });
 });

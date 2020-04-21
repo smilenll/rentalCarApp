@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { postAmortization } from '../../redux';
 import Input from '../../shared/forms/Input';
 import { validateAmortizationForm } from '../../shared/forms/validate-form';
+import PropTypes from 'prop-types';
 
 
 class CreateAmortization extends Component {
@@ -44,32 +45,42 @@ class CreateAmortization extends Component {
       await this.setState({ errors: this.validate().errors });
     }
 
-    return this.props.sendAmortizationForm({
-      name: this.state.name,
-      from: this.state.from,
-      to: this.state.to,
+    const { name, from, to } = this.state;
+    const { sendAmortizationForm } = this.props;
+
+    return sendAmortizationForm({
+      name,
+      from,
+      to,
     });
   }
 
   render() {
+    const {
+      name,
+      from,
+      to,
+      errors,
+    } = this.state;
+
     return (
       <div>
-        <h2>From ADD Todo</h2>
+        <h2>Create Amortization range</h2>
         <Input
           label="Name"
           type="text"
           id="Name"
-          value={this.state.name}
-          error={this.state.errors.name}
+          value={name}
+          error={errors.name}
           setInput={this.updateName}
           formStartValidation
         />
         <Input
           label="From"
           type="number"
-          id={this.state.from}
-          value={this.state.from}
-          error={this.state.errors.from}
+          id="From"
+          value={from}
+          error={errors.from}
           setInput={this.updateFrom}
           formStartValidation
         />
@@ -77,12 +88,13 @@ class CreateAmortization extends Component {
           label="To"
           type="number"
           id="To"
-          value={this.state.to}
-          error={this.state.errors.to}
+          value={to}
+          error={errors.to}
           setInput={this.updateTo}
           formStartValidation
         />
         <button
+          type="button"
           className="btn btn-outline-success btn-block"
           onClick={this.handleSendForm}
         >
@@ -92,6 +104,10 @@ class CreateAmortization extends Component {
     );
   }
 }
+
+CreateAmortization.propTypes = {
+  sendAmortizationForm: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   sendAmortizationForm: (formData) => dispatch(postAmortization(formData)),

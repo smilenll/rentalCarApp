@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAmortizations } from '../../redux';
+import { deleteAmortization, getAmortizations } from '../../redux';
 
 class ShowAmortization extends Component {
+  constructor(props) {
+    super(props);
+    this.handleDeleteAmortization = this.handleDeleteAmortization.bind(this);
+  }
+
   componentDidMount() {
     const { storageAmortizations } = this.props;
     storageAmortizations();
+  }
+
+  async handleDeleteAmortization(id) {
+    const { storageDeleteAmortization, storageAmortizations } = this.props;
+    await storageDeleteAmortization(id);
+    await storageAmortizations();
   }
 
   render() {
@@ -22,27 +33,32 @@ class ShowAmortization extends Component {
     if (amortizationsArray) {
       return (
         <table className="table table-hover table-dark">
-          <tr>
-            <td>Name</td>
-            <td>From</td>
-            <td>To</td>
-            <td>Actions</td>
-          </tr>
-          {amortizationsArray.map((item) => (
+          <thead>
             <tr>
-              <td>{item.name}</td>
-              <td>{item.from}</td>
-              <td>{item.to}</td>
-              <td>
-                <button
-                  type="button"
-                  className="btn btn-outline-danger btn-block"
-                >
-                  Delete
-                </button>
-              </td>
+              <td>Name</td>
+              <td>From</td>
+              <td>To</td>
+              <td>Actions</td>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {amortizationsArray.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.from}</td>
+                <td>{item.to}</td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger btn-block"
+                    onClick={() => this.handleDeleteAmortization(item.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       );
     }
@@ -57,6 +73,7 @@ ShowAmortization.propTypes = {
     loading: PropTypes.bool,
   }).isRequired,
   storageAmortizations: PropTypes.func.isRequired,
+  storageDeleteAmortization: PropTypes.func.isRequired,
 };
 
 
@@ -64,6 +81,7 @@ const mapStateToProps = (state) => ({ amortizations: state.AmortizationReducers 
 
 const mapDispatchToProps = (dispatch) => ({
   storageAmortizations: () => dispatch(getAmortizations()),
+  storageDeleteAmortization: (id) => dispatch(deleteAmortization(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowAmortization);

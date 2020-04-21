@@ -4,6 +4,7 @@ import {
   FETCH_CONTRACTS_REQUEST,
   FETCH_CONTRACTS_SUCCESS,
 } from './contractTypes';
+import { API_DOMAIN_NAME } from '../../configs/configs';
 
 export const fetchContractsRequest = () => ({
   type: FETCH_CONTRACTS_REQUEST,
@@ -21,7 +22,7 @@ export const fetchContractsFailure = (error) => ({
 
 export const getContracts = () => (dispatch) => {
   dispatch(fetchContractsRequest());
-  axios.get('http://localhost:4000/api/contracts')
+  axios.get(`${API_DOMAIN_NAME}/contracts`)
     .then((response) => dispatch(fetchContractsSuccess(response)))
     .catch((error) => dispatch(fetchContractsFailure(error.message)));
 };

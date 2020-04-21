@@ -11,7 +11,7 @@ export class Amortization {
     @PrimaryGeneratedColumn('increment')
     public id: number;
 
-    @Column('varchar', {length: 50})
+    @Column('varchar', {length: 50, unique: true})
     public name: string;
 
     @Column({ type: 'int', default: 0 })

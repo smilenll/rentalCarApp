@@ -12,7 +12,7 @@ export class Manufacturer {
     @PrimaryGeneratedColumn('increment')
     public id: number;
 
-    @Column('varchar', {length: 50})
+    @Column('varchar', {length: 50, unique: true})
     public name: string;
 
     @Column({type: 'boolean', default: false})

@@ -10,6 +10,7 @@ import Dashboard from './components/dashboard/dashboard';
 import Cars from './components/cars/cars';
 import Rent from './components/rent/rent';
 import store from './redux/store';
+import Amortization from './components/amortization/amortization';
 
 function App() {
   return (
@@ -17,15 +18,16 @@ function App() {
       <Router>
         <Provider store={store}>
           <Navbar />
-            <div className="container">
-              <Switch>
-                <Route path="/" component={Dashboard} exact />
-                <Route path="/dashboard" component={Dashboard} exact />
-                <Route path="/cars" component={Cars} />
-                <Route path="/rent/:carid" component={Rent} />
-                <Route render={() => (<h1> 404</h1>)} />
-              </Switch>
-            </div>
+          <div className="container">
+            <Switch>
+              <Route path="/" component={Dashboard} exact />
+              <Route path="/dashboard" component={Dashboard} exact />
+              <Route path="/cars" component={Cars} />
+              <Route path="/rent/:carid" component={Rent} />
+              <Route path="/amortization" component={Amortization} />
+              <Route render={() => (<h1> 404</h1>)} />
+            </Switch>
+          </div>
         </Provider>
       </Router>
       <ToastContainer />

@@ -1,4 +1,4 @@
-const validateForm = (firstName, lastName, age, calculatedDays) => {
+export const validateRentForm = (firstName, lastName, age, calculatedDays) => {
   const currentErrors = { errors: 0 };
 
   if (firstName.length < 3) {
@@ -25,4 +25,23 @@ const validateForm = (firstName, lastName, age, calculatedDays) => {
   return currentErrors;
 };
 
-export default validateForm;
+export const validateAmortizationForm = (name, from, to) => {
+  const currentErrors = { errors: 0 };
+
+  if (name.length < 1) {
+    currentErrors.errors += 1;
+    currentErrors.name = 'First name must be at lease 1 characters';
+  }
+
+  if (from >= to) {
+    currentErrors.errors += 1;
+    currentErrors.from = 'From must be be for "To"';
+  }
+
+  if (to <= from) {
+    currentErrors.errors += 1;
+    currentErrors.to = 'At leas one year from "From" ';
+  }
+
+  return currentErrors;
+};

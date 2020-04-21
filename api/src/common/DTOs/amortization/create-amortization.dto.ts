@@ -2,7 +2,7 @@ import {
     IsString,
     IsNotEmpty,
     Length,
-    IsNumber,
+    IsNumber, IsNumberString,
 } from 'class-validator';
 
 export class CreateAmortizationDTO {

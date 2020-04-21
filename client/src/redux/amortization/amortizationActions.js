@@ -30,17 +30,13 @@ export const getAmortizations = () => (dispatch) => {
 export const postAmortization = (body) => (dispatch) => {
   dispatch(fetchAmortizationRequest());
   axios.post(`${API_DOMAIN_NAME}/amortizations`, body)
-    .then((response) => {
-      dispatch(fetchAmortizationSuccess(response));
-    })
+    .then(() => { dispatch(getAmortizations()); })
     .catch((error) => dispatch(fetchAmortizationFailure(error.message)));
 };
 
 export const deleteAmortization = (id) => (dispatch) => {
   dispatch(fetchAmortizationRequest());
   axios.delete(`${API_DOMAIN_NAME}/amortizations/${id}`)
-    .then((response) => {
-      dispatch(fetchAmortizationSuccess(response));
-    })
+    .then(() => { dispatch(getAmortizations()); })
     .catch((error) => dispatch(fetchAmortizationFailure(error.message)));
 };

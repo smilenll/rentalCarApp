@@ -141,7 +141,7 @@ describe('Filters', () => {
   });
 
   describe('getAmortizationsFilters', () => {
-    test('it should return all unique Existing amortization filters', () => {
+    test('it should return all unique Existing amortization filter', () => {
       const inputCars = [
         {
           id: 3,

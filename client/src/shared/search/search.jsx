@@ -22,7 +22,7 @@ const Search = ({ setQ }) => (
 );
 
 Search.propTypes = {
-  setQ: PropTypes.func,
+  setQ: PropTypes.func.isRequired,
 };
 
 export default Search;

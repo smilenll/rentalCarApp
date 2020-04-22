@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import { getCars } from '../../redux';
 import Car from '../car/car';
 import Search from '../../shared/search/search';
+import Filter from '../../shared/filter/filter';
 
 const Cars = ({ cars, storageCars }) => {
   const [result, setResult] = useState();
-  const [q, setQ] = React.useState('');
-
+  const [manufacture, setManufacture] = React.useState();
+  const [model, setModel] = React.useState();
+  const [carClass, setCarClass] = React.useState();
+  const [age, setAge] = React.useState();
 
   useEffect(() => {
     storageCars();
@@ -30,6 +33,10 @@ const Cars = ({ cars, storageCars }) => {
   ) : (
     <div className="container mt-4">
       <Search items={carsArray} setQ={setQ} />
+      <Filter cars={carsArray} name="Manufacture" />
+      <Filter cars={carsArray} name="Model" />
+      <Filter cars={carsArray} name="Class" />
+      <Filter cars={carsArray} name="Age" />
       <div className="row mt-4">
         {result
           ? result.map((item) => (
@@ -45,7 +52,6 @@ const Cars = ({ cars, storageCars }) => {
           ))}
       </div>
     </div>
-
   );
 };
 
@@ -54,18 +60,8 @@ Cars.propTypes = {
     allCars: PropTypes.any.isRequired,
     error: PropTypes.string,
     loading: PropTypes.bool,
-  }),
+  }).isRequired,
   storageCars: PropTypes.func.isRequired,
-};
-
-// not working properly
-Car.defaultProps = {
-  cars: {
-    allCars: [],
-    error: '',
-    loading: true,
-  },
-  storageCars: [],
 };
 
 const mapStateToProps = (state) => ({ cars: state.CarReducers });

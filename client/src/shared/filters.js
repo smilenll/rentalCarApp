@@ -30,9 +30,21 @@ const getAmortizationsFilters = (cars, filters, year = new Date().getFullYear())
   return unique(availableFilters);
 };
 
+const setManufacturesFilter = (cars, manufacture) => cars
+  .filter((item) => item.model.manufacture.id === manufacture.id);
+
+const setModelsFilter = (cars, model) => cars
+  .filter((item) => item.model.id === model.id);
+
+const setCarClassFilter = (cars, carClass) => cars
+  .filter((item) => item.model.carClass.id === carClass.id);
+
 export {
   getModelsFilter,
   getManufacturesFilter,
   getAmortizationsFilters,
   getCarClassesFilter,
+  setManufacturesFilter,
+  setModelsFilter,
+  setCarClassFilter,
 };

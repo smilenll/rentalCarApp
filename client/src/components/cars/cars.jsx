@@ -98,27 +98,33 @@ const Cars = ({
     <h3>{cars.error}</h3>
   ) : (
     <div className="container mt-4">
-      <Search items={carsArray} setQ={setQ} />
-      <Filter
-        name="Manufacture"
-        setFilter={setManufacture}
-        availableFilters={availableFilters.manufacturersFilters}
-      />
-      <Filter
-        name="Model"
-        setFilter={setModel}
-        availableFilters={availableFilters.modelsFilters}
-      />
-      <Filter
-        name="Class"
-        setFilter={setCarClass}
-        availableFilters={availableFilters.carClassFilters}
-      />
-      <Filter
-        name="Amortization"
-        setFilter={setAmortization}
-        availableFilters={availableFilters.amortizationFilters}
-      />
+      <div className="row">
+        <div className="col-lg-4">
+          <Search items={carsArray} setQ={setQ} />
+        </div>
+        <Filter
+          name="Manufacture"
+          setFilter={setManufacture}
+          availableFilters={availableFilters.manufacturersFilters}
+        />
+        <Filter
+          name="Model"
+          setFilter={setModel}
+          availableFilters={availableFilters.modelsFilters}
+        />
+        <Filter
+          name="Class"
+          setFilter={setCarClass}
+          availableFilters={availableFilters.carClassFilters}
+        />
+        <Filter
+          name="Amortization"
+          setFilter={setAmortization}
+          availableFilters={availableFilters.amortizationFilters}
+        />
+      </div>
+
+
       <div className="row mt-4">
         {result
           ? result.map((item) => (

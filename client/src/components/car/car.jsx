@@ -47,14 +47,23 @@ Car.propTypes = {
   car: PropTypes.shape(
     {
       id: PropTypes.number,
-      model: PropTypes.string,
-      img: PropTypes.string,
-      carClass: PropTypes.shape(
+      model: PropTypes.shape(
         {
-          price: PropTypes.number,
+          id: PropTypes.number,
           name: PropTypes.string,
+          carClass: PropTypes.shape(
+            {
+              price: PropTypes.number,
+              name: PropTypes.string,
+            },
+          ),
+          manufacture: PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+          }),
         },
       ),
+      img: PropTypes.string,
     },
   ),
 };

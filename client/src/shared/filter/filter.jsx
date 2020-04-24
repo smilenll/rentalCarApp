@@ -1,41 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import PropTypes from 'prop-types';
 
-const Filter = ({ availableFilters, setFilter, name }) => (
-  <>
-    <DropdownButton
-      id={`dropdown-variants-${name}`}
-      variant="info"
-      title={name}
-    >
-      <Dropdown.Item
-        onClick={() => {
-          setFilter(false);
-        }}
-      >
-        All
-      </Dropdown.Item>
-      {availableFilters
-        .map((filter) => (
+const Filter = ({ availableFilters, setFilter, name }) => {
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  return (
+    <>
+      <div className="col-lg-2">
+        <h6>{name}</h6>
+        <DropdownButton
+          id={`dropdown-variants-${name}`}
+          variant="info"
+          title={activeFilter}
+          block
+        >
           <Dropdown.Item
-            eventKey={filter.id}
             onClick={() => {
-              setFilter(filter);
+              setActiveFilter('All');
+              setFilter(false);
             }}
           >
-            {filter.name}
+            All
           </Dropdown.Item>
-        ))}
-      <Dropdown.Item eventKey="3" active>Active Item</Dropdown.Item>
-    </DropdownButton>
-    {' '}
-  </>
-);
+          {availableFilters
+            .map((filter) => (
+              <Dropdown.Item
+                key={filter.id}
+                onClick={() => {
+                  setActiveFilter(filter.name);
+                  setFilter(filter);
+                }}
+              >
+                {filter.name}
+              </Dropdown.Item>
+            ))}
+        </DropdownButton>
+        {' '}
+      </div>
+    </>
+  );
+};
 
 Filter.propTypes = {
-  availableFilters: PropTypes.any.isRequired,
+  availableFilters: PropTypes.arrayOf({}).isRequired,
   setFilter: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
 };

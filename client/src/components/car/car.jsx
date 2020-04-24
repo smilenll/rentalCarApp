@@ -31,6 +31,11 @@ const Car = ({ car }) => {
               </strong>
             </p>
             <p className="card-text">
+              <strong className="car-text-board">
+                {car.yearOfManufacture}
+              </strong>
+            </p>
+            <p className="card-text">
               <strong className="car-class">
                 {car.model.carClass.name}
               </strong>
@@ -64,6 +69,7 @@ Car.propTypes = {
         },
       ),
       img: PropTypes.string,
+      yearOfManufacture: PropTypes.number.isRequired,
     },
   ),
 };

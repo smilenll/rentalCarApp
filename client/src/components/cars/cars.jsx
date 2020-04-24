@@ -1,48 +1,65 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCars } from '../../redux';
+import { getAmortizations, getCars } from '../../redux';
 import Car from '../car/car';
 import Search from '../../shared/search/search';
 import Filter from '../../shared/filter/filter';
 import {
   getManufacturesFilter,
   getModelsFilter,
+  getCarClassesFilter,
+  getAmortizationsFilters,
   setManufacturesFilter,
   setModelsFilter,
-  setCarClassFilter, getCarClassesFilter,
+  setCarClassFilter, setAmortizationsFilter,
 } from '../../shared/filters';
 
-const Cars = ({ cars, storageCars }) => {
+const Cars = ({
+  cars, amortizations, storageCars, storageAmortizations,
+}) => {
   const [result, setResult] = useState(false);
+  const [resultAF, setResultAF] = useState(false);
   const [q, setQ] = useState(false);
   const [manufacture, setManufacture] = useState(false);
   const [model, setModel] = useState(false);
-  const [carClass, setCarClass] = useState();
-  // const [age, setAge] = useState();
+  const [carClass, setCarClass] = useState(false);
+  const [amortization, setAmortization] = useState(false);
   const [availableFilters, setAvailableFilters] = useState({
     manufacturersFilters: [],
     modelsFilters: [],
     carClassFilters: [],
+    amortizationFilters: [],
   });
 
   const carsArray = cars.allCars.data;
+  const amortizationArray = amortizations.allAmortizationFilters.data;
 
   const getFiltersForCurrentCars = (carsResult) => ({
-    manufacturersFilters: getManufacturesFilter(carsResult),
-    modelsFilters: getModelsFilter(carsResult),
-    carClassFilters: getCarClassesFilter(carsResult),
+    manufacturersFilters: manufacture
+      ? getManufacturesFilter(carsArray) : getManufacturesFilter(carsResult),
+    modelsFilters: model
+      ? getModelsFilter(carsArray) : getModelsFilter(carsResult),
+    carClassFilters: carClass
+      ? getCarClassesFilter(carsArray) : getCarClassesFilter(carsResult),
+    amortizationFilters: amortization
+      ? getAmortizationsFilters(carsArray, amortizationArray)
+      : getAmortizationsFilters(carsResult, amortizationArray),
   });
 
   useEffect(() => {
     storageCars();
+    storageAmortizations();
   }, []);
 
   useEffect(() => {
     if (carsArray) {
       setResult(carsArray);
     }
-  }, [carsArray]);
+    if (amortizationArray) {
+      setResultAF(amortizationArray);
+    }
+  }, [carsArray, amortizationArray]);
 
   useEffect(() => {
     let filtered = carsArray;
@@ -63,14 +80,17 @@ const Cars = ({ cars, storageCars }) => {
     if (carClass) {
       filtered = setCarClassFilter(filtered, carClass);
     }
+    if (amortization) {
+      filtered = setAmortizationsFilter(filtered, amortization);
+    }
     setResult(filtered);
-  }, [q, manufacture, model, carClass]);
+  }, [q, manufacture, model, carClass, amortization]);
 
   useEffect(() => {
-    if (result) {
+    if (result && resultAF) {
       setAvailableFilters(getFiltersForCurrentCars(result));
     }
-  }, [result]);
+  }, [result, resultAF]);
 
   return cars.loading ? (
     <h3>Loading</h3>
@@ -94,7 +114,11 @@ const Cars = ({ cars, storageCars }) => {
         setFilter={setCarClass}
         availableFilters={availableFilters.carClassFilters}
       />
-      {/* <Filter cars={carsArray} name="Age" /> */}
+      <Filter
+        name="Amortization"
+        setFilter={setAmortization}
+        availableFilters={availableFilters.amortizationFilters}
+      />
       <div className="row mt-4">
         {result
           ? result.map((item) => (
@@ -120,12 +144,22 @@ Cars.propTypes = {
     loading: PropTypes.bool,
   }).isRequired,
   storageCars: PropTypes.func.isRequired,
+  amortizations: PropTypes.shape({
+    allAmortizationFilters: PropTypes.any.isRequired,
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+  }).isRequired,
+  storageAmortizations: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({ cars: state.CarReducers });
+const mapStateToProps = (state) => ({
+  cars: state.CarReducers,
+  amortizations: state.AmortizationReducers,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   storageCars: () => dispatch(getCars()),
+  storageAmortizations: () => dispatch(getAmortizations()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cars);

@@ -147,5 +147,27 @@
       "yearOFManufacture": 2014,
       "isFree": true
     }
+  ],
+  "amortizations": [
+    {
+      "name": "Brand New",
+      "from": 0,
+      "until": 3
+    },
+    {
+      "name": "New",
+      "from": 3,
+      "until": 5
+    },
+    {
+      "name": "Moderate",
+      "from": 5,
+      "until": 9
+    },
+    {
+      "name": "Old",
+      "from": 9,
+      "until": 200
+    }
   ]
 }

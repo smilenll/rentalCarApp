@@ -19,4 +19,8 @@ export class CreateAmortizationDTO {
     @IsNumber()
     @IsNotEmpty()
     public to: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    public priceCoefficient: number;
 }

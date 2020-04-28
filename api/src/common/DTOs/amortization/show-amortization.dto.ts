@@ -1,10 +1,3 @@
-import {
-    IsString,
-    IsNotEmpty,
-    Length,
-    IsNumber,
-    IsDateString, Min
-} from 'class-validator';
 import {Publish} from "../../decorators/publish";
 
 export class ShowAmortizationDTO {
@@ -20,4 +13,7 @@ export class ShowAmortizationDTO {
 
     @Publish()
     public to: number;
+
+    @Publish()
+    public priceCoefficient:number;
 }

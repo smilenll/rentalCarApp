@@ -20,6 +20,9 @@ export class Amortization {
     @Column({ type: 'int', default: 0 })
     public to: number;
 
+    @Column({ type: 'float', nullable: true })
+    public priceCoefficient: number;
+
     @Column({type: 'boolean', default: false})
     public isDeleted: boolean;
 }

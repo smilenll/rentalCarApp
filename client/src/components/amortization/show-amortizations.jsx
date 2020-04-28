@@ -38,6 +38,7 @@ class ShowAmortization extends Component {
               <td>Name</td>
               <td>From</td>
               <td>To</td>
+              <td>Coefficient</td>
               <td>Actions</td>
             </tr>
           </thead>
@@ -47,6 +48,7 @@ class ShowAmortization extends Component {
                 <td>{item.name}</td>
                 <td>{item.from}</td>
                 <td>{item.to}</td>
+                <td>{item.priceCoefficient}</td>
                 <td>
                   <button
                     type="button"

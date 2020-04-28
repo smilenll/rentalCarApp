@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { postAmortization } from '../../redux';
 import Input from '../../shared/forms/Input';
 import { validateAmortizationForm } from '../../shared/forms/validate-form';
-import PropTypes from 'prop-types';
 
 
 class CreateAmortization extends Component {
@@ -13,11 +13,13 @@ class CreateAmortization extends Component {
       name: '',
       from: 0,
       to: 0,
+      priceCoefficient: 0,
       errors: {},
     };
     this.updateName = this.updateName.bind(this);
     this.updateFrom = this.updateFrom.bind(this);
     this.updateTo = this.updateTo.bind(this);
+    this.updatePriceCoefficient = this.updatePriceCoefficient.bind(this);
     this.handleSendForm = this.handleSendForm.bind(this);
   }
 
@@ -36,6 +38,11 @@ class CreateAmortization extends Component {
     await this.setState({ errors: this.validate() });
   }
 
+  async updatePriceCoefficient(priceCoefficient) {
+    await this.setState({ priceCoefficient: +priceCoefficient });
+    await this.setState({ errors: this.validate() });
+  }
+
   validate() {
     return validateAmortizationForm(this.state.name, this.state.from, this.state.to);
   }
@@ -45,13 +52,16 @@ class CreateAmortization extends Component {
       await this.setState({ errors: this.validate().errors });
     }
 
-    const { name, from, to } = this.state;
+    const {
+      name, from, to, priceCoefficient,
+    } = this.state;
     const { sendAmortizationForm } = this.props;
 
     return sendAmortizationForm({
       name,
       from,
       to,
+      priceCoefficient,
     });
   }
 
@@ -60,6 +70,7 @@ class CreateAmortization extends Component {
       name,
       from,
       to,
+      priceCoefficient,
       errors,
     } = this.state;
 
@@ -91,6 +102,15 @@ class CreateAmortization extends Component {
           value={to}
           error={errors.to}
           setInput={this.updateTo}
+          formStartValidation
+        />
+        <Input
+          label="Price Coefficient"
+          type="number"
+          id="PriceCoefficient"
+          value={priceCoefficient}
+          error={errors.priceCoefficient}
+          setInput={this.updatePriceCoefficient}
           formStartValidation
         />
         <button

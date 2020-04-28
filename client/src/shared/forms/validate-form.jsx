@@ -25,7 +25,7 @@ export const validateRentForm = (firstName, lastName, age, calculatedDays) => {
   return currentErrors;
 };
 
-export const validateAmortizationForm = (name, from, to) => {
+export const validateAmortizationForm = (name, from, to, priceCoefficient) => {
   const currentErrors = { errors: 0 };
 
   if (name.length < 1) {
@@ -41,6 +41,11 @@ export const validateAmortizationForm = (name, from, to) => {
   if (to <= from) {
     currentErrors.errors += 1;
     currentErrors.to = 'At leas one year from "From" ';
+  }
+
+  if (priceCoefficient > 0) {
+    currentErrors.errors += 1;
+    currentErrors.priceCoefficient = 'Price coefficient must be positive number';
   }
 
   return currentErrors;

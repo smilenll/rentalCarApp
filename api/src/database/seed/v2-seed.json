@@ -16,22 +16,22 @@
   "models": [
     {
       "name": "1-series",
-      "manufacture": 1,
+      "manufacture": 2,
       "carClassId": 1
     },
     {
       "name": "3-series",
-      "manufacture": 1,
+      "manufacture": 2,
       "carClassId": 2
     },
     {
       "name": "5-series",
-      "manufacture": 1,
+      "manufacture": 2,
       "carClassId": 3
     },
     {
       "name": "6-series",
-      "manufacture": 1,
+      "manufacture": 2,
       "carClassId": 4
     },
     {
@@ -146,6 +146,28 @@
       "image": "https://images.dealersync.com/cloud/userdocumentprod/2659/Photos/307757/20190115184452947_2014_mini_cooper_clubman-pic-3771956625271938048-1024x768.jpg?_=08cbb8c7b324580ded472b45b6b9ddfd1b29a963",
       "yearOFManufacture": 2014,
       "isFree": true
+    }
+  ],
+  "amortizations": [
+    {
+      "name": "Brand New",
+      "from": 0,
+      "until": 3
+    },
+    {
+      "name": "New",
+      "from": 3,
+      "until": 5
+    },
+    {
+      "name": "Moderate",
+      "from": 5,
+      "until": 9
+    },
+    {
+      "name": "Old",
+      "from": 9,
+      "until": 200
     }
   ]
 }

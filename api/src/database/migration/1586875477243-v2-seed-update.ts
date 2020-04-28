@@ -43,6 +43,16 @@ export class v2SeedUpdate1586875477243 implements MigrationInterface {
                     RETURNING "id", "isDeleted"`)
             )
         );
+
+        await Promise.all(
+            V2seed.amortizations.map(async item =>
+                await queryRunner.query(`INSERT INTO "amortizations"
+                    ("name", "from", "to")
+                    VALUES
+                    ('${item.name}', '${item.from}', '${item.until}')
+                    RETURNING "id", "isDeleted"`)
+            )
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {

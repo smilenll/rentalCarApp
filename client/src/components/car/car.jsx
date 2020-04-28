@@ -31,6 +31,11 @@ const Car = ({ car }) => {
               </strong>
             </p>
             <p className="card-text">
+              <strong className="car-text-board">
+                {car.yearOfManufacture}
+              </strong>
+            </p>
+            <p className="card-text">
               <strong className="car-class">
                 {car.model.carClass.name}
               </strong>
@@ -47,14 +52,24 @@ Car.propTypes = {
   car: PropTypes.shape(
     {
       id: PropTypes.number,
-      model: PropTypes.string,
-      img: PropTypes.string,
-      carClass: PropTypes.shape(
+      model: PropTypes.shape(
         {
-          price: PropTypes.number,
+          id: PropTypes.number,
           name: PropTypes.string,
+          carClass: PropTypes.shape(
+            {
+              price: PropTypes.number,
+              name: PropTypes.string,
+            },
+          ),
+          manufacture: PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+          }),
         },
       ),
+      img: PropTypes.string,
+      yearOfManufacture: PropTypes.number.isRequired,
     },
   ),
 };

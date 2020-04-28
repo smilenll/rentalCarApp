@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { postRent } from '../../redux';
+import PropTypes from 'prop-types';
+import { getAmortizations, postRent } from '../../redux';
 import Car from '../car/car';
 import {
   calcDays,
@@ -14,9 +15,11 @@ import Input from '../../shared/forms/Input';
 import DateInput from '../../shared/forms/DateInput';
 import { validateRentForm } from '../../shared/forms/validate-form';
 import Notificator from '../notificator/notificator';
+import { findCarAmortizationFilter } from '../../shared/filters';
+import Bill from '../bill/bill';
 
 const Rent = ({
-  cars, match, sendRentForm, redirectTo,
+  cars, amortizations, match, sendRentForm, redirectTo, storageAmortizations,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const currentDateTime = new Date().toISOString();
@@ -39,9 +42,8 @@ const Rent = ({
         name: 'test',
       },
     },
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT02WvrL6ErmOuV8XfhAyOdRP_PzRC3RzFyYaLRoIvULYitBol4',
+    img: 'demo',
     isFree: true,
-
   });
   const [deliveryDate, setDeliveryDate] = useState(currentDateTime);
   const [bill, setBill] = useState({
@@ -54,6 +56,15 @@ const Rent = ({
 
   const calculatedDays = calcDays(new Date(), deliveryDate);
 
+  let currentAmortizationFilter = {};
+
+  // This can be made better
+  if (amortizations.allAmortizationFilters.data && car) {
+    currentAmortizationFilter = findCarAmortizationFilter(
+      amortizations.allAmortizationFilters.data, car,
+    );
+  }
+
   const createRequest = () => ({
     firstName,
     lastName,
@@ -63,7 +74,6 @@ const Rent = ({
     expectedReturnDateTime: new Date(deliveryDate).toISOString(),
   });
 
-  // BUG on empty Form
   const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
 
   const validate = () => {
@@ -73,6 +83,7 @@ const Rent = ({
   useEffect(buildBill, [age, deliveryDate]);
   useEffect(validate, [age, firstName, lastName, deliveryDate]);
   useEffect(() => {
+    storageAmortizations();
     if (cars.allCars.data) {
       setCar(cars.allCars.data.find((item) => item.id === +match.params.carid));
     } else {
@@ -146,54 +157,43 @@ const Rent = ({
           </div>
         </div>
         <div className="col-6 mt-5">
-          <h4 className="text-right">Estimated price</h4>
-          {
-            bill.price <= 1.2
-              ? (
-                <h5 className="text-right empty-form-msg">For estimated price fill the form</h5>
-              )
-              : (
-                <table className="table table-striped table-dark ">
-                  <tbody>
-                    {bill && bill.massages.map((item) => (
-                      <tr key={item}>
-                        <td colSpan="2" className="text-right">
-                          {item}
-                        </td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <td>
-                        <h2>
-                          Total
-                        </h2>
-                      </td>
-                      <td className="text-right">
-                        <h2>
-                          {bill.price}
-                          {' '}
-                          $
-                        </h2>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              )
-          }
+          <Bill
+            bill={bill}
+            car={car.model.price}
+            currentAmortizationFilter={currentAmortizationFilter}
+          />
         </div>
       </div>
     </div>
   );
 };
 
+Rent.propTypes = {
+  cars: PropTypes.shape({
+    allCars: PropTypes.any.isRequired,
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+  }).isRequired,
+  amortizations: PropTypes.shape({
+    allAmortizationFilters: PropTypes.any.isRequired,
+    loading: PropTypes.bool,
+  }).isRequired,
+  match: PropTypes.shape({}).isRequired,
+  storageAmortizations: PropTypes.func.isRequired,
+  sendRentForm: PropTypes.func.isRequired,
+  redirectTo: PropTypes.string.isRequired,
+};
+
 
 const mapStateToProps = (state) => ({
   cars: state.CarReducers,
+  amortizations: state.AmortizationReducers,
   redirectTo: state.RedirectReducers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   sendRentForm: (formData) => dispatch(postRent(formData)),
+  storageAmortizations: () => dispatch(getAmortizations()),
 });
 
 export default connect(

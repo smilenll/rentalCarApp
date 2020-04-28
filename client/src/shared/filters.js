@@ -1,6 +1,12 @@
 // Read more
 const unique = (array) => [...new Map(array.map((item) => [item.id, item])).values()];
 
+const findCarAmortizationFilter = (filters, car, year = new Date().getFullYear()) => {
+  const carYears = year - car.yearOfManufacture;
+  return filters
+    .find((rangeFilter) => rangeFilter.from <= carYears && rangeFilter.to > carYears);
+};
+
 const getManufacturesFilter = (cars) => {
   const filters = cars.map((item) => item.model.manufacture);
 
@@ -28,11 +34,9 @@ const getCarClassesFilter = (cars) => {
 const setCarClassFilter = (cars, carClass) => cars
   .filter((item) => item.model.carClass.id === carClass.id);
 
-const getAmortizationsFilters = (cars, filters, year = new Date().getFullYear()) => {
+const getAmortizationsFilters = (cars, filters) => {
   const availableFilters = cars.reduce((acc, car) => {
-    const carYears = year - car.yearOfManufacture;
-    const foundFilter = filters
-      .find((rangeFilter) => rangeFilter.from <= carYears && rangeFilter.to > carYears);
+    const foundFilter = findCarAmortizationFilter(filters, car);
     if (foundFilter) {
       acc.push(foundFilter);
       return acc;
@@ -59,4 +63,5 @@ export {
   setModelsFilter,
   setCarClassFilter,
   setAmortizationsFilter,
+  findCarAmortizationFilter,
 };

@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getContracts } from '../../redux';
+import { getAmortizations, getContracts } from '../../redux';
 import Contract from '../contract/contract';
 
-const Dashboard = ({ contracts, storageContracts }) => {
+const Dashboard = ({
+  contracts, amortizations, storageContracts, storageAmortizations,
+}) => {
   useEffect(() => {
     storageContracts();
+    storageAmortizations();
   }, []);
 
   return contracts.loading ? (
@@ -34,8 +37,13 @@ const Dashboard = ({ contracts, storageContracts }) => {
           <tbody>
             {contracts
           && contracts.allContracts.data
+          && amortizations.allAmortizationFilters.data
           && contracts.allContracts.data.map((item) => (
-            <Contract key={item.id} contract={item} />
+            <Contract
+              key={item.id}
+              contract={item}
+              amortizationFilters={amortizations.allAmortizationFilters.data}
+            />
           ))}
           </tbody>
         </table>
@@ -49,23 +57,24 @@ Dashboard.propTypes = {
     allContracts: PropTypes.any.isRequired,
     error: PropTypes.string,
     loading: PropTypes.bool,
-  }),
-  storageContracts: PropTypes.func,
-};
-Dashboard.defaultProps = {
-  contracts: {
-    allContracts: [],
-    error: 'No error',
-    loading: 'Loading',
-  },
-  storageContracts: PropTypes.func,
+  }).isRequired,
+  amortizations: PropTypes.shape({
+    allAmortizationFilters: PropTypes.any.isRequired,
+    loading: PropTypes.bool,
+  }).isRequired,
+  storageContracts: PropTypes.func.isRequired,
+  storageAmortizations: PropTypes.func.isRequired,
 };
 
 
-const mapStateToProps = (state) => ({ contracts: state.ContractReducers });
+const mapStateToProps = (state) => ({
+  contracts: state.ContractReducers,
+  amortizations: state.AmortizationReducers,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   storageContracts: () => dispatch(getContracts()),
+  storageAmortizations: () => dispatch(getAmortizations()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

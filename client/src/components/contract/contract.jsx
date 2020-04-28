@@ -9,10 +9,11 @@ import {
 } from '../../shared/calculator';
 import { returnCar } from '../../services';
 import './contact.css';
+import { findCarAmortizationFilter } from '../../shared/filters';
 
 import Notificator from '../notificator/notificator';
 
-const Contract = ({ contract }) => {
+const Contract = ({ contract, amortizationFilters }) => {
   const [date, setDate] = useState(new Date());
   const [btnDisable, setBtnDisable] = useState(false);
   const currentDateTime = new Date(date).toISOString();
@@ -20,11 +21,13 @@ const Contract = ({ contract }) => {
   const estimatedDays = calcDays(contract.initialDateTime, contract.expectedReturnDateTime);
   const estimatedBill = calculateTotalBill(contract.age, contract.car, estimatedDays);
   const finalPrice = calculateReturnPrice(contract, estimatedDays, currentDays);
+  const amortizationCoefficient = findCarAmortizationFilter(amortizationFilters, contract.car)
+    .priceCoefficient;
 
   function tick() {
     setDate(new Date());
   }
-  // Bad error handling
+
   const sendReturnCarRequest = async () => {
     try {
       await returnCar(contract.id, { returnDateTime: currentDateTime });
@@ -57,18 +60,18 @@ const Contract = ({ contract }) => {
         {estimatedDays}
       </td>
       <td>
-        {(estimatedBill.price / estimatedDays).toFixed(2)}
+        {((estimatedBill.price / estimatedDays) * amortizationCoefficient).toFixed(2)}
         {' '}
         $/days
       </td>
       <td>{currentDays}</td>
       <td>
-        {(finalPrice / currentDays).toFixed(2)}
+        {((finalPrice / currentDays) * amortizationCoefficient).toFixed(2)}
         {' '}
         $/days
       </td>
       <td>
-        {finalPrice.toFixed(2)}
+        {(finalPrice * amortizationCoefficient).toFixed(2)}
         {' '}
         $
       </td>
@@ -113,25 +116,15 @@ Contract.propTypes = {
       car: PropTypes.shape({
         model: PropTypes.shape({
           name: PropTypes.string,
+          carClass: PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+          }),
         }),
-      }),
+      }).isRequired,
     },
-  ),
-};
-
-Contract.defaultProps = {
-  contract: {
-    initialDateTime: 'no date',
-    expectedReturnDateTime: 'no date',
-    firstName: 'No name',
-    lastName: 'No name',
-    pickUpDateTime: 'No name',
-    days: 'No name',
-    car: {
-      model: 'No name',
-      name: 'No name',
-    },
-  },
+  ).isRequired,
+  amortizationFilters: PropTypes.arrayOf({}).isRequired,
 };
 
 export default Contract;

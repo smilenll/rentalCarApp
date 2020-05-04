@@ -5,6 +5,7 @@ import './car.css';
 
 const Car = ({ car }) => {
   const btnLink = `/rent/${car.id}`;
+
   return (
     <>
       <NavLink to={btnLink}>

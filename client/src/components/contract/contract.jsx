@@ -124,7 +124,7 @@ Contract.propTypes = {
       }).isRequired,
     },
   ).isRequired,
-  amortizationFilters: PropTypes.arrayOf({}).isRequired,
+  amortizationFilters: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default Contract;

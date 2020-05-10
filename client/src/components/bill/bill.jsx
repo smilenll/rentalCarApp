@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
   <>
-    <h4 className="text-right">Estimated price</h4>
     {
         bill.price <= 1.2
           ? (
@@ -19,7 +18,7 @@ const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
                     </td>
                   </tr>
                 ))}
-                {/*Where to put this? In calc or hear*/}
+                {/* Where to put this? In calc or hear */}
                 <tr>
                   <td colSpan="2" className="text-right">
                     Car is
@@ -56,14 +55,18 @@ const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
 
 Bill.propTypes = {
   bill: PropTypes.shape({
-    massages: PropTypes.string,
+    massages: PropTypes.arrayOf(PropTypes.string),
     price: PropTypes.number,
   }).isRequired,
-  carPrice: PropTypes.number.isRequired,
+  carPrice: PropTypes.number,
   currentAmortizationFilter: PropTypes.shape({
     name: PropTypes.string,
     priceCoefficient: PropTypes.number,
   }).isRequired,
+};
+
+Bill.defaultProps = {
+  carPrice: 0,
 };
 
 export default Bill;

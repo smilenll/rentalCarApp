@@ -1,0 +1,377 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard component should be render correct 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-12"
+  >
+    <table
+      className="table table-hover table-dark"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            Car
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="First & Last name"
+          >
+            Customer
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip "
+            scope="col"
+            title="First & Last name"
+          >
+            From
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated return date"
+          >
+            To
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated days"
+          >
+            days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated price per day"
+          >
+            price $/days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Days until today"
+          >
+            On day
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="The price per day which customer has to pay today"
+          >
+            Current price
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Total price for now"
+          >
+            Total price
+          </th>
+          <th
+            scope="col"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Dashboard component should render Dashboard cu 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-12"
+  >
+    <table
+      className="table table-hover table-dark"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            Car
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="First & Last name"
+          >
+            Customer
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip "
+            scope="col"
+            title="First & Last name"
+          >
+            From
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated return date"
+          >
+            To
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated days"
+          >
+            days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated price per day"
+          >
+            price $/days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Days until today"
+          >
+            On day
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="The price per day which customer has to pay today"
+          >
+            Current price
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Total price for now"
+          >
+            Total price
+          </th>
+          <th
+            scope="col"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Dashboard component should render contracts from Redux store 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-12"
+  >
+    <table
+      className="table table-hover table-dark"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            Car
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="First & Last name"
+          >
+            Customer
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip "
+            scope="col"
+            title="First & Last name"
+          >
+            From
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated return date"
+          >
+            To
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated days"
+          >
+            days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated price per day"
+          >
+            price $/days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Days until today"
+          >
+            On day
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="The price per day which customer has to pay today"
+          >
+            Current price
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Total price for now"
+          >
+            Total price
+          </th>
+          <th
+            scope="col"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Dashboard component should render loading 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-12"
+  >
+    <table
+      className="table table-hover table-dark"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            Car
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="First & Last name"
+          >
+            Customer
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip "
+            scope="col"
+            title="First & Last name"
+          >
+            From
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated return date"
+          >
+            To
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated days"
+          >
+            days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Estimated price per day"
+          >
+            price $/days
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Days until today"
+          >
+            On day
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="The price per day which customer has to pay today"
+          >
+            Current price
+          </th>
+          <th
+            data-placement="top"
+            data-toggle="tooltip"
+            scope="col"
+            title="Total price for now"
+          >
+            Total price
+          </th>
+          <th
+            scope="col"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+</div>
+`;

@@ -27,37 +27,15 @@ const Rent = ({
   const [lastName, setLastName] = useState('');
   const [formStartValidation, setFormStartValidation] = useState(false);
   const [age, setAge] = useState(0);
-  const [car, setCar] = useState({
-    id: 1,
-    model: {
-      id: 1,
-      name: 'test',
-      carClass: {
-        id: 1,
-        name: 'A',
-        price: 0,
-      },
-      manufacture: {
-        id: 1,
-        name: 'test',
-      },
-    },
-    img: 'demo',
-    isFree: true,
-  });
+  const [car, setCar] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState(currentDateTime);
-  const [bill, setBill] = useState({
-    price: 0,
-    massages: [],
-  });
+  const [bill, setBill] = useState();
   const [errors, setErrors] = useState({
     errors: 0,
   });
 
   const calculatedDays = calcDays(new Date(), deliveryDate);
-
   let currentAmortizationFilter = {};
-
   // This can be made better
   if (amortizations.allAmortizationFilters.data && car) {
     currentAmortizationFilter = findCarAmortizationFilter(
@@ -65,22 +43,32 @@ const Rent = ({
     );
   }
 
-  const createRequest = () => ({
-    firstName,
-    lastName,
-    age: +age,
-    car: +match.params.carid,
-    initialDateTime: new Date().toISOString(),
-    expectedReturnDateTime: new Date(deliveryDate).toISOString(),
-  });
+  const sendForm = () => {
+    const form = {
+      firstName,
+      lastName,
+      age: +age,
+      car: +match.params.carid,
+      initialDateTime: new Date().toISOString(),
+      expectedReturnDateTime: new Date(deliveryDate).toISOString(),
+    };
 
-  const buildBill = () => setBill(calculateTotalBill(age, car, calculatedDays));
+    if (errors.errors === 0) {
+      sendRentForm(form);
+    } else {
+      setFormStartValidation(true);
+    }
+  };
 
   const validate = () => {
     setErrors(validateRentForm(firstName, lastName, age, calculatedDays));
   };
 
-  useEffect(buildBill, [age, deliveryDate]);
+  useEffect(() => {
+    if (car) {
+      setBill(calculateTotalBill(age, car, calculatedDays));
+    }
+  }, [age, deliveryDate]);
   useEffect(validate, [age, firstName, lastName, deliveryDate]);
   useEffect(() => {
     storageAmortizations();
@@ -109,7 +97,9 @@ const Rent = ({
   return (
     <div className="container">
       <div className="row">
-        {isLoading ? <div>Loading</div> : <div className="col-lg-12"><Car car={car} /></div>}
+        {!isLoading && car
+          ? <div className="col-lg-12"><Car car={car} /></div>
+          : <div>Loading</div>}
         <div className="col-lg-6 mt-5">
           <div className="form-row">
             <Input
@@ -147,21 +137,24 @@ const Rent = ({
               id="car-submit-btn"
               type="button"
               className="btn btn-outline-success btn-block"
-              onClick={() => {
-                setFormStartValidation(true);
-                errors.errors === 0 && sendRentForm(createRequest());
-              }}
+              onClick={sendForm}
             >
               Rent car
             </button>
           </div>
         </div>
         <div className="col-6 mt-5">
-          <Bill
-            bill={bill}
-            car={car.model.price}
-            currentAmortizationFilter={currentAmortizationFilter}
-          />
+          {car && bill ? (
+            <div className="col-lg-12">
+              <Bill
+                bill={bill}
+                car={car.model.price}
+                currentAmortizationFilter={currentAmortizationFilter}
+              />
+            </div>
+          ) : (
+            <h5 className="text-right empty-form-msg">For estimated price fill the form</h5>
+          )}
         </div>
       </div>
     </div>
@@ -178,10 +171,16 @@ Rent.propTypes = {
     allAmortizationFilters: PropTypes.any.isRequired,
     loading: PropTypes.bool,
   }).isRequired,
-  match: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      carid: PropTypes.string,
+    }),
+  }).isRequired,
   storageAmortizations: PropTypes.func.isRequired,
   sendRentForm: PropTypes.func.isRequired,
-  redirectTo: PropTypes.string.isRequired,
+  redirectTo: PropTypes.shape({
+    redirectTo: PropTypes.string,
+  }).isRequired,
 };
 
 

@@ -13,7 +13,6 @@ export const calcDays = (initialDateTime, expectedReturnDate) => {
 };
 
 export const calculateDiscounts = (differenceInDays) => {
-
   let tax = {
     price: 0,
     massage: '',
@@ -71,7 +70,6 @@ export const calculateTotalBill = (age, car, calculatedDays) => {
 };
 
 export const calculateReturnPrice = (contract, estimatedDays, currentDays) => {
-
   if ((currentDays - estimatedDays) <= 0) {
     return calculateTotalBill(contract.age, contract.car, currentDays)
       .price;
@@ -81,9 +79,9 @@ export const calculateReturnPrice = (contract, estimatedDays, currentDays) => {
     .price;
 
   if (extraDays <= 2) {
-    contractPrice += contract.car.carClass.price * 1.2 * extraDays;
+    contractPrice += contract.car.model.carClass.price * 1.2 * extraDays;
     return contractPrice;
   }
-  contractPrice += contract.car.carClass.price * 1.5 * extraDays;
+  contractPrice += contract.car.model.carClass.price * 1.5 * extraDays;
   return contractPrice;
 };

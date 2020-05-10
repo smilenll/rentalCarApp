@@ -1,9 +1,10 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class SeedPriceCoefficientColumn1588058457167 implements MigrationInterface {
-    name = 'SeedPriceCoefficientColumn1588058457167'
+export class SeedPriceCoefficient1589103810743 implements MigrationInterface {
+    name = 'SeedPriceCoefficient1589103810743'
 
     public async up(queryRunner: QueryRunner): Promise<any> {
+        await queryRunner.query(`ALTER TABLE "contracts" ALTER COLUMN "returnDateTime" SET DEFAULT null`, undefined);
         await queryRunner.query(`ALTER TABLE "contracts" ALTER COLUMN "returnDateTime" SET DEFAULT null`, undefined);
         await queryRunner.query(`UPDATE amortizations SET "priceCoefficient" = 1.2 WHERE "id" = 1`);
         await queryRunner.query(`UPDATE amortizations SET "priceCoefficient" = 1.1 WHERE "id" = 2`);

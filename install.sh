@@ -32,7 +32,7 @@ echo "Install api dependencies"
 npm install;
 
 echo "We need clean database. For this project we use default postgreSQL database with name postgres";
-echo "Set DB conection"
+echo "Set DB connection"
 
 echo "
 PORT=3000

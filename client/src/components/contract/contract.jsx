@@ -12,10 +12,12 @@ import './contact.css';
 import { findCarAmortizationFilter } from '../../shared/filters';
 
 import Notificator from '../notificator/notificator';
+import Confirm from '../../shared/modals/confirm';
 
 const Contract = ({ contract, amortizationFilters }) => {
   const [date, setDate] = useState(new Date());
   const [btnDisable, setBtnDisable] = useState(false);
+  const [show, setShow] = useState(false);
   const currentDateTime = new Date(date).toISOString();
   const currentDays = calcDays(contract.initialDateTime, currentDateTime);
   const estimatedDays = calcDays(contract.initialDateTime, contract.expectedReturnDateTime);
@@ -32,6 +34,7 @@ const Contract = ({ contract, amortizationFilters }) => {
     try {
       await returnCar(contract.id, { returnDateTime: currentDateTime });
       setBtnDisable(true);
+      setShow(false);
     } catch (e) {
       setBtnDisable(false);
       toast(<Notificator massage={e.message} />);
@@ -46,37 +49,38 @@ const Contract = ({ contract, amortizationFilters }) => {
   });
 
   return (
-    <tr
-      className={(btnDisable ? 'flipOut' : '')}
-      data-toggle="tooltip "
-      data-placement="top"
-      title={`Class ${contract.car.model.carClass.name}, regular price per day ${contract.car.model.carClass.price}`}
-    >
-      <th scope="row">{contract.car.model.name}</th>
-      <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
-      <td>{moment(contract.initialDateTime).format('Do MMMM  YYYY, H:mm')}</td>
-      <td>{moment(contract.expectedReturnDateTime).format('Do MMMM  YYYY, H:mm')}</td>
-      <td>
-        {estimatedDays}
-      </td>
-      <td>
-        {((estimatedBill.price / estimatedDays) * amortizationCoefficient).toFixed(2)}
-        {' '}
-        $/days
-      </td>
-      <td>{currentDays}</td>
-      <td>
-        {((finalPrice / currentDays) * amortizationCoefficient).toFixed(2)}
-        {' '}
-        $/days
-      </td>
-      <td>
-        {(finalPrice * amortizationCoefficient).toFixed(2)}
-        {' '}
-        $
-      </td>
-      <td>
-        {
+    <>
+      <tr
+        className={(btnDisable ? 'flipOut' : '')}
+        data-toggle="tooltip "
+        data-placement="top"
+        title={`Class ${contract.car.model.carClass.name}, regular price per day ${contract.car.model.carClass.price}`}
+      >
+        <th scope="row">{contract.car.model.name}</th>
+        <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
+        <td>{moment(contract.initialDateTime).format('Do MMMM  YYYY, H:mm')}</td>
+        <td>{moment(contract.expectedReturnDateTime).format('Do MMMM  YYYY, H:mm')}</td>
+        <td>
+          {estimatedDays}
+        </td>
+        <td>
+          {((estimatedBill.price / estimatedDays) * amortizationCoefficient).toFixed(2)}
+          {' '}
+          $/days
+        </td>
+        <td>{currentDays}</td>
+        <td>
+          {((finalPrice / currentDays) * amortizationCoefficient).toFixed(2)}
+          {' '}
+          $/days
+        </td>
+        <td>
+          {(finalPrice * amortizationCoefficient).toFixed(2)}
+          {' '}
+          $
+        </td>
+        <td>
+          {
           btnDisable
             ? (
               <button
@@ -91,14 +95,21 @@ const Contract = ({ contract, amortizationFilters }) => {
               <button
                 type="button"
                 className="btn btn-outline-primary btn-block"
-                onClick={() => sendReturnCarRequest()}
+                onClick={() => setShow(true)}
               >
                 Return
               </button>
             )
         }
-      </td>
-    </tr>
+        </td>
+      </tr>
+      <Confirm
+        texts={{ massage: 'Do you wont to return this car', submit: 'Return car' }}
+        setShow={setShow}
+        show={show}
+        submit={sendReturnCarRequest}
+      />
+    </>
   );
 };
 

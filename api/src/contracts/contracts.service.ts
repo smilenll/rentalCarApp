@@ -5,9 +5,8 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ShowContractDTO} from "../common/DTOs/contract/show-contract.dto";
 import {Car} from "../database/entities/car.entity";
 import {CloseContractDTO} from "../common/DTOs/contract/close-contract.dto";
-import {NotFoundError} from "../common/exeptions/not-found.error";
-import {ValidationError} from "../common/exeptions/validation.error";
 import {ReturnCarDTO} from "../common/DTOs/car/return-car.dto";
+import Guard from "../common/utils/guard";
 
 @Injectable()
 export class ContractsService {
@@ -27,12 +26,11 @@ export class ContractsService {
         contractEntity.car = await this.carsRepository
             .findOne({id: body.car, isFree: true, isDeleted: false});
 
-        if(!contractEntity.car) {
-            throw new ValidationError('Incorrect car');
-        }
+        Guard.exists(contractEntity.car, "Incorrect car");
 
-        this.validateData(body.initialDateTime);
-        this.validatePeriod(body.initialDateTime, body.expectedReturnDateTime);
+        Guard.isDateCloseToNow(body.initialDateTime, 10, "Invalid date")
+        Guard.isValidPeriod(body.initialDateTime, body.expectedReturnDateTime);
+
 
         contractEntity.car = this.changeCarStatus(contractEntity.car);
 
@@ -49,12 +47,10 @@ export class ContractsService {
         const contract = await this.contractsRepository
             .findOne({id , returnDateTime: null, isDeleted: false});
 
-        if(!contract) {
-            throw new NotFoundError(`Contract with ID ${id} do not exist`);
-        }
+        Guard.exists(contract, `Contract with ID ${id} do not exist`);
 
-        this.validateData(body.returnDateTime);
-        this.validatePeriod(contract.initialDateTime, body.returnDateTime);
+        Guard.isDateCloseToNow(body.returnDateTime, 10, "Invalid date")
+        Guard.isValidPeriod(contract.initialDateTime, body.returnDateTime);
 
         contract.returnDateTime = body.returnDateTime;
         contract.car = await this.changeCarStatus(contract.car);
@@ -74,29 +70,12 @@ export class ContractsService {
         return car;
     }
 
-    private validateData(date: Date): void{
-
-        const tenMinutes= 600000;
-        const now = new Date().getTime();
-        const initialDateTime = new Date(date).getTime();
-        const differenceInTime = now - initialDateTime;
-
-        if(differenceInTime < 0) {
-            throw new ValidationError('Invalid date');
-        }
-        if(differenceInTime > tenMinutes) {
-            throw new ValidationError('Invalid date');
-        }
-    }
-
-    private validatePeriod(startDate: Date, endDate: Date): void{
-
-        const start = new Date(startDate).getTime();
-        const end = new Date(endDate).getTime();
-        const differenceInTime = end - start;
-
-        if(differenceInTime < 0) {
-            throw new ValidationError('Incorrect return date ');
-        }
-    }
+    // private validateData(date: Date): void{
+    //
+    //     Guard.isWithinPeriod({
+    //         from: new Date(),
+    //         to: date,
+    //         value: moment().add(10, 'm').toDate(),
+    //     })
+    // }
 }

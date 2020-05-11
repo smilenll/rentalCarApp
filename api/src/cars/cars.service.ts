@@ -3,7 +3,7 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Car} from "../database/entities/car.entity";
 import {ShowCarDTO} from "../common/DTOs/car/show-car.dto";
-import {NotFoundError} from "../common/exeptions/not-found.error";
+import Guard from "../common/utils/guard";
 
 @Injectable()
 export class CarsService {
@@ -20,9 +20,7 @@ export class CarsService {
         const car = await this.carsRepository
             .findOne({id, isFree: true, isDeleted: false});
 
-        if(!car){
-            throw new NotFoundError(`Car with  id ${id} not found`);
-        }
+        Guard.exists(car, `Contract with ID ${id} do not exist`);
 
         return car;
     }

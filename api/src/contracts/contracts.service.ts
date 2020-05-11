@@ -27,7 +27,6 @@ export class ContractsService {
             .findOne({id: body.car, isFree: true, isDeleted: false});
 
         Guard.exists(contractEntity.car, "Incorrect car");
-
         Guard.isDateCloseToNow(body.initialDateTime, 10, "Invalid date")
         Guard.isValidPeriod(body.initialDateTime, body.expectedReturnDateTime);
 
@@ -48,7 +47,6 @@ export class ContractsService {
             .findOne({id , returnDateTime: null, isDeleted: false});
 
         Guard.exists(contract, `Contract with ID ${id} do not exist`);
-
         Guard.isDateCloseToNow(body.returnDateTime, 10, "Invalid date")
         Guard.isValidPeriod(contract.initialDateTime, body.returnDateTime);
 

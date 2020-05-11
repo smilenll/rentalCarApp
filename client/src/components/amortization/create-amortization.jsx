@@ -44,7 +44,8 @@ class CreateAmortization extends Component {
   }
 
   validate() {
-    return validateAmortizationForm(this.state.name, this.state.from, this.state.to);
+    const [name, from, to] = this.state;
+    return validateAmortizationForm(name, from, to);
   }
 
   async handleSendForm() {

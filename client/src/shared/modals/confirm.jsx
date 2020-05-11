@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import './comfirm.css';
 
 const Confirm = ({
-  texts, show, setShow, submit,
+  texts, show, setShow, submit
 }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => submit();

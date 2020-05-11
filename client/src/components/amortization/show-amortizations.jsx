@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteAmortization, getAmortizations } from '../../redux';
+import AmortizationRow from './amortization-table/amortization-row';
 
 class ShowAmortization extends Component {
   constructor(props) {
@@ -44,21 +45,7 @@ class ShowAmortization extends Component {
           </thead>
           <tbody>
             {amortizationsArray.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.from}</td>
-                <td>{item.to}</td>
-                <td>{item.priceCoefficient}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger btn-block"
-                    onClick={() => this.handleDeleteAmortization(item.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              <AmortizationRow item={item} deleteItem={this.handleDeleteAmortization} />
             ))}
           </tbody>
         </table>

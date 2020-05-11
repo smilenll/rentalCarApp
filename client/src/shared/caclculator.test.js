@@ -39,13 +39,13 @@ describe('Calculator', () => {
 
   describe('calculateBasePrice', () => {
     test('it should return tax object', () => {
-      const car = { carClass: { name: 'VW polo', price: 20 } };
+      const carClass = { name: 'VW polo', price: 20 };
       const output = {
         price: 60,
-        massage: `Car class ${car.carClass.name} for ${car.carClass.price}$/day for 3 days`,
+        massage: `Car class ${carClass.name} for ${carClass.price}$/day for 3 days`,
       };
 
-      expect(calculateBasePrice(car, 3)).toEqual(output);
+      expect(calculateBasePrice(carClass, 3)).toEqual(output);
     });
   });
 
@@ -56,8 +56,10 @@ describe('Calculator', () => {
       const contract = {
         age: 26,
         car: {
-          carClass: {
-            price: 20,
+          model: {
+            carClass: {
+              price: 20,
+            },
           },
         },
       };
@@ -73,8 +75,10 @@ describe('Calculator', () => {
       const contract = {
         age: 26,
         car: {
-          carClass: {
-            price: 20,
+          model: {
+            carClass: {
+              price: 20,
+            },
           },
         },
       };
@@ -90,8 +94,10 @@ describe('Calculator', () => {
       const contract = {
         age: 26,
         car: {
-          carClass: {
-            price: 20,
+          model: {
+            carClass: {
+              price: 20,
+            },
           },
         },
       };

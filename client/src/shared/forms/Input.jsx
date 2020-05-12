@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Car from '../../components/car/car';
 
 const Input = ({
-  label, type, id, value, error, setInput,
+  label, type, id, value, error, setInput, formStartValidation,
 }) => {
   const [showError, setShowError] = useState(false);
+
+  useEffect(() => {
+    if (formStartValidation) {
+      setShowError(true);
+    }
+  }, [formStartValidation]);
 
   return (
     <div className="col-md-12 mb-3">

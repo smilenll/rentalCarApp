@@ -15,7 +15,7 @@ export const validateRentForm = (firstName, lastName, age, calculatedDays) => {
   }
   if (age && age < 18) {
     currentErrors.errors += 1;
-    currentErrors.age = 'You are too yong to drive';
+    currentErrors.age = 'You should be at least 18 years old';
   }
   if (calculatedDays < 1) {
     currentErrors.errors += 1;

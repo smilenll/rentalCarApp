@@ -43,7 +43,7 @@ const Rent = ({
     );
   }
 
-  const sendForm = () => {
+  const sendForm = async () => {
     const form = {
       firstName,
       lastName,
@@ -61,7 +61,7 @@ const Rent = ({
   };
 
   const validate = () => {
-    setErrors(validateRentForm(firstName, lastName, age, calculatedDays));
+    setErrors(validateRentForm(firstName, lastName, age, calculatedDays, formStartValidation));
   };
 
   useEffect(() => {
@@ -132,6 +132,8 @@ const Rent = ({
             <DateInput
               currentDateTime={currentDateTime}
               setDeliveryDate={setDeliveryDate}
+              formStartValidation={formStartValidation}
+              error={errors.date}
             />
             <button
               id="car-submit-btn"

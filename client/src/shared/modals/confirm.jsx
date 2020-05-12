@@ -19,7 +19,7 @@ const Confirm = ({
       <Modal.Body>{texts.massage}</Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>Close</Button>
+        <Button variant="secondary" onClick={handleClose}>{texts.cancel}</Button>
         <Button variant="primary" onClick={handleShow}>{texts.submit}</Button>
       </Modal.Footer>
     </Modal>
@@ -30,6 +30,7 @@ Confirm.propTypes = {
   texts: PropTypes.shape({
     massage: PropTypes.string,
     submit: PropTypes.string,
+    cancel: PropTypes.string,
   }).isRequired,
   show: PropTypes.bool.isRequired,
   setShow: PropTypes.func.isRequired,

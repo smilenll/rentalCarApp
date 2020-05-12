@@ -30,8 +30,9 @@ const AmortizationRow = ({ item, deleteItem }) => {
         setShow={setShow}
         submit={handleDelete}
         texts={{
-          massage: 'Do you wont to delete this amortization',
+          massage: 'Do you want to delete this amortization?',
           submit: 'Delete',
+          cancel: 'Back',
         }}
       />
     </>

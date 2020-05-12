@@ -105,7 +105,7 @@ const Contract = ({ contract, amortizationFilters }) => {
         </td>
       </tr>
       <Confirm
-        texts={{ massage: 'Do you wont to return this car', submit: 'Return car' }}
+        texts={{ massage: 'Do you want to return this car?', submit: 'Return car', cancel: 'No' }}
         setShow={setShow}
         show={show}
         submit={sendReturnCarRequest}

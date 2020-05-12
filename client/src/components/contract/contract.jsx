@@ -29,7 +29,6 @@ const Contract = ({ contract, amortizationFilters }) => {
   function tick() {
     setDate(new Date());
   }
-
   const sendReturnCarRequest = async () => {
     try {
       await returnCar(contract.id, { returnDateTime: currentDateTime });
@@ -87,6 +86,7 @@ const Contract = ({ contract, amortizationFilters }) => {
                 type="button"
                 className="btn btn-outline-primary btn-block"
                 disabled
+                data-testid="toggle"
               >
                 The car is back
               </button>
@@ -96,6 +96,7 @@ const Contract = ({ contract, amortizationFilters }) => {
                 type="button"
                 className="btn btn-outline-primary btn-block"
                 onClick={() => setShow(true)}
+                data-testid="toggle"
               >
                 Return
               </button>

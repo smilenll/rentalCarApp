@@ -11,6 +11,7 @@ import Cars from './components/cars/cars';
 import Rent from './components/rent/rent';
 import store from './redux/store';
 import Amortization from './components/amortization/amortization';
+import Footer from './components/footer/footer';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/amortization" component={Amortization} />
               <Route render={() => (<h1> 404</h1>)} />
             </Switch>
+            <Footer />
           </div>
         </Provider>
       </Router>

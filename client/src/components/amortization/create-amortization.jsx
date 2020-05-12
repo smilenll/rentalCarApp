@@ -77,7 +77,9 @@ class CreateAmortization extends Component {
 
     return (
       <div>
-        <h2>Create Amortization range</h2>
+        <div className="col-md-12 mb-3">
+          <h2>Create Amortization range</h2>
+        </div>
         <Input
           label="Name"
           type="text"
@@ -114,13 +116,15 @@ class CreateAmortization extends Component {
           setInput={this.updatePriceCoefficient}
           formStartValidation
         />
-        <button
-          type="button"
-          className="btn btn-outline-success btn-block"
-          onClick={this.handleSendForm}
-        >
-          Add Amortization range
-        </button>
+        <div className="col-md-12 mb-3">
+          <button
+            type="button"
+            className="btn btn-outline-success btn-block"
+            onClick={this.handleSendForm}
+          >
+            Add Amortization range
+          </button>
+        </div>
       </div>
     );
   }

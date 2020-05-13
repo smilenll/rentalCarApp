@@ -24,7 +24,7 @@ const Cars = ({
   const [manufacture, setManufacture] = useState(false);
   const [model, setModel] = useState(false);
   const [carClass, setCarClass] = useState(false);
-  const [amortization, setAmortization] = useState(false);
+  const [amortization, setAmortization] = useState();
   const [availableFilters, setAvailableFilters] = useState({
     manufacturersFilters: [],
     modelsFilters: [],
@@ -127,15 +127,17 @@ const Cars = ({
 
       <div className="row mt-4">
         {result
+        && amortizationArray
           ? result.map((item) => (
             <div key={item.id} className="col-lg-4 mb-4">
-              <Car car={item} />
+              <Car car={item} amortizations={amortizationArray} />
             </div>
           ))
           : carsArray
+          && amortizationArray
           && carsArray.map((item) => (
             <div key={item.id} className="col-lg-4 mb-4">
-              <Car car={item} />
+              <Car car={item} amortizations={amortizationArray} />
             </div>
           ))}
       </div>

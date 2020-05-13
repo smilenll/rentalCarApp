@@ -135,14 +135,16 @@ const Rent = ({
               formStartValidation={formStartValidation}
               error={errors.date}
             />
-            <button
-              id="car-submit-btn"
-              type="button"
-              className="btn btn-outline-success btn-block"
-              onClick={sendForm}
-            >
-              Rent car
-            </button>
+            <div className="col-lg-12">
+              <button
+                id="car-submit-btn"
+                type="button"
+                className="btn btn-outline-success btn-block"
+                onClick={sendForm}
+              >
+                Rent car
+              </button>
+            </div>
           </div>
         </div>
         <div className="col-6 mt-5">

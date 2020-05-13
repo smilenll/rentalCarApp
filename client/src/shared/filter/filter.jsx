@@ -44,7 +44,9 @@ const Filter = ({ availableFilters, setFilter, name }) => {
 };
 
 Filter.propTypes = {
-  availableFilters: PropTypes.arrayOf({}).isRequired,
+  availableFilters: PropTypes.arrayOf({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
   setFilter: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
 };

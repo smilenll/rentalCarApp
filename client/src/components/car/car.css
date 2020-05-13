@@ -1,5 +1,5 @@
 .car-text-board {
-    background-color: rgba(33, 37, 41, 0.6);
+    background-color: rgba(189, 189, 189, 0.6);
     padding: 4px 10px;
     border-radius: 0.25rem;
 }
@@ -11,4 +11,10 @@
     padding: 3px 10px;
     border-radius: 0.25rem;
     border: 1px solid #28a745;
+}
+
+.card-bar {
+    background-color: rgba(23, 162, 184, 0.4);
+    border-radius: 0.25rem;
+    border: 2px solid #17a2b8;
 }

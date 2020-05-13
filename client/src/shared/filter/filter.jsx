@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import PropTypes from 'prop-types';
+import './filter.css';
 
 const Filter = ({ availableFilters, setFilter, name }) => {
   const [activeFilter, setActiveFilter] = useState('All');
 
   return (
     <>
-      <div className="col-lg-2">
+      <div className="dropdown col-lg-2">
         <h6>{name}</h6>
-        <DropdownButton
-          id={`dropdown-variants-${name}`}
-          variant="info"
-          title={activeFilter}
-          block
-        >
-          <Dropdown.Item
+        <button className="dropbtn">{activeFilter}</button>
+        <div className="dropdown-content">
+          <a
             onClick={() => {
               setActiveFilter('All');
               setFilter(false);
             }}
           >
             All
-          </Dropdown.Item>
+          </a>
           {availableFilters
             .map((filter) => (
-              <Dropdown.Item
+              <a
                 key={filter.id}
                 onClick={() => {
                   setActiveFilter(filter.name);
@@ -34,10 +29,9 @@ const Filter = ({ availableFilters, setFilter, name }) => {
                 }}
               >
                 {filter.name}
-              </Dropdown.Item>
+              </a>
             ))}
-        </DropdownButton>
-        {' '}
+        </div>
       </div>
     </>
   );

@@ -1,0 +1,11 @@
+.search-nav {
+    border: 1px outset #282c34;
+    margin: 0px;
+    padding: 8px 0px;
+    border-radius: 0.25rem;
+    background-color: #f8f9fa;
+}
+
+.search-nav > div > h6 {
+    color: rgba(0,0,0,.9);
+}

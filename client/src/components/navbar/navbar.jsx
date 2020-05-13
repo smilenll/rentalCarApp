@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => (
-  <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+  <nav className="navbar navbar-expand-md navbar-light bg-light">
     <div className="container">
       <button
         className="navbar-toggler"

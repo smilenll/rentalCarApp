@@ -14,6 +14,7 @@ import {
   setModelsFilter,
   setCarClassFilter, setAmortizationsFilter,
 } from '../../shared/filters';
+import './cars.css';
 
 const Cars = ({
   cars, amortizations, storageCars, storageAmortizations,
@@ -98,7 +99,7 @@ const Cars = ({
     <h3>{cars.error}</h3>
   ) : (
     <div className="container mt-4">
-      <div className="row">
+      <div className="row search-nav">
         <div className="col-lg-4">
           <Search items={carsArray} setQ={setQ} />
         </div>
@@ -123,8 +124,6 @@ const Cars = ({
           availableFilters={availableFilters.amortizationFilters}
         />
       </div>
-
-
       <div className="row mt-4">
         {result
         && amortizationArray

@@ -20,7 +20,6 @@ const Cars = ({
   cars, amortizations, storageCars, storageAmortizations,
 }) => {
   const [result, setResult] = useState(false);
-  const [resultAF, setResultAF] = useState(false);
   const [q, setQ] = useState(false);
   const [manufacture, setManufacture] = useState(false);
   const [model, setModel] = useState(false);
@@ -36,17 +35,16 @@ const Cars = ({
   const carsArray = cars.allCars.data;
   const amortizationArray = amortizations.allAmortizationFilters.data;
 
-  const getFiltersForCurrentCars = (carsResult) => ({
-    manufacturersFilters: manufacture
-      ? getManufacturesFilter(carsArray) : getManufacturesFilter(carsResult),
-    modelsFilters: model
-      ? getModelsFilter(carsArray) : getModelsFilter(carsResult),
-    carClassFilters: carClass
-      ? getCarClassesFilter(carsArray) : getCarClassesFilter(carsResult),
-    amortizationFilters: amortization
-      ? getAmortizationsFilters(carsArray, amortizationArray)
-      : getAmortizationsFilters(carsResult, amortizationArray),
-  });
+  const getFiltersForCurrentCars = (carsResult) => {
+    const filtersForCurrentResult = {
+      manufacturersFilters: getManufacturesFilter(carsResult),
+      modelsFilters: getModelsFilter(carsResult),
+      carClassFilters: getCarClassesFilter(carsResult),
+      amortizationFilters: getAmortizationsFilters(carsResult, amortizationArray),
+    };
+    console.log(filtersForCurrentResult);
+    return filtersForCurrentResult;
+  };
 
   useEffect(() => {
     storageCars();
@@ -57,10 +55,7 @@ const Cars = ({
     if (carsArray) {
       setResult(carsArray);
     }
-    if (amortizationArray) {
-      setResultAF(amortizationArray);
-    }
-  }, [carsArray, amortizationArray]);
+  }, [carsArray]);
 
   useEffect(() => {
     let filtered = carsArray;
@@ -88,10 +83,10 @@ const Cars = ({
   }, [q, manufacture, model, carClass, amortization]);
 
   useEffect(() => {
-    if (result && resultAF) {
+    if (result) {
       setAvailableFilters(getFiltersForCurrentCars(result));
     }
-  }, [result, resultAF]);
+  }, [result]);
 
   return cars.loading ? (
     <h3>Loading</h3>

@@ -8,7 +8,7 @@ const Car = ({ car, amortizations }) => {
   const [amortization, setAmortization] = useState();
 
   const btnLink = `/rent/${car.id}`;
-
+  const imgRoute =`http://localhost:4000/public/${car.img}.jpg`
   useEffect(() => {
     if (amortizations) {
       const filter = findCarAmortizationFilter(amortizations, car);
@@ -47,7 +47,7 @@ const Car = ({ car, amortizations }) => {
         <div className="card bg-dark text-white mt-1">
           <img
             className="card-img"
-            src={car.img}
+            src={imgRoute}
             alt="Card"
           />
           <div data-car="select" className="card-img-overlay">

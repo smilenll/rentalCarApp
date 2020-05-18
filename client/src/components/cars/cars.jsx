@@ -19,32 +19,51 @@ import './cars.css';
 const Cars = ({
   cars, amortizations, storageCars, storageAmortizations,
 }) => {
+  const defaultFilters = {
+    manufacturersFilters: [],
+    modelsFilters: [],
+    carClassFilters: [],
+    amortizationFilters: [],
+  }
   const [result, setResult] = useState(false);
   const [q, setQ] = useState(false);
   const [manufacture, setManufacture] = useState(false);
   const [model, setModel] = useState(false);
   const [carClass, setCarClass] = useState(false);
   const [amortization, setAmortization] = useState();
-  const [availableFilters, setAvailableFilters] = useState({
-    manufacturersFilters: [],
-    modelsFilters: [],
-    carClassFilters: [],
-    amortizationFilters: [],
-  });
+  const [availableFilters, setAvailableFilters] = useState(defaultFilters);
+  const [clearFilter, setClearFilter] = useState(false);
 
   const carsArray = cars.allCars.data;
   const amortizationArray = amortizations.allAmortizationFilters.data;
 
-  const getFiltersForCurrentCars = (carsResult) => {
-    const filtersForCurrentResult = {
+  const getFiltersForCurrentCars = (carsResult) => ({
       manufacturersFilters: getManufacturesFilter(carsResult),
       modelsFilters: getModelsFilter(carsResult),
       carClassFilters: getCarClassesFilter(carsResult),
       amortizationFilters: getAmortizationsFilters(carsResult, amortizationArray),
-    };
-    console.log(filtersForCurrentResult);
-    return filtersForCurrentResult;
-  };
+    });
+
+  const handleClear = () => {
+    setQ(false)
+    setAmortization(false);
+    setModel(false);
+    setManufacture(false);
+    setCarClass(false);
+  }
+
+  useEffect(() => {
+    if (clearFilter) {
+      handleClear();
+      console.log(clearFilter);
+    }
+  }, [clearFilter]);
+
+  useEffect(() => {
+    if (carsArray) {
+      setResult(carsArray);
+    }
+  }, [carsArray]);
 
   useEffect(() => {
     storageCars();
@@ -96,29 +115,45 @@ const Cars = ({
     <div className="container mt-4">
       <div className="row search-nav">
         <div className="col-lg-4">
-          <Search items={carsArray} setQ={setQ} />
+          <Search
+          items={carsArray}
+          q={q || ''}
+          setQ={setQ}
+          setClearFilter={setClearFilter}
+          clearFilter={clearFilter} 
+          />
         </div>
         <Filter
           name="Manufacture"
           setFilter={setManufacture}
           availableFilters={availableFilters.manufacturersFilters}
+          setClearFilter={setClearFilter}
+          clearFilter={clearFilter}
         />
         <Filter
           name="Model"
           setFilter={setModel}
           availableFilters={availableFilters.modelsFilters}
+          setClearFilter={setClearFilter}
+          clearFilter={clearFilter}
         />
         <Filter
           name="Class"
           setFilter={setCarClass}
           availableFilters={availableFilters.carClassFilters}
+          setClearFilter={setClearFilter}
+          clearFilter={clearFilter}
         />
         <Filter
           name="Amortization"
           setFilter={setAmortization}
           availableFilters={availableFilters.amortizationFilters}
+          setClearFilter={setClearFilter}
+          clearFilter={clearFilter}
         />
       </div>
+      
+      
       <div className="row mt-4">
         {result
         && amortizationArray

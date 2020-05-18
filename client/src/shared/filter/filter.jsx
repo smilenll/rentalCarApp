@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './filter.css';
+import { useEffect } from 'react';
 
-const Filter = ({ availableFilters, setFilter, name }) => {
-  const [activeFilter, setActiveFilter] = useState('All');
-
+const Filter = ({ availableFilters, setFilter, name, clearFilter, setClearFilter }) => {
+  const defaultText = 'Clear';
+  const [activeFilter, setActiveFilter] = useState(defaultText);
+  useEffect(() => {
+    if(clearFilter){
+      setActiveFilter(defaultText);
+    }
+  }, [clearFilter]);
   return (
     <>
       <div className="dropdown col-lg-2">
@@ -13,11 +19,11 @@ const Filter = ({ availableFilters, setFilter, name }) => {
         <div className="dropdown-content">
           <a
             onClick={() => {
-              setActiveFilter('All');
+              setActiveFilter(defaultText);
               setFilter(false);
             }}
           >
-            All
+            {defaultText}
           </a>
           {availableFilters
             .map((filter) => (
@@ -26,6 +32,7 @@ const Filter = ({ availableFilters, setFilter, name }) => {
                 onClick={() => {
                   setActiveFilter(filter.name);
                   setFilter(filter);
+                  setClearFilter(false)
                 }}
               >
                 {filter.name}

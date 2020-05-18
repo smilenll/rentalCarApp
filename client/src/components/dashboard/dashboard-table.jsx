@@ -5,11 +5,11 @@ import Contract from '../contract/contract';
 const DashboardTable = ({ contracts, amortizations }) => (contracts.error
   ? (<h3>{contracts.error}</h3>)
   : (
-    <div className="row">
+    <div className="row mt-4">
       <div className="col-12">
-        <table className="table table-hover table-dark">
+        <table className="table-custom-style">
           <thead>
-            <tr>
+            <tr className="table-header">
               <th scope="col">Car</th>
               <th data-toggle="tooltip" data-placement="top" title="First & Last name" scope="col">Customer</th>
               <th scope="col" data-toggle="tooltip " data-placement="top" title="First & Last name">From</th>

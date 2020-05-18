@@ -50,12 +50,12 @@ const Contract = ({ contract, amortizationFilters }) => {
   return (
     <>
       <tr
-        className={(btnDisable ? 'flipOut' : '')}
+        className={(btnDisable ? 'flipOut table-row returned' : 'table-row')}
         data-toggle="tooltip "
         data-placement="top"
         title={`Class ${contract.car.model.carClass.name}, regular price per day ${contract.car.model.carClass.price}`}
       >
-        <th scope="row">{contract.car.model.name}</th>
+        <td scope="row">{contract.car.model.name}</td>
         <td className="contract-user-name">{`${contract.firstName} ${contract.lastName}`}</td>
         <td>{moment(contract.initialDateTime).format('Do MMMM  YYYY, H:mm')}</td>
         <td>{moment(contract.expectedReturnDateTime).format('Do MMMM  YYYY, H:mm')}</td>
@@ -84,7 +84,7 @@ const Contract = ({ contract, amortizationFilters }) => {
             ? (
               <button
                 type="button"
-                className="btn btn-outline-primary btn-block"
+                className="return-car-btn"
                 disabled
                 data-testid="toggle"
               >
@@ -94,7 +94,7 @@ const Contract = ({ contract, amortizationFilters }) => {
             : (
               <button
                 type="button"
-                className="btn btn-outline-primary btn-block"
+                className="return-car-btn"
                 onClick={() => setShow(true)}
                 data-testid="toggle"
               >

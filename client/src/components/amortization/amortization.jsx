@@ -21,7 +21,6 @@ const Amortization = () => {
         </button>
       </div>
     </div>
-
     <div className="row">
         <div className="col-lg-6">
           <CreateAmortization />

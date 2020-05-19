@@ -7,16 +7,19 @@ import { validateAmortizationForm } from '../../shared/forms/validate-form';
 
 
 class CreateAmortization extends Component {
+
+  initialState = {
+    name: '',
+    from: '',
+    to: '',
+    priceCoefficient: '',
+    errors: {},
+    formStartValidation: false,
+  }
+
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      from: '',
-      to: '',
-      priceCoefficient: '',
-      errors: {},
-      formStartValidation: false,
-    };
+    this.state = this.initialState;
     this.updateName = this.updateName.bind(this);
     this.updateFrom = this.updateFrom.bind(this);
     this.updateTo = this.updateTo.bind(this);
@@ -59,7 +62,7 @@ class CreateAmortization extends Component {
         name, from, to, priceCoefficient,
       } = this.state;
       const { sendAmortizationForm } = this.props;
-  
+      this.setState(this.initialState);
       return sendAmortizationForm({
         name,
         from,
@@ -80,7 +83,7 @@ class CreateAmortization extends Component {
     } = this.state;
 
     return (
-      <div>
+      <div className="mt-3">
         <Input
           label="Name"
           type="text"

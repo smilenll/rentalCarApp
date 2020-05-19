@@ -18,3 +18,104 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+th, td {
+  border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+.table-custom-style {
+  width: 100%;
+  padding: 8px 0px;
+  border-radius: 0.25rem;
+  background-color: #f8f9fa;
+  border-color: #343a40;
+
+}
+.table-header {
+  padding: 8px; 
+  background-color: rgba(23, 162, 184, 0.4);
+  padding: 6px 25%;
+  background-color: rgba(23, 162, 184, 0.4);
+  border-radius: 0.25rem;
+}
+
+.table-header > th {
+  color:rgba(0,0,0, 0.9);
+  padding: 15px;
+}
+
+.table-row > td {
+  color: #282c34;
+  padding: 6px;
+  background-color: #e8e8e8;
+}
+
+.return-car-btn {
+    width: 100%;
+    color: rgba(0,0,0, 0.9);
+    padding: 6px 17%;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgba(23, 162, 184, 0.4);
+    border-radius: 0.25rem;
+    border: 1px solid #17a2b8;
+}
+
+.return-car-btn:hover {
+  background-color: rgba(23, 162, 184, 0.7) !important;
+}
+
+.return-car-btn:active {
+  outline:none;
+}
+
+.return-car-btn:focus {
+  outline:none;
+}
+
+.create-amortization-btn {
+  width: 100%;
+  color: #e8e8e8;
+  padding: 6px 14.3%;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: rgba(8, 255, 49, 0.4);
+  border-radius: 0.25rem;
+  border: 1px solid rgba(8, 255, 49, 0.9);
+}
+
+.create-amortization-btn:hover {
+  background-color: rgba(8, 255, 49, 0.7) !important;
+}
+
+.create-amortization-btn:active {
+  outline:none;
+}
+
+.create-amortization-btn:focus {
+  outline:none;
+}
+
+.delete-amortization-btn {
+  color: rgba(0,0,0, 0.9);
+  padding: 6px 17%;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: rgba(124, 0, 83, 0.4);
+  border-radius: 0.25rem;
+  border: 1px solid rgba(124, 0, 83, 0.9);
+}
+
+.delete-amortization-btn:hover {
+  background-color: rgba(124, 0, 83, 0.7) !important;
+}
+
+.returned > td {
+  color:#e8e8e8;
+  background-color: #343a40;
+}
+
+.estimation-table-total {
+  color: rgba(0,0,0, 0.9);
+}

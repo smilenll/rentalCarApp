@@ -43,7 +43,7 @@ export const validateAmortizationForm = (name, from, to, priceCoefficient) => {
     currentErrors.to = 'At leas one year from "From" ';
   }
 
-  if (priceCoefficient > 0) {
+  if (priceCoefficient <= 0) {
     currentErrors.errors += 1;
     currentErrors.priceCoefficient = 'Price coefficient must be positive number';
   }

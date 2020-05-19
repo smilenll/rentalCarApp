@@ -26,7 +26,7 @@ const Rent = ({
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [formStartValidation, setFormStartValidation] = useState(false);
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState('');
   const [car, setCar] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState(currentDateTime);
   const [bill, setBill] = useState();
@@ -36,10 +36,12 @@ const Rent = ({
 
   const calculatedDays = calcDays(new Date(), deliveryDate);
   let currentAmortizationFilter = {};
+  const amortizationArray = amortizations.allAmortizationFilters.data;
+  
   // This can be made better
-  if (amortizations.allAmortizationFilters.data && car) {
+  if (amortizationArray && car) {
     currentAmortizationFilter = findCarAmortizationFilter(
-      amortizations.allAmortizationFilters.data, car,
+      amortizationArray, car,
     );
   }
 
@@ -97,10 +99,7 @@ const Rent = ({
   return (
     <div className="container">
       <div className="row">
-        {!isLoading && car
-          ? <div className="col-lg-12"><Car car={car} /></div>
-          : <div>Loading</div>}
-        <div className="col-lg-6 mt-5">
+      <div className="col-lg-6 mt-3">
           <div className="form-row">
             <Input
               label="First name"
@@ -147,19 +146,29 @@ const Rent = ({
             </div>
           </div>
         </div>
-        <div className="col-6 mt-5">
-          {car && bill ? (
-            <div className="col-lg-12">
+        {!isLoading && car
+          ? <div className="col-lg-6">
+            <div>
+          {car
+          && bill
+          && amortizationArray ? (
+            <div>
               <Bill
                 bill={bill}
-                car={car.model.price}
+                carPrice={car.model.carClass.price}
                 currentAmortizationFilter={currentAmortizationFilter}
               />
             </div>
           ) : (
-            <h5 className="text-right empty-form-msg">For estimated price fill the form</h5>
+            <h5 className="text-right empty-form-msg mt-3">For estimated price fill the form</h5>
           )}
         </div>
+            {amortizationArray
+            && (<Car car={car} amortizations={amortizationArray}/>)
+            }
+            </div>
+          : <div>Loading</div>}
+
       </div>
     </div>
   );

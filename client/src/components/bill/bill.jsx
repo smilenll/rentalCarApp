@@ -6,20 +6,20 @@ const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
     {
         bill.price <= 1.2
           ? (
-            <h5 className="text-right empty-form-msg">For estimated price fill the form</h5>
+            <h6 className="text-right empty-form-msg">For estimated price fill the form.</h6>
           )
           : (
-            <table className="table table-striped table-dark ">
-              <tbody>
+            <table className="table-custom-style mt-3 mb-3">
+              <tbody className="table-custom-style">
                 {bill && bill.massages.map((item) => (
-                  <tr key={item}>
+                  <tr className="table-row" key={item}>
                     <td colSpan="2" className="text-right">
                       {item}
                     </td>
                   </tr>
                 ))}
                 {/* Where to put this? In calc or hear */}
-                <tr>
+                <tr className="table-row">
                   <td colSpan="2" className="text-right">
                     Car is
                     {' '}
@@ -29,21 +29,22 @@ const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
                     {' '}
                     {(carPrice * currentAmortizationFilter.priceCoefficient)
                       .toFixed(2)}
+                      {' '}
                     $/day
                   </td>
                 </tr>
-                <tr>
+                <tr className="table-row">
                   <td>
-                    <h2>
+                    <h5 className="estimation-table-total">
                       Total
-                    </h2>
+                    </h5>
                   </td>
                   <td className="text-right">
-                    <h2>
+                    <h5 className="estimation-table-total">
                       {(bill.price * currentAmortizationFilter.priceCoefficient).toFixed(2)}
                       {' '}
                       $
-                    </h2>
+                    </h5>
                   </td>
                 </tr>
               </tbody>

@@ -11,10 +11,11 @@ class CreateAmortization extends Component {
     super(props);
     this.state = {
       name: '',
-      from: 0,
-      to: 0,
-      priceCoefficient: 0,
+      from: '',
+      to: '',
+      priceCoefficient: '',
       errors: {},
+      formStartValidation: false,
     };
     this.updateName = this.updateName.bind(this);
     this.updateFrom = this.updateFrom.bind(this);
@@ -44,26 +45,28 @@ class CreateAmortization extends Component {
   }
 
   validate() {
-    const [name, from, to] = this.state;
-    return validateAmortizationForm(name, from, to);
+    const {name, from, to, priceCoefficient} = this.state;
+
+    return validateAmortizationForm(name, from, to, priceCoefficient);
   }
 
   async handleSendForm() {
-    if (this.validate().errors !== 0) {
-      await this.setState({ errors: this.validate().errors });
+    if (this.validate().errors > 0) {
+      await this.setState({ errors: this.validate() });
+      await this.setState({ formStartValidation: true });
+    } else {
+      const {
+        name, from, to, priceCoefficient,
+      } = this.state;
+      const { sendAmortizationForm } = this.props;
+  
+      return sendAmortizationForm({
+        name,
+        from,
+        to,
+        priceCoefficient,
+      });
     }
-
-    const {
-      name, from, to, priceCoefficient,
-    } = this.state;
-    const { sendAmortizationForm } = this.props;
-
-    return sendAmortizationForm({
-      name,
-      from,
-      to,
-      priceCoefficient,
-    });
   }
 
   render() {
@@ -73,13 +76,11 @@ class CreateAmortization extends Component {
       to,
       priceCoefficient,
       errors,
+      formStartValidation,
     } = this.state;
 
     return (
       <div>
-        <div className="col-md-12 mb-3">
-          <h2>Create Amortization range</h2>
-        </div>
         <Input
           label="Name"
           type="text"
@@ -87,7 +88,7 @@ class CreateAmortization extends Component {
           value={name}
           error={errors.name}
           setInput={this.updateName}
-          formStartValidation
+          formStartValidation = {formStartValidation}
         />
         <Input
           label="From"
@@ -96,7 +97,7 @@ class CreateAmortization extends Component {
           value={from}
           error={errors.from}
           setInput={this.updateFrom}
-          formStartValidation
+          formStartValidation = {formStartValidation}
         />
         <Input
           label="To"
@@ -105,7 +106,7 @@ class CreateAmortization extends Component {
           value={to}
           error={errors.to}
           setInput={this.updateTo}
-          formStartValidation
+          formStartValidation = {formStartValidation}
         />
         <Input
           label="Price Coefficient"
@@ -114,7 +115,7 @@ class CreateAmortization extends Component {
           value={priceCoefficient}
           error={errors.priceCoefficient}
           setInput={this.updatePriceCoefficient}
-          formStartValidation
+          formStartValidation = {formStartValidation}
         />
         <div className="col-md-12 mb-3">
           <button

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Confirm from '../../../shared/modals/confirm';
+import Confirm from '../../shared/modals/confirm';
 
 const AmortizationRow = ({ item, deleteItem }) => {
   const [show, setShow] = useState(false);
@@ -10,15 +10,15 @@ const AmortizationRow = ({ item, deleteItem }) => {
 
   return (
     <>
-      <tr key={item.id}>
+      <tr className={"table-row"} key={item.id}>
         <td>{item.name}</td>
         <td>{item.from}</td>
         <td>{item.to}</td>
         <td>{item.priceCoefficient}</td>
-        <td>
+        <td className="text-right">
           <button
             type="button"
-            className="btn btn-outline-danger btn-block"
+            className="delete-amortization-btn"
             onClick={() => setShow(true)}
           >
             Delete

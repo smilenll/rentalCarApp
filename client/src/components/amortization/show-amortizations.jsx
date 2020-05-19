@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteAmortization, getAmortizations } from '../../redux';
-import AmortizationRow from './amortization-table/amortization-row';
+import AmortizationRow from './amortization-row';
 
 class ShowAmortization extends Component {
   constructor(props) {
@@ -33,14 +33,14 @@ class ShowAmortization extends Component {
     }
     if (amortizationsArray) {
       return (
-        <table className="table table-hover table-dark">
+        <table className="table-custom-style mt-4">
           <thead>
-            <tr>
-              <td>Name</td>
-              <td>From</td>
-              <td>To</td>
-              <td>Coefficient</td>
-              <td>Actions</td>
+            <tr className="table-header">
+              <th>Name</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Coefficient</th>
+              <th className="text-right">Actions</th>
             </tr>
           </thead>
           <tbody>

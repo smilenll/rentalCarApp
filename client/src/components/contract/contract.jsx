@@ -10,7 +10,6 @@ import {
 import { returnCar } from '../../services';
 import './contact.css';
 import { findCarAmortizationFilter } from '../../shared/filters';
-
 import Notificator from '../notificator/notificator';
 import Confirm from '../../shared/modals/confirm';
 
@@ -88,7 +87,7 @@ const Contract = ({ contract, amortizationFilters }) => {
                 disabled
                 data-testid="toggle"
               >
-                The car is back
+                Returned
               </button>
             )
             : (

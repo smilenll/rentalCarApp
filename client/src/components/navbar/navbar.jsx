@@ -18,15 +18,15 @@ const Navbar = () => (
       <div className="collapse navbar-collapse" id="navbarCollapse">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <NavLink activeClassName="active" className="nav-link" to="/dashboard">Dashboard</NavLink>
+            <NavLink activeClassName="active" className="nav-link" to="/" exact>Dashboard</NavLink>
           </li>
           <li className="nav-item ">
-            <NavLink activeClassName="active" cars="goToAllCars" className="nav-link" to="/cars">Cars</NavLink>
-          </li>
-          <li className="nav-item ">
-            <NavLink activeClassName="active" className="nav-link" to="/amortization">Amortization</NavLink>
+            <NavLink activeClassName="active" cars="goToAllCars" className="nav-link" to="/cars" exact>Cars</NavLink>
           </li>
         </ul>
+        <div class="form-inline my-2 my-lg-0">
+        <NavLink activeClassName="active" className="nav-link" to="/amortization">Amortization</NavLink>
+    </div>
       </div>
     </div>
   </nav>

@@ -21,7 +21,7 @@ export class AmortizationsService {
         const findAmortization = await this.amortizationsRepository.findOne({where: { name: body.name}})
 
         Guard.exists(!findAmortization, `Amortization filter with name "${body.name}" all ready exist.`);
-        Guard.should(((body.to - body.from) > 1), 'Range must be at leas one year');
+        Guard.should(((body.to - body.from) >= 1), 'Range must be at leas one year');
 
         const amortization: any = await this.amortizationsRepository.create(body);
 

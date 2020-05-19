@@ -2,7 +2,6 @@ import { ValidationError } from "../exeptions/validation.error"
 import { NotFoundError } from "../exeptions/not-found.error"
 
 const should = (rule: boolean, message = "Invalid rule")  => {
-    console.log(rule);
     if(!rule) {
         throw new ValidationError(message)
     }

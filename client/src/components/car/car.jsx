@@ -22,7 +22,7 @@ const Car = ({ car, amortizations }) => {
         <div className="card-bar bt-2">
           <div className="row">
             <div className="col-lg-6">
-              <h6 className="card-text-color ml-2 mt-2">
+              <h6 className="card-text-color ml-2 mt-2" data-car='name'>
                 {car.model.manufacture.name}
                 {' '}
                 {car.model.name}

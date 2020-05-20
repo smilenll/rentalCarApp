@@ -22,7 +22,8 @@ const Contract = ({ contract, amortizationFilters }) => {
   const estimatedDays = calcDays(contract.initialDateTime, contract.expectedReturnDateTime);
   const estimatedBill = calculateTotalBill(contract.age, contract.car, estimatedDays);
   const finalPrice = calculateReturnPrice(contract, estimatedDays, currentDays);
-  const amortizationCoefficient = findCarAmortizationFilter(amortizationFilters, contract.car)
+  console.log(amortizationFilters.length);
+  const amortizationCoefficient = amortizationFilters.length > 0 && findCarAmortizationFilter(amortizationFilters, contract.car)
     .priceCoefficient;
 
   function tick() {
@@ -62,18 +63,30 @@ const Contract = ({ contract, amortizationFilters }) => {
           {estimatedDays}
         </td>
         <td>
-          {((estimatedBill.price / estimatedDays) * amortizationCoefficient).toFixed(2)}
+          {
+          amortizationCoefficient
+          ? ((estimatedBill.price / estimatedDays) * amortizationCoefficient).toFixed(2)
+          : ((estimatedBill.price / estimatedDays)).toFixed(2)
+          }
           {' '}
           $/days
         </td>
         <td>{currentDays}</td>
         <td>
-          {((finalPrice / currentDays) * amortizationCoefficient).toFixed(2)}
+        {
+          amortizationCoefficient
+          ? ((finalPrice / currentDays) * amortizationCoefficient).toFixed(2)
+          : ((finalPrice / currentDays)).toFixed(2)
+          }
           {' '}
           $/days
         </td>
         <td>
-          {(finalPrice * amortizationCoefficient).toFixed(2)}
+          {
+          amortizationCoefficient
+          ?(finalPrice * amortizationCoefficient).toFixed(2)
+          :(finalPrice).toFixed(2)
+          }
           {' '}
           $
         </td>

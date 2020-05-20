@@ -17,21 +17,20 @@ module.exports = {
   'step three: Search for Lada': function (browser) {
     browser
       .setValue('input[type=search]', 'Lada')
-      .click('button[type="submit"]')
-      .waitForElementVisible('[data-name=notFound]')
-      .assert.containsText('[data-name=notFound]', 'No result')
-      .clearValue('input[type=search]');
+      .assert.not.elementPresent('[data-car="name"]')
+      .click('[data-clear="clear-btn"]');
   },
-  'step four: Search for golf': function (browser) {
+    'step four: Search for golf': function (browser) {
     browser
+      .clearValue('input[type=search]')
       .setValue('input[type=search]', 'golf')
-      .click('button[type="submit"]')
-      .assert.containsText('[class="card-title"]', 'golf');
+      .assert.containsText('[data-car="name"]', 'VW Golf');
   },
+
   'step five: Go to golf': function (browser) {
     browser
       .click('[data-car="select"]')
-      .assert.containsText('[class="card-title"]', 'golf');
+      .assert.containsText('[data-car="name"]', 'VW Golf');
   },
   'step six: Fill the form and send it': function (browser) {
     browser
@@ -47,16 +46,8 @@ module.exports = {
     browser
       .click('[cars="goToAllCars"]')
       .setValue('input[type=search]', 'golf')
-      .click('button[type="submit"]')
-      .assert.not.containsText('[class="card-title"]', 'golf')
+      .pause(1000)
+      .assert.not.elementPresent('[data-car="name"]')
       .end();
   },
-
-  // 'step eight: return car': function (browser) {
-  //   browser
-  //     .assert.containsText('[class="contract-user-name"]', 'Night Watch')
-  //     .click('[class="btn btn-outline-primary btn-block"]')
-  //     .end();
-  // },
-
 };

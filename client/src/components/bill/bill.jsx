@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
+const Bill = ({ bill, carPrice, currentAmortizationFilter }) => {
+  
+  const priceCoefficient = currentAmortizationFilter && currentAmortizationFilter.priceCoefficient
+
+  return(
   <>
     {
         bill.price <= 1.2
           ? (
-            <h6 className="text-right empty-form-msg">For estimated price fill the form.</h6>
+            <h6 className="text-right empty-form-msg">For estimated price fill the form</h6>
           )
           : (
             <table className="table-custom-style mt-3 mb-3">
@@ -19,32 +23,37 @@ const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
                   </tr>
                 ))}
                 {/* Where to put this? In calc or hear */}
-                <tr className="table-row">
-                  <td colSpan="2" className="text-right">
-                    Car is
-                    {' '}
-                    {currentAmortizationFilter.name}
-                    {' '}
-                    and price is changed to
-                    {' '}
-                    {(carPrice * currentAmortizationFilter.priceCoefficient)
-                      .toFixed(2)}
+                {
+                  currentAmortizationFilter
+                  && (
+                  <tr className="table-row">
+                    <td colSpan="2" className="text-right">
+                      Car is
                       {' '}
-                    $/day
-                  </td>
-                </tr>
+                      {currentAmortizationFilter.name}
+                      {' '}
+                      and price is changed to
+                      {' '}
+                      {(carPrice * priceCoefficient)
+                        .toFixed(2)}
+                      $/day
+                    </td>
+                  </tr>
+                )}               
                 <tr className="table-row">
                   <td>
-                    <h5 className="estimation-table-total">
+                    <h2 className="estimation-table-total">
                       Total
-                    </h5>
+                    </h2>
                   </td>
                   <td className="text-right">
-                    <h5 className="estimation-table-total">
-                      {(bill.price * currentAmortizationFilter.priceCoefficient).toFixed(2)}
+                    <h2 className="estimation-table-total">
+                      {(bill.price * priceCoefficient
+                        || bill.price
+                        ).toFixed(2)}
                       {' '}
                       $
-                    </h5>
+                    </h2>
                   </td>
                 </tr>
               </tbody>
@@ -52,7 +61,7 @@ const Bill = ({ bill, carPrice, currentAmortizationFilter }) => (
           )
       }
   </>
-);
+);}
 
 Bill.propTypes = {
   bill: PropTypes.shape({

@@ -12,6 +12,7 @@ const Search = ({ q, setQ, setClearFilter }) => (
         <button
         type="button"
         className="clear-filters-btn"
+        data-clear="clear-btn"
         onClick={() => {
           setClearFilter(true)
         }}
